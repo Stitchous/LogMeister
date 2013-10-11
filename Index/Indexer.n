@@ -1,0 +1,56 @@
+﻿using System;
+using System.IO;
+using Lucene.Net.Analysis.Standard;
+using Lucene.Net.Documents;
+using Lucene.Net.Index;
+using Lucene.Net.QueryParsers;
+using Lucene.Net.Search;
+using Lucene.Net.Store;
+using Lucene.Net.Util;
+
+namespace LogMeister.Index
+{
+    public class Indexer
+    {
+        public static Do(): void
+        {
+            def directoryName = <#c:\temp\testindex#>;
+            when (Directory.Exists(directoryName))
+                Directory.Delete(directoryName, true);
+            _ = Directory.CreateDirectory(directoryName);
+            def indexDirectory = FSDirectory.Open(directoryName);
+            using (def indexWriter = IndexWriter(indexDirectory,
+                                        StandardAnalyzer(Version.LUCENE_CURRENT),
+                                        IndexWriter.MaxFieldLength.LIMITED))
+            {
+                def texts = [
+                    "hello world",
+                    "hello sailor",
+                    "goodnight moon" ];
+                foreach (text in texts) 
+                {
+                    def doc = Document();
+                    doc.Add(Field("text",text, Field.Store.YES, Field.Index.ANALYZED));
+                    indexWriter.AddDocument(doc);
+                }
+            }
+            def queryStrings = ["hello"];
+            using (def searcher = IndexSearcher(indexDirectory))
+            {
+                def parser = QueryParser(Version.LUCENE_CURRENT, "text", StandardAnalyzer(Version.LUCENE_CURRENT));
+                foreach (queryString in queryStrings)
+                {
+                     Console.WriteLine("searching for: {0}", queryString);
+                     def query = parser.Parse(queryString);
+                     def results = searcher.Search(query, 10);
+                     Console.WriteLine("total hits: {0}", results.TotalHits);
+                     foreach (hit in results.ScoreDocs)
+                     {
+                         def doc = searcher.Doc(hit.Doc);
+                         Console.WriteLine("{0} {1}", hit.Score, doc.Get("text"));
+                     }
+                }
+            }
+        }
+    }
+}
