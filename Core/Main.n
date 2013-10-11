@@ -1,0 +1,178 @@
+﻿using Nemerle;
+using Nemerle.Collections;
+using Nemerle.Text;
+using Nemerle.Utility;
+
+using System;
+using System.Diagnostics;
+using System.Collections.Generic;
+using System.Console;
+using System.Linq;
+using System.IO;
+using System.Threading.Tasks;
+using System.Globalization;
+
+public class Line
+{
+    public this(splitedLine : array[string])
+    {
+        def splitedTime = splitedLine[0].Split(TimeDelemiters);
+        Time = TimeSpan(0, int.Parse(splitedTime[0]), int.Parse(splitedTime[1]), int.Parse(splitedTime[2]), int.Parse(splitedTime[3]));
+        Thread = splitedLine[1];
+        Severity = splitedLine[2];
+        Component = splitedLine[3];
+        Message = splitedLine[4];
+    }
+    
+    public this(line : Line, additionalMessage : string)
+    {
+        Time = line.Time;
+        Thread = line.Thread;
+        Severity = line.Severity;
+        Component = line.Component;
+        Message = line.Component + additionalMessage;
+    }
+    
+    public Time : TimeSpan { get; private set; }
+    public Thread : string { get; private set; }
+    public Severity : string { get; private set; }
+    public Component : string { get; private set; }
+    public Message: string { get; private set; }
+    
+    private static TimeDelemiters : array[char] = array[ ':', '.' ];
+}
+
+class Parser: IEnumerable[Line], IDisposable
+{
+    public Header : string { get; private set; }
+    
+    public this(filename : string)
+    {
+        def ReadHeader(reader, header = string.Empty)
+        {
+            def line = reader.ReadLine();
+            
+            if (line == null)
+                throw FileLoadException("Unexpected end of file in header")
+            else
+            {
+                 if (string.IsNullOrEmpty(line))
+                    header
+                else
+                    ReadHeader(reader, header + line)
+            }
+        }
+        
+        _reader = StreamReader(filename);
+        Header = ReadHeader(_reader);
+    }
+    
+    public GetEnumerator() : IEnumerator[Line] 
+    {
+        mutable currentLine : option[Line] = None();
+        
+        def TrySplitLine(line) 
+        {
+            def splited = line.Split( Delemiter, MinimalPartCount);
+            if (splited != null && splited.Length == MinimalPartCount)
+            {
+                Some(Line(splited))
+            }
+            else
+                None()
+        }
+        
+        def ParseBody(line)
+        {
+            def optionLine = TrySplitLine(line);
+            if (optionLine.HasValue)
+            {   
+                def prevLine = currentLine;
+                currentLine = optionLine;
+                prevLine
+            }
+            else
+            {
+                currentLine = currentLine.Map( x => Line(x, line) );
+                None()
+            }
+        }
+        
+        def ProcessLines(reader)
+        {
+            def line = _reader.ReadLine();
+            when (line != null)
+            {
+                def result = ParseBody(line);
+                when (result.HasValue)
+                    yield result.Value;
+                ProcessLines(reader)
+            }
+        }
+        
+        ProcessLines(_reader)
+    }
+    
+    public Dispose() : void
+    {
+        _reader.Dispose();
+    }
+    
+    public Progress : double
+    {
+        get
+        {
+            def stream = _reader.BaseStream;
+            (stream.Position :> double) / stream.Length; 
+        }
+    }
+    
+    private _reader : StreamReader;
+    
+    private static Delemiter : array[char] = array[ '\t' ];
+    private static MinimalPartCount  = 5;
+}
+
+module Program
+{
+    Main() : void
+    {
+        def severityCount =  Dictionary.[string, int]();
+        
+        mutable prevp = .0;
+        mutable lines = 0;
+        def timer = Stopwatch();
+        timer.Start();
+        
+        using (def p = Parser("d:/log.txt"))
+        {
+            foreach (l in p)
+            {
+                ++lines;
+                if (severityCount.ContainsKey(l.Severity))
+                    ++severityCount[l.Severity];
+                else
+                    severityCount[l.Severity] = 1;
+                
+                //def progreess = Math.Round(p.Progress, 2);
+                //when (prevp != progreess)
+                //{
+                //    prevp = progreess;
+                //    Console.WriteLine(prevp);
+                //}
+            }
+            timer.Stop();
+            
+            Console.WriteLine(p.Header);
+            Console.WriteLine(timer.Elapsed);
+            Console.WriteLine(lines);            
+        }
+        
+        foreach (severity in severityCount)
+        {
+            Console.WriteLine("{0} - {1} - {2}", severity.Key, severity.Value, (severity.Value * 100) / lines);
+        }
+        
+        _ = ReadLine();
+    }
+}

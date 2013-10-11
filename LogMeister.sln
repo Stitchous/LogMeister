@@ -4,6 +4,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{EDCC3B85-0BAD-11DB-BC1A-00112FDE8B61}") = "LogMeister.Index", "Index\LogMeister.Index.nproj", "{20A9F21F-0B2C-498D-9AE6-97E7093EEA7C}"
 EndProject
 Project("{EDCC3B85-0BAD-11DB-BC1A-00112FDE8B61}") = "LogMeister.IndexerRunner", "IndexerRunner\LogMeister.IndexerRunner.nproj", "{04777073-6FF2-4204-8417-6974848737F5}"
+Project("{EDCC3B85-0BAD-11DB-BC1A-00112FDE8B61}") = "Core", "Core\Core.nproj", "{C3681536-9F11-42D0-9D94-2BD8B7BBB847}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,6 +20,10 @@ Global
 		{04777073-6FF2-4204-8417-6974848737F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04777073-6FF2-4204-8417-6974848737F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04777073-6FF2-4204-8417-6974848737F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3681536-9F11-42D0-9D94-2BD8B7BBB847}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3681536-9F11-42D0-9D94-2BD8B7BBB847}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3681536-9F11-42D0-9D94-2BD8B7BBB847}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3681536-9F11-42D0-9D94-2BD8B7BBB847}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
