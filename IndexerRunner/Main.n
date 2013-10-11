@@ -13,6 +13,7 @@ module Program
 {
   Main() : void
   {
-    Indexer.Do();    
+    Indexer.Do();
+    _ = ReadLine();
   }
 }

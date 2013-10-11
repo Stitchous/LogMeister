@@ -1,5 +1,8 @@
-﻿using System;
+﻿
+using System;
+using System.Diagnostics;
 using System.IO;
+
 using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Documents;
 using Lucene.Net.Index;
@@ -19,31 +22,34 @@ namespace LogMeister.Index
                 Directory.Delete(directoryName, true);
             _ = Directory.CreateDirectory(directoryName);
             def indexDirectory = FSDirectory.Open(directoryName);
+            def stopwatch = Stopwatch.StartNew();
+            mutable symbolsRead = 0;
             using (def indexWriter = IndexWriter(indexDirectory,
-                                        StandardAnalyzer(Version.LUCENE_CURRENT),
-                                        IndexWriter.MaxFieldLength.LIMITED))
+                                        StandardAnalyzer(Version.LUCENE_30),
+                                        IndexWriter.MaxFieldLength.LIMITED),
+                       reader = StreamReader(<#d:\log.txt#>))
             {
-                def texts = [
-                    "hello world",
-                    "hello sailor",
-                    "goodnight moon" ];
-                foreach (text in texts) 
+                while (reader.Peek() >= 0 && symbolsRead < 10000000)                 
                 {
                     def doc = Document();
-                    doc.Add(Field("text",text, Field.Store.YES, Field.Index.ANALYZED));
+                    def line = reader.ReadLine();
+                    doc.Add(Field("text", line, Field.Store.YES, Field.Index.ANALYZED));
                     indexWriter.AddDocument(doc);
+                    symbolsRead += line.Length;
                 }
             }
-            def queryStrings = ["hello"];
+            Console.WriteLine("Indexing took {0}, symbols read: {1}, speed: {2} Mb/s", stopwatch.Elapsed, symbolsRead, symbolsRead / stopwatch.ElapsedMilliseconds / 1000);
+            def queryStrings = ["s"];
             using (def searcher = IndexSearcher(indexDirectory))
             {
-                def parser = QueryParser(Version.LUCENE_CURRENT, "text", StandardAnalyzer(Version.LUCENE_CURRENT));
+                def parser = QueryParser(Version.LUCENE_30, "text", StandardAnalyzer(Version.LUCENE_30));
                 foreach (queryString in queryStrings)
                 {
                      Console.WriteLine("searching for: {0}", queryString);
+                     stopwatch.Restart();
                      def query = parser.Parse(queryString);
                      def results = searcher.Search(query, 10);
-                     Console.WriteLine("total hits: {0}", results.TotalHits);
+                     Console.WriteLine("total hits: {0}, time: {1}", results.TotalHits, stopwatch.Elapsed);
                      foreach (hit in results.ScoreDocs)
                      {
                          def doc = searcher.Doc(hit.Doc);
