@@ -68,7 +68,7 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Indexing\LogMeister.Index.nproj">
+    <ProjectReference Include="..\Index\LogMeister.Index.nproj">
       <Name>LogMeister.Index</Name>
       <Project>{20a9f21f-0b2c-498d-9ae6-97e7093eea7c}</Project>
       <Private>True</Private>
