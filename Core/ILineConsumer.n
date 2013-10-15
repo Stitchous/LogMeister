@@ -1,0 +1,8 @@
+﻿
+namespace Core
+{
+    public interface ILineConsumer
+    {
+        Process(line : ILine) : void
+    }
+}

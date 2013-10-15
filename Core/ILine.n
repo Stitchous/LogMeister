@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace Core
+{
+    public interface ILine
+    {
+        Time : TimeSpan { get;}
+        Thread : string { get;}
+        Severity : string { get;}
+        Components : IEnumerable[string] { get;}
+        Message: string { get; }
+        Offset : long { get;}
+    }
+}
