@@ -1,0 +1,29 @@
+﻿using Nemerle;
+using Nemerle.Collections;
+using Nemerle.Text;
+using Nemerle.Utility;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
+
+namespace LogMeister.Shell
+{
+  public class ShellApplication : Application
+  {
+      [STAThread]
+      public static Main() : void
+      {
+        _ = ShellApplication().Run();
+      }
+
+      protected override OnStartup(_ : StartupEventArgs) : void 
+      {
+        _bootstrapper.Run();
+        Current.MainWindow.Show();
+      }
+
+      _bootstrapper : Bootstrapper = Bootstrapper();
+  }
+}

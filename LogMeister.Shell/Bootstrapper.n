@@ -1,0 +1,42 @@
+﻿using Nemerle;
+using Nemerle.Collections;
+using Nemerle.Text;
+using Nemerle.Utility;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
+
+using Microsoft.Practices.Prism.Modularity;
+using Microsoft.Practices.Prism.UnityExtensions;
+using Microsoft.Practices.Unity;
+
+using LogMeister.Views;
+
+namespace LogMeister.Shell
+{
+  public class Bootstrapper : UnityBootstrapper
+  {
+	protected override InitializeShell() : void 
+	{
+		base.InitializeShell();
+
+		Application.Current.MainWindow = this.Shell :> Window;
+		Application.Current.MainWindow.Show();
+	}
+
+    protected override CreateShell() : DependencyObject
+	{
+		InitializeModules();
+        def mainWindow = Container.Resolve.[object](typeof(MainWindow).FullName);
+		mainWindow :> DependencyObject;
+	}
+  
+    protected override ConfigureContainer() : void
+    {
+        base.ConfigureContainer();
+        _ = Container.RegisterType.[object, MainWindow](typeof(MainWindow).FullName);
+    }
+  }
+}
