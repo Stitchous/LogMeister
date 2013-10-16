@@ -105,7 +105,7 @@
     <Reference Include="Nemerle">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(Nemerle)\Nemerle.dll</HintPath>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <MacroReference Include="Nemerle.Linq">
       <HintPath>$(Nemerle)\Nemerle.Linq.dll</HintPath>
@@ -146,12 +146,12 @@
     <ProjectReference Include="..\Core\Core.nproj">
       <Name>Core</Name>
       <Project>{c3681536-9f11-42d0-9d94-2bd8b7bbb847}</Project>
-      <Private>True</Private>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\LogMeister.Infrastructure\LogMeister.Infrastructure.nproj">
       <Name>LogMeister.Infrastructure</Name>
       <Project>{24e9ff55-6333-43cf-a309-b19e2ce31282}</Project>
-      <Private>True</Private>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(Nemerle)\Nemerle.MSBuild.targets" />

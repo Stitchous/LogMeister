@@ -36,9 +36,17 @@ namespace LogMeister.Shell
 
     protected override CreateShell() : DependencyObject
 	{
-		InitializeModules();
-        def mainWindow = Container.Resolve.[object](typeof(MainWindow).FullName);
-		mainWindow :> DependencyObject;
+		try
+		{
+	        InitializeModules();
+            def mainWindow = Container.Resolve.[object](typeof(MainWindow).FullName);
+		    mainWindow :> DependencyObject;
+	    }
+	    catch
+	    {
+	        | e => _ = MessageBox.Show(e.ToString()); throw;
+	    }
+	    
 	}
   
     protected override ConfigureContainer() : void
@@ -65,7 +73,16 @@ namespace LogMeister.Shell
         def mappings = base.ConfigureRegionAdapterMappings();
         
         def behaviorFactory = ServiceLocator.Current.GetInstance.[RegionBehaviorFactory]();
-        mappings.RegisterMapping(typeof(LayoutAnchorablePane), AnchorablePaneRegionAdapter(behaviorFactory));
+        
+        def document : LayoutContent = LayoutDocument();
+        Console.WriteLine(document.ToString());
+        
+        mappings.RegisterMapping(typeof(LayoutDocumentPane),
+            LayoutDocumentPaneRegionAdapter.[LayoutDocumentPane, LayoutDocument](behaviorFactory));
+        
+        mappings.RegisterMapping(typeof(LayoutAnchorablePane), 
+            LayoutGroupRegionAdapter.[LayoutAnchorablePane, LayoutAnchorable](behaviorFactory));
+        
         
         mappings;
     }

@@ -146,10 +146,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnchorablePaneRegionAdapter.n">
+    <Compile Include="AvalonRegion.n">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="AvalonRegion.n">
+    <Compile Include="LayoutDocumentPaneRegionAdapter.n">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="LayoutGroupRegionAdapter.n">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ModuleMetaInfoAttribute.n">

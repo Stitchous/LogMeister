@@ -12,7 +12,7 @@
 		<avalonDock:DockingManager>
 			<avalonDock:LayoutRoot>
 				<avalonDock:LayoutPanel Orientation="Horizontal">
-					<avalonDock:LayoutDocumentPane />
+                    <avalonDock:LayoutDocumentPane views:AvalonDockRegion.Nomen="DocumentsPane" />
                     <avalonDock:LayoutAnchorablePane views:AvalonDockRegion.Nomen="PropertiesPane"  DockMinWidth="150">
 					</avalonDock:LayoutAnchorablePane>
 				</avalonDock:LayoutPanel>

@@ -19,14 +19,16 @@ using Xceed.Wpf.AvalonDock.Layout;
 
 namespace LogMeister.Infrastructure
 {
-    public class AnchorablePaneRegionAdapter : RegionAdapterBase.[LayoutAnchorablePane]
+    public class LayoutGroupRegionAdapter[T, U] : RegionAdapterBase.[T] 
+        where T : LayoutGroup[U] 
+        where U : LayoutContent, new()
     {
         public this(regionBehaviorFactory : IRegionBehaviorFactory)
         {
             base(regionBehaviorFactory)
         }
         
-        protected override Adapt(region : IRegion, regionTarget : LayoutAnchorablePane) : void 
+        protected override Adapt(region : IRegion, regionTarget : T) : void 
         {
             region.Views.CollectionChanged += 
             (_, e) =>
@@ -37,7 +39,6 @@ namespace LogMeister.Infrastructure
                         foreach(view in e.NewItems)
                         {
                             AddViewToPane(view, regionTarget)
-
                         }
                     | _ => ()
                 }
@@ -50,13 +51,13 @@ namespace LogMeister.Infrastructure
         region
     }
     
-    private AddViewToPane(view : object, pane : LayoutAnchorablePane) : void
+    private AddViewToPane(view : object, pane : T) : void
     {
         def attr = view.GetType().GetCustomAttributes(typeof(ModuleMetaInfoAttribute), false).SingleOrDefault();
         def title = if(attr == null) "Title" else (attr :> ModuleMetaInfoAttribute).Name;
         
-        mutable layoutAnchorable = LayoutAnchorable() <- { Content = view; Title = title; };
-        pane.Children.Add(layoutAnchorable); 
+        mutable u = U() <- { Content = view; Title = title; };
+        pane.Children.Add(u);
     }
   }
 }

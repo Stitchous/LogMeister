@@ -25,5 +25,4 @@ namespace LogMeister.Module.Core
     
     _container : IUnityContainer
   }
-  
 }
