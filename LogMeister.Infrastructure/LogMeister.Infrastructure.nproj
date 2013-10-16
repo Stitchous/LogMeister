@@ -5,74 +5,39 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>dbb9ca5e-751f-4fd4-b207-80301a1671ed</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <ProjectGuid>24e9ff55-6333-43cf-a309-b19e2ce31282</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LogMeister.Shell</RootNamespace>
-    <AssemblyName>LogMeister.Shell</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <RootNamespace>LogMeister.Infrastructure</RootNamespace>
+    <AssemblyName>LogMeister.Infrastructure</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NoStdLib>true</NoStdLib>
     <NemerleVersion>Net-4.0</NemerleVersion>
     <NemerleBinPathRoot Condition=" '$(NemerleBinPathRoot)' == '' ">$(ProgramFiles)\Nemerle</NemerleBinPathRoot>
     <Nemerle Condition=" '$(Nemerle)' == '' ">$(NemerleBinPathRoot)\$(NemerleVersion)</Nemerle>
-    <Name>LogMeister.Shell</Name>
-    <StartupObject />
-    <ApplicationIcon />
+    <Name>LogMeister.Infrastructure</Name>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <OutputPath>..\bin\$(Configuration)\</OutputPath>
     <DocumentationFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <Optimize>false</Optimize>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <OutputPath>..\bin\Debug\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <StartProgram />
-    <WorkingDirectory>$(OutputDirectory)</WorkingDirectory>
-    <CmdArgs />
-    <OutputPath>..\bin\Debug\</OutputPath>
-    <RunDebugger>true</RunDebugger>
+    <RunDebugger>false</RunDebugger>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>false</DebugSymbols>
     <Optimize>true</Optimize>
+    <OutputPath>..\bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
-    <StartProgram />
-    <WorkingDirectory>$(OutputDirectory)</WorkingDirectory>
-    <CmdArgs />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <DebugSymbols>true</DebugSymbols>
-    <Optimize>false</Optimize>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <StartProgram />
-    <WorkingDirectory>$(OutputDirectory)</WorkingDirectory>
-    <CmdArgs />
-    <OutputPath>..\bin\Debug\</OutputPath>
-    <RunDebugger>false</RunDebugger>
-    <PlatformTarget>x86</PlatformTarget>
-    <Platform>x86</Platform>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <DebugSymbols>false</DebugSymbols>
-    <Optimize>true</Optimize>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
-    <StartProgram />
-    <WorkingDirectory>$(OutputDirectory)</WorkingDirectory>
-    <CmdArgs />
-    <PlatformTarget>x86</PlatformTarget>
-    <Platform>x86</Platform>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
@@ -125,6 +90,11 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Windows, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <Name>System.Windows</Name>
+      <AssemblyName>System.Windows.dll</AssemblyName>
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Windows.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <Name>System.Windows.Interactivity</Name>
       <AssemblyName>System.Windows.Interactivity.dll</AssemblyName>
@@ -149,11 +119,6 @@
     <MacroReference Include="Nemerle.Wpf">
       <HintPath>$(Nemerle)\Nemerle.WPF.dll</HintPath>
     </MacroReference>
-    <Reference Include="WindowsBase, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
-      <Name>WindowsBase</Name>
-      <AssemblyName>WindowsBase.dll</AssemblyName>
-      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\WindowsBase.dll</HintPath>
-    </Reference>
     <Reference Include="Xceed.Wpf.AvalonDock, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4">
       <Name>Xceed.Wpf.AvalonDock</Name>
       <AssemblyName>Xceed.Wpf.AvalonDock.dll</AssemblyName>
@@ -181,11 +146,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bootstrapper.n">
+    <Compile Include="AnchorablePaneRegionAdapter.n">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AvalonRegion.n">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModuleMetaInfoAttribute.n">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.n" />
-    <Compile Include="ShellApplication.n">
+    <Compile Include="ViewExportAttribute.n">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -196,23 +167,6 @@
     <Content Include="packages.config">
       <SubType>Content</SubType>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Core\Core.nproj">
-      <Name>Core</Name>
-      <Project>{c3681536-9f11-42d0-9d94-2bd8b7bbb847}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\LogMeister.Infrastructure\LogMeister.Infrastructure.nproj">
-      <Name>LogMeister.Infrastructure</Name>
-      <Project>{24e9ff55-6333-43cf-a309-b19e2ce31282}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\LogMeister.Views\LogMeister.Views.csproj">
-      <Name>LogMeister.Views</Name>
-      <Project>{e21361b1-5613-4ad9-8f9e-3e12182e0e8b}</Project>
-      <Private>True</Private>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(Nemerle)\Nemerle.MSBuild.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

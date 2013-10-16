@@ -5,24 +5,22 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>dbb9ca5e-751f-4fd4-b207-80301a1671ed</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <ProjectGuid>006ca5e9-aadf-47ce-aadd-2464cff88db4</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LogMeister.Shell</RootNamespace>
-    <AssemblyName>LogMeister.Shell</AssemblyName>
+    <RootNamespace>LogMeister.Module.FileInfo</RootNamespace>
+    <AssemblyName>LogMeister.Module.FileInfo</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NoStdLib>true</NoStdLib>
     <NemerleVersion>Net-4.0</NemerleVersion>
     <NemerleBinPathRoot Condition=" '$(NemerleBinPathRoot)' == '' ">$(ProgramFiles)\Nemerle</NemerleBinPathRoot>
     <Nemerle Condition=" '$(Nemerle)' == '' ">$(NemerleBinPathRoot)\$(NemerleVersion)</Nemerle>
-    <Name>LogMeister.Shell</Name>
-    <StartupObject />
-    <ApplicationIcon />
+    <Name>LogMeister.Module.FileInfo</Name>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <OutputPath>..\bin\$(Configuration)\</OutputPath>
     <DocumentationFile />
+    <OutputPath>..\bin\$(Configuration)\modules\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,11 +28,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <StartProgram />
-    <WorkingDirectory>$(OutputDirectory)</WorkingDirectory>
-    <CmdArgs />
-    <OutputPath>..\bin\Debug\</OutputPath>
-    <RunDebugger>true</RunDebugger>
+    <RunDebugger>false</RunDebugger>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>false</DebugSymbols>
@@ -43,36 +37,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
-    <StartProgram />
-    <WorkingDirectory>$(OutputDirectory)</WorkingDirectory>
-    <CmdArgs />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <DebugSymbols>true</DebugSymbols>
-    <Optimize>false</Optimize>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <StartProgram />
-    <WorkingDirectory>$(OutputDirectory)</WorkingDirectory>
-    <CmdArgs />
-    <OutputPath>..\bin\Debug\</OutputPath>
-    <RunDebugger>false</RunDebugger>
-    <PlatformTarget>x86</PlatformTarget>
-    <Platform>x86</Platform>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <DebugSymbols>false</DebugSymbols>
-    <Optimize>true</Optimize>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
-    <StartProgram />
-    <WorkingDirectory>$(OutputDirectory)</WorkingDirectory>
-    <CmdArgs />
-    <PlatformTarget>x86</PlatformTarget>
-    <Platform>x86</Platform>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
@@ -146,47 +110,22 @@
     <MacroReference Include="Nemerle.Linq">
       <HintPath>$(Nemerle)\Nemerle.Linq.dll</HintPath>
     </MacroReference>
-    <MacroReference Include="Nemerle.Wpf">
-      <HintPath>$(Nemerle)\Nemerle.WPF.dll</HintPath>
-    </MacroReference>
     <Reference Include="WindowsBase, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <Name>WindowsBase</Name>
       <AssemblyName>WindowsBase.dll</AssemblyName>
       <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\WindowsBase.dll</HintPath>
     </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4">
-      <Name>Xceed.Wpf.AvalonDock</Name>
-      <AssemblyName>Xceed.Wpf.AvalonDock.dll</AssemblyName>
-      <HintPath>..\packages\AvalonDock.2.0.2000\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4">
-      <Name>Xceed.Wpf.AvalonDock.Themes.Aero</Name>
-      <AssemblyName>Xceed.Wpf.AvalonDock.Themes.Aero.dll</AssemblyName>
-      <HintPath>..\packages\AvalonDock.2.0.2000\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Expression, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4">
-      <Name>Xceed.Wpf.AvalonDock.Themes.Expression</Name>
-      <AssemblyName>Xceed.Wpf.AvalonDock.Themes.Expression.dll</AssemblyName>
-      <HintPath>..\packages\AvalonDock.2.0.2000\lib\net40\Xceed.Wpf.AvalonDock.Themes.Expression.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4">
-      <Name>Xceed.Wpf.AvalonDock.Themes.Metro</Name>
-      <AssemblyName>Xceed.Wpf.AvalonDock.Themes.Metro.dll</AssemblyName>
-      <HintPath>..\packages\AvalonDock.2.0.2000\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4">
-      <Name>Xceed.Wpf.AvalonDock.Themes.VS2010</Name>
-      <AssemblyName>Xceed.Wpf.AvalonDock.Themes.VS2010.dll</AssemblyName>
-      <HintPath>..\packages\AvalonDock.2.0.2000\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bootstrapper.n">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Module.n" />
     <Compile Include="Properties\AssemblyInfo.n" />
-    <Compile Include="ShellApplication.n">
+    <Page Include="FileInfoView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="FileInfoView.xaml.n">
       <SubType>Code</SubType>
+      <DependentUpon>FileInfoView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -198,24 +137,18 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core\Core.nproj">
-      <Name>Core</Name>
-      <Project>{c3681536-9f11-42d0-9d94-2bd8b7bbb847}</Project>
-      <Private>True</Private>
-    </ProjectReference>
     <ProjectReference Include="..\LogMeister.Infrastructure\LogMeister.Infrastructure.nproj">
       <Name>LogMeister.Infrastructure</Name>
       <Project>{24e9ff55-6333-43cf-a309-b19e2ce31282}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\LogMeister.Views\LogMeister.Views.csproj">
-      <Name>LogMeister.Views</Name>
-      <Project>{e21361b1-5613-4ad9-8f9e-3e12182e0e8b}</Project>
-      <Private>True</Private>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(Nemerle)\Nemerle.MSBuild.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <PropertyGroup>
+    <DefaultLanguageSourceExtension>.cs</DefaultLanguageSourceExtension>
+    <Language>C#</Language>
+  </PropertyGroup>
   <!--
 		To modify your build process, add your task inside one of the targets below and uncomment it. 
 		Other similar extension points exist, see Microsoft.Common.targets.

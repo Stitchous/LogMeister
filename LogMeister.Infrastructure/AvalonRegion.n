@@ -1,0 +1,38 @@
+﻿using Nemerle;
+using Nemerle.Assertions;
+using Nemerle.Collections;
+using Nemerle.Text;
+using Nemerle.Utility;
+using Nemerle.WPF;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
+using System.Diagnostics;
+
+using Microsoft.Practices.Prism.Regions;
+using Microsoft.Practices.ServiceLocation;
+
+
+namespace LogMeister.Infrastructure
+{
+    public class AvalonRegion : DependencyObject
+    {
+        [DependencyProperty(Metadata = PropertyMetadata(string.Empty, OnNameChanged))]
+        public static GetName(f : DependencyObject) : string;
+
+        private static OnNameChanged(d : DependencyObject , e : DependencyPropertyChangedEventArgs )  : void 
+        {
+            CreateRegion(d :> FrameworkElement, e.NewValue :> string);
+            Debug.Assert(false);
+        }
+        
+        private static CreateRegion([NotNull] element : FrameworkElement, [NotNullOrEmpty] regionName : string) : void 
+        {
+            def mappings = ServiceLocator.Current.GetInstance.[RegionAdapterMappings]();
+            def adapter = mappings.GetMapping(element.GetType());
+            _ = adapter.Initialize(element, regionName);
+        }
+    }
+}

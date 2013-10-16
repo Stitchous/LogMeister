@@ -1,0 +1,31 @@
+﻿using Nemerle.Assertions;
+using Nemerle.Collections;
+using Nemerle.Text;
+using Nemerle.Utility;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+using Microsoft.Practices.Prism.Modularity;
+using Microsoft.Practices.Unity;
+using Microsoft.Practices.Prism.Regions;
+
+namespace LogMeister.Module.FileInfo
+{
+  public class Module : IModule
+  {
+  	public this([NotNull] container : IUnityContainer)
+	{
+		_container = container;
+	}
+
+    public Initialize() : void 
+    {
+        _ = _container.RegisterType.[object, FileInfoView](typeof(FileInfoView).FullName);
+        _ = _container.Resolve.[RegionManager]().RegisterViewWithRegion("PropertiesPane", typeof(FileInfoView));
+    }
+
+    _container : IUnityContainer;
+  }
+}
