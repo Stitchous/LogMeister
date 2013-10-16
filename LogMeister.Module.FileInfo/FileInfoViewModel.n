@@ -1,0 +1,30 @@
+﻿using Nemerle;
+using Nemerle.Collections;
+using Nemerle.Text;
+using Nemerle.Utility;
+using Nemerle.WPF;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+using Core;
+
+namespace LogMeister.Module.FileInfo
+{
+  
+  [NotifyPropertyChanged]
+  public class FileInfoViewModel
+  {
+      _logInfo : ILogInfo;
+      
+      public this(logInfo : ILogInfo)
+      {
+        _logInfo = logInfo;
+      }
+      
+      public FullPath : string { get { _logInfo.FullPath }}
+      
+      public Header : string { get { _logInfo.Header }}
+  }
+}
