@@ -1,0 +1,15 @@
+﻿using System;
+
+namespace Core
+{
+    public interface ILogInfo
+    {
+        FullPath : string { get; }
+        Header : string { get; }
+        ProcessedLineCount : int { get; }    
+        event Loaded : EventHandler;
+        FileSize : long { get; }
+        LoadedPercent : double { get; } // form 0 to 100
+        IsLoaded : bool { get; }
+    }
+}

@@ -59,6 +59,21 @@
     </MacroReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IIndexedLineConsumer.n">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IIndexedLineProvider.n">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ILine.n">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ILineConsumer.n">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ILogInfo.n">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Main.n" />
     <Compile Include="Properties\AssemblyInfo.n" />
   </ItemGroup>
