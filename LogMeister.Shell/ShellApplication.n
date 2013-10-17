@@ -2,28 +2,44 @@
 using Nemerle.Collections;
 using Nemerle.Text;
 using Nemerle.Utility;
+using Nemerle.Extensions;
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using Forms = System.Windows.Forms;
 
 namespace LogMeister.Shell
 {
-  public class ShellApplication : Application
-  {
-      [STAThread]
-      public static Main() : void
+    public class ShellApplication : Application
+    {
+        [STAThread]
+        public static Main() : void
+        {
+            def dialog = Forms.OpenFileDialog() <- 
+                {
+                    DefaultExt = "log"; 
+                    Filter = "Executable files(*.log)|*.log";
+                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                };
+            when (dialog.ShowDialog() == Forms.DialogResult.OK)
+            {
+                _ = ShellApplication(dialog.FileName).Run();
+            }
+      }
+      
+      public this(filePath : string)
       {
-        _ = ShellApplication().Run();
+          _bootstrapper = Bootstrapper(filePath);   
       }
 
       protected override OnStartup(_ : StartupEventArgs) : void 
       {
-        _bootstrapper.Run();
-        Current.MainWindow.Show();
+          _bootstrapper.Run();
+          Current.MainWindow.Show();
       }
 
-      _bootstrapper : Bootstrapper = Bootstrapper();
+      _bootstrapper : Bootstrapper
   }
 }

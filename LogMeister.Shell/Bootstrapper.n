@@ -26,6 +26,11 @@ namespace LogMeister.Shell
 {
   public class Bootstrapper : UnityBootstrapper
   {
+    public this(filename : string)
+    {
+        _filename = filename;
+    }
+      
 	protected override InitializeShell() : void 
 	{
 		base.InitializeShell();
@@ -54,13 +59,12 @@ namespace LogMeister.Shell
         base.ConfigureContainer();
         _ = Container
             .RegisterType.[object, MainWindow](typeof(MainWindow).FullName)
+            .RegisterInstance(_filename)
             .RegisterType.[IEnumerable[object]](InjectionFactory(
-                c => 
+                _ => 
                     {
                       Enumerable.Empty.[object]()
                     }));
-        
-        
     }
 
     protected override  CreateModuleCatalog() : IModuleCatalog
@@ -86,5 +90,7 @@ namespace LogMeister.Shell
         
         mappings;
     }
+    
+    private _filename : string;
   }
 }

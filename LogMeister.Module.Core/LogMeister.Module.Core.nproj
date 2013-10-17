@@ -101,21 +101,38 @@
     </MacroReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LogInfo.n">
+    <Compile Include="IIndexedLineConsumer.n">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IIndexedLineProvider.n">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ILine.n">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ILineConsumer.n">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ILogInfo.n">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Line.n">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="LineIndex.n">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="LogProcessor.n">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Module.n" />
     <Compile Include="Properties\AssemblyInfo.n" />
+    <Compile Include="SplitedLineReader.n">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Core\Core.nproj">
-      <Name>Core</Name>
-      <Project>{c3681536-9f11-42d0-9d94-2bd8b7bbb847}</Project>
-      <Private>True</Private>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

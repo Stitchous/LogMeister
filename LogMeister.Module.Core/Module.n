@@ -10,8 +10,6 @@ using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Prism.UnityExtensions;
 
-using Core;
-
 namespace LogMeister.Module.Core
 {
   [Record]
@@ -20,7 +18,9 @@ namespace LogMeister.Module.Core
   {
     public Initialize() : void 
     {
-        _ = _container.RegisterType.[ILogInfo, LogInfo] ();
+        _ = _container.RegisterType.[LogProcessor](InjectionFactory(
+                                c => LogProcessor(c.Resolve.[string](), c.ResolveAll.[ILineConsumer](), c.ResolveAll.[IIndexedLineConsumer]()) ))
+                      .RegisterType.[ILogInfo, LogProcessor]();
     }
     
     _container : IUnityContainer

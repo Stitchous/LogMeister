@@ -143,15 +143,15 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core\Core.nproj">
-      <Name>Core</Name>
-      <Project>{c3681536-9f11-42d0-9d94-2bd8b7bbb847}</Project>
-      <Private>False</Private>
-    </ProjectReference>
     <ProjectReference Include="..\LogMeister.Infrastructure\LogMeister.Infrastructure.nproj">
       <Name>LogMeister.Infrastructure</Name>
       <Project>{24e9ff55-6333-43cf-a309-b19e2ce31282}</Project>
       <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\LogMeister.Module.Core\LogMeister.Module.Core.nproj">
+      <Name>LogMeister.Module.Core</Name>
+      <Project>{b60b76c2-5ab4-4a34-924b-f5dfd806fcc4}</Project>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(Nemerle)\Nemerle.MSBuild.targets" />

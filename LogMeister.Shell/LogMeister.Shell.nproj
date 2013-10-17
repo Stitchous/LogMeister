@@ -125,6 +125,11 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <Name>System.Windows.Forms</Name>
+      <AssemblyName>System.Windows.Forms.dll</AssemblyName>
+      <HintPath>C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Windows.Forms.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <Name>System.Windows.Interactivity</Name>
       <AssemblyName>System.Windows.Interactivity.dll</AssemblyName>
@@ -198,11 +203,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core\Core.nproj">
-      <Name>Core</Name>
-      <Project>{c3681536-9f11-42d0-9d94-2bd8b7bbb847}</Project>
-      <Private>True</Private>
-    </ProjectReference>
     <ProjectReference Include="..\LogMeister.Infrastructure\LogMeister.Infrastructure.nproj">
       <Name>LogMeister.Infrastructure</Name>
       <Project>{24e9ff55-6333-43cf-a309-b19e2ce31282}</Project>
