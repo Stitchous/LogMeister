@@ -1,18 +1,26 @@
 ﻿using Nemerle;
+using Nemerle.Assertions;
 using Nemerle.Collections;
+using Nemerle.Extensions;
 using Nemerle.Text;
 using Nemerle.Utility;
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
 
 using Microsoft.Practices.Prism.Modularity;
+using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Prism.UnityExtensions;
+using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 
+using Xceed.Wpf.AvalonDock.Layout;
+
 using LogMeister.Views;
+using LogMeister.Infrastructure;
 
 namespace LogMeister.Shell
 {
@@ -28,15 +36,55 @@ namespace LogMeister.Shell
 
     protected override CreateShell() : DependencyObject
 	{
-		InitializeModules();
-        def mainWindow = Container.Resolve.[object](typeof(MainWindow).FullName);
-		mainWindow :> DependencyObject;
+		try
+		{
+	        InitializeModules();
+            def mainWindow = Container.Resolve.[object](typeof(MainWindow).FullName);
+		    mainWindow :> DependencyObject;
+	    }
+	    catch
+	    {
+	        | e => _ = MessageBox.Show(e.ToString()); throw;
+	    }
+	    
 	}
   
     protected override ConfigureContainer() : void
     {
         base.ConfigureContainer();
-        _ = Container.RegisterType.[object, MainWindow](typeof(MainWindow).FullName);
+        _ = Container
+            .RegisterType.[object, MainWindow](typeof(MainWindow).FullName)
+            .RegisterType.[IEnumerable[object]](InjectionFactory(
+                c => 
+                    {
+                      Enumerable.Empty.[object]()
+                    }));
+        
+        
+    }
+
+    protected override  CreateModuleCatalog() : IModuleCatalog
+    {
+        DirectoryModuleCatalog() <- { ModulePath = <#.\modules#>; }
+    }
+
+    protected override ConfigureRegionAdapterMappings() : RegionAdapterMappings 
+    {
+        def mappings = base.ConfigureRegionAdapterMappings();
+        
+        def behaviorFactory = ServiceLocator.Current.GetInstance.[RegionBehaviorFactory]();
+        
+        def document : LayoutContent = LayoutDocument();
+        Console.WriteLine(document.ToString());
+        
+        mappings.RegisterMapping(typeof(LayoutDocumentPane),
+            LayoutDocumentPaneRegionAdapter.[LayoutDocumentPane, LayoutDocument](behaviorFactory));
+        
+        mappings.RegisterMapping(typeof(LayoutAnchorablePane), 
+            LayoutGroupRegionAdapter.[LayoutAnchorablePane, LayoutAnchorable](behaviorFactory));
+        
+        
+        mappings;
     }
   }
 }
