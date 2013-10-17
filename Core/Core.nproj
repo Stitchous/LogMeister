@@ -74,8 +74,20 @@
     <Compile Include="ILogInfo.n">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Line.n">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="LineIndex.n">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="LogProcessor.n">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Main.n" />
     <Compile Include="Properties\AssemblyInfo.n" />
+    <Compile Include="SplitedLineReader.n">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

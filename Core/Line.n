@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace Core
+{
+    internal class Line : ILine
+    {
+        public this(time : TimeSpan, thread : string, severity : string, components : IEnumerable[string], message : string, offset : long )
+        {
+            Time = time;
+            Thread = thread;
+            Severity = severity;
+            Components = components;
+            Message = message;
+            Offset = offset;
+        }
+    
+        public Time : TimeSpan { get; private set; }
+        public Thread : string { get; private set; }
+        public Severity : string { get; private set; }
+        public Components : IEnumerable[string] { get; private set; }
+        public Message: string { get; private set; }
+        public Offset : long { get; private set; }
+    }
+}
