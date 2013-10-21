@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Nemerle.Assertions;
 
 namespace LogMeister.Module.Core
 {
 class SplitedLineReader: IDisposable
 {
-    public this(filename : string)
+    public this([NotNullOrEmpty] filename : string)
     {
         def FindHeaderEnd(start = 0, hasEmptyLines = false)
         {

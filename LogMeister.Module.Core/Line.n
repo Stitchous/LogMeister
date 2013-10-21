@@ -1,11 +1,17 @@
-﻿using System;
+﻿using Nemerle.Assertions;
+using System;
 using System.Collections.Generic;
 
 namespace LogMeister.Module.Core
 {
     internal class Line : ILine
     {
-        public this(time : TimeSpan, thread : string, severity : string, components : IEnumerable[string], message : string, offset : long )
+        public this(time : TimeSpan, 
+                    [NotNullOrEmpty] thread : string, 
+                    [NotNullOrEmpty] severity : string,
+                    [NotNull ]components : IEnumerable[string],
+                    [NotNullOrEmpty] message : string,
+                    offset : long )
         {
             Time = time;
             Thread = thread;

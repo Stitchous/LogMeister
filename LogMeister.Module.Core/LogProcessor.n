@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using Nemerle.Collections;
+using Nemerle.Assertions;
 
 namespace LogMeister.Module.Core
 {
     public class LogProcessor : IIndexedLineProvider, ILogInfo, IDisposable
     {
-        public this(filePath : string, lineConsumers : IEnumerable[ILineConsumer], indexedLineCosubers : IEnumerable[IIndexedLineConsumer])
+        public this([NotNullOrEmpty] filePath : string, [NotNull] lineConsumers : IEnumerable[ILineConsumer], [NotNull] indexedLineCosubers : IEnumerable[IIndexedLineConsumer])
         {
             Loaded += (_, _) => {};
             FullPath = filePath;

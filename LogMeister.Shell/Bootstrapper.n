@@ -26,7 +26,7 @@ namespace LogMeister.Shell
 {
   public class Bootstrapper : UnityBootstrapper
   {
-    public this(filename : string)
+    public this([NotNullOrEmpty] filename : string)
     {
         _filename = filename;
     }

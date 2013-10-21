@@ -21,7 +21,7 @@ namespace LogMeister.Shell
                 {
                     DefaultExt = "log"; 
                     Filter = "Executable files(*.log)|*.log";
-                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
                 };
             when (dialog.ShowDialog() == Forms.DialogResult.OK)
             {
