@@ -1,0 +1,66 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Nemerle.Collections;
+using Nemerle.Concurrency;
+
+namespace LogMeister.Module.Core
+{
+    public class LogProcessor : IIndexedLineProvider, ILogInfo, IDisposable
+    {
+        public this(filePath : string, lineConsumers : IEnumerable[ILineConsumer], indexedLineCosubers : IEnumerable[IIndexedLineConsumer])
+        {
+            Loaded += (_, _) => {};
+            FullPath = filePath;
+            _lineConsumers = lineConsumers;
+            _indexedLineCosubers = indexedLineCosubers.ToArray();            
+            _splitedLineReader = SplitedLineReader(FullPath);
+            _lineIndex = LineIndex();
+            Header = _splitedLineReader.Header;
+            FileSize = _splitedLineReader.BaseStream.Length;
+            
+            async { Load(); }
+        }
+        
+        public GetLine(index : int) : ILine
+        {
+            // assert(IsLoaded)
+            _splitedLineReader.ReadLineAt( _lineIndex.GetLineOffset(index) )
+        }
+        
+        public FullPath : string { get; private set; }
+        public Header : string { get; private set; }
+        public ProcessedLineCount : int { get; private set; }            
+        public FileSize : long { get; private set; }
+        public LoadedPercent : double { get; private set; } // form 0 to 100
+        public IsLoaded : bool { get; private set; }
+        
+        public event Loaded : EventHandler;
+        
+        public Dispose() : void
+        {
+            _splitedLineReader.Dispose();
+        }
+        
+        public Load() : void
+        {
+            //assert(!IsLoaded)
+            foreach (line in _splitedLineReader)
+            {
+                _lineConsumers.Iter( x => x.Process( line ) );
+                def index = _lineIndex.AddNextLine(line.Offset);
+                _indexedLineCosubers.Iter( x => x.Process(line, index) );
+                ++ProcessedLineCount;
+                LoadedPercent = (line.Offset:double) / FileSize;
+            }
+            LoadedPercent  = 100;
+            IsLoaded = true;
+            Loaded(this, EventArgs.Empty);
+        }
+
+        private _lineConsumers : IEnumerable[ILineConsumer];
+        private _indexedLineCosubers : IEnumerable[IIndexedLineConsumer];
+        private _splitedLineReader : SplitedLineReader;
+        private _lineIndex : LineIndex;
+    }
+}

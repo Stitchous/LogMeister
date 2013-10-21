@@ -1,0 +1,66 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace LogMeister.Module.Core
+{
+    class LineIndex
+    {
+        public GetLineOffset(index : int) : long
+        {
+            def chunkIndex = index / LinesInChunk;
+            _chunks[chunkIndex].GetLineOffset(index)
+        }
+    
+        public AddNextLine(lineOffset : long) : int
+        {
+            if (_chunks.Any())
+            {
+                def lashChunk = _chunks[_chunks.Count - 1];
+                if (lashChunk.HasMoreSpace)
+                    lashChunk.AddNextLine(lineOffset)
+                else
+                {
+                    def index = lashChunk.LastLine + 1;
+                    _chunks.Add(LineIndexChunk(index, lineOffset));
+                    index
+                }
+            }
+            else
+            {
+                def firstIndex = 0;
+                _chunks.Add(LineIndexChunk(firstIndex, lineOffset));
+                firstIndex
+            }
+        }
+    
+        class LineIndexChunk
+        {
+            public this(firstLine : int, firstLineOffset : long)
+            {
+                FirstLine = firstLine;
+                _firstLineOffset = firstLineOffset;
+                _lines.Add(0);
+            }
+    
+            public HasMoreSpace : bool { get { _lines.Count < LinesInChunk } } 
+    
+            public FirstLine : int { get; private set; }
+            public LastLine : int { get { FirstLine + _lines.Count - 1 } }
+        
+            public AddNextLine(lineOffset: long) : int
+            {
+                _lines.Add((lineOffset - _firstLineOffset) :> int);
+                FirstLine + _lines.Count - 1;
+            }
+        
+            public GetLineOffset(index : int) : long { _lines[index - FirstLine] }
+    
+            private _firstLineOffset : long;
+            private _lines  : IList[int] = List.[int](LinesInChunk);
+        }
+    
+        private static LinesInChunk  = 100000;
+        private _chunks : IList[LineIndexChunk] = List.[LineIndexChunk](1000);
+    }
+}

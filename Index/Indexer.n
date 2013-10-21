@@ -3,7 +3,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 
-using Lucene.Net.Analysis.Standard;
+using Lucene.Net.Analysis;
 using Lucene.Net.Documents;
 using Lucene.Net.Index;
 using Lucene.Net.QueryParsers;
@@ -11,52 +11,26 @@ using Lucene.Net.Search;
 using Lucene.Net.Store;
 using Lucene.Net.Util;
 
+using LogMeister.Module.Core;
+
 namespace LogMeister.Index
 {
-    public class Indexer
+    public class Indexer: IIndexedLineConsumer
     {
-        public static Do(): void
+        public this()
         {
-            def directoryName = <#c:\temp\testindex#>;
-            when (Directory.Exists(directoryName))
-                Directory.Delete(directoryName, true);
-            _ = Directory.CreateDirectory(directoryName);
-            def indexDirectory = FSDirectory.Open(directoryName);
-            def stopwatch = Stopwatch.StartNew();
-            mutable symbolsRead = 0;
-            using (def indexWriter = IndexWriter(indexDirectory,
-                                        StandardAnalyzer(Version.LUCENE_30),
-                                        IndexWriter.MaxFieldLength.LIMITED),
-                       reader = StreamReader(<#d:\log.txt#>))
-            {
-                while (reader.Peek() >= 0 && symbolsRead < 10000000)                 
-                {
-                    def doc = Document();
-                    def line = reader.ReadLine();
-                    doc.Add(Field("text", line, Field.Store.YES, Field.Index.ANALYZED));
-                    indexWriter.AddDocument(doc);
-                    symbolsRead += line.Length;
-                }
-            }
-            Console.WriteLine("Indexing took {0}, symbols read: {1}, speed: {2} Mb/s", stopwatch.Elapsed, symbolsRead, symbolsRead / stopwatch.ElapsedMilliseconds / 1000);
-            def queryStrings = ["s"];
-            using (def searcher = IndexSearcher(indexDirectory))
-            {
-                def parser = QueryParser(Version.LUCENE_30, "text", StandardAnalyzer(Version.LUCENE_30));
-                foreach (queryString in queryStrings)
-                {
-                     Console.WriteLine("searching for: {0}", queryString);
-                     stopwatch.Restart();
-                     def query = parser.Parse(queryString);
-                     def results = searcher.Search(query, 10);
-                     Console.WriteLine("total hits: {0}, time: {1}", results.TotalHits, stopwatch.Elapsed);
-                     foreach (hit in results.ScoreDocs)
-                     {
-                         def doc = searcher.Doc(hit.Doc);
-                         Console.WriteLine("{0} {1}", hit.Score, doc.Get("text"));
-                     }
-                }
-            }
+            def directory = RAMDirectory();            
+            _indexWriter = IndexWriter(directory, SimpleAnalyzer(), IndexWriter.MaxFieldLength.LIMITED);
         }
+        
+        public Process(line : ILine, index : int) : void
+        {
+            def doc = Document();
+            doc.Add(Field("index", index.ToString(), Field.Store.YES, Field.Index.NO));            
+            doc.Add(Field("text", line.Message, Field.Store.NO, Field.Index.ANALYZED));
+            _indexWriter.AddDocument(doc);
+        }
+        
+        private _indexWriter: IndexWriter;
     }
 }

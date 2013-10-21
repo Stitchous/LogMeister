@@ -1,0 +1,7 @@
+﻿namespace LogMeister.Module.Core
+{
+    public interface IIndexedLineProvider
+    {
+        GetLine(index : int) : ILine
+    }
+}

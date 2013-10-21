@@ -10,17 +10,15 @@ using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Prism.UnityExtensions;
 
-namespace LogMeister.Module.Core
+namespace LogMeister.Index
 {
   [Record]
-  [Module(ModuleName="Core")]
+  [Module(ModuleName="Index")]
   public class Module : IModule
   {
     public Initialize() : void 
     {
-        _ = _container.RegisterType.[LogProcessor](InjectionFactory(
-                                c => LogProcessor(c.Resolve.[string](), c.ResolveAll.[ILineConsumer](), c.ResolveAll.[IIndexedLineConsumer]()) ))
-                      .RegisterType.[ILogInfo, LogProcessor]();
+        _ = _container.RegisterType.[LogMeister.Module.Core.IIndexedLineConsumer, Indexer]("Indexer", ContainerControlledLifetimeManager());
     }
     
     _container : IUnityContainer
