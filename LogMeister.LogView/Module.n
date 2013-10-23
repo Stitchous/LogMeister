@@ -24,7 +24,6 @@ namespace LogMeister.LogView
     
      public Initialize() : void 
     {
-        _container.RegisterType.[LogMeister.Module.Core.IIndexedLineProvider,LogMeister.Module.Core.LogProcessor]();
         _container.RegisterType.[LogView]();
         RegisterForRegion.[LogView, LogViewModel]("DocumentsPane");
     }
