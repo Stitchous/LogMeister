@@ -20,8 +20,8 @@ namespace LogMeister.Module.Core
     {
         _ = _container.RegisterType.[LogProcessor](InjectionFactory(
                                 c => LogProcessor(c.Resolve.[string](), c.ResolveAll.[ILineConsumer](), c.ResolveAll.[IIndexedLineConsumer]()) ))
-                      .RegisterType.[ILogInfo, LogProcessor]();
-        _= _container.RegisterType.[LogMeister.Module.Core.IIndexedLineProvider,LogMeister.Module.Core.LogProcessor]();
+                      .RegisterType.[ILogInfo, LogProcessor]()
+                      .RegisterType.[IIndexedLineProvider,LogProcessor]();
     }
     
     _container : IUnityContainer
