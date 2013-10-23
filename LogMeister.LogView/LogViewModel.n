@@ -20,11 +20,21 @@ namespace LogMeister.LogView
     {
         _lineProvider = lineProvider;
         _logInfo = logInfo;
+        
+        _logInfo.Loaded += OnLoaded;
     }
-
-    public    Lines : ObservableCollection[LineViewModel] { get; }
+    
+    public    Lines : ObservableCollection[LineViewModel] { get; private set;}
     public FullPath : string { get { _logInfo.FullPath }}
     public   Header : string { get { _logInfo.Header }}
+    
+    private OnLoaded(_: object, _: EventArgs) : void
+    {
+        Lines = 
+            ObservableCollection(
+            Enumerable.Range(10, _logInfo.ProcessedLineCount - 10)
+                      .Select(i => LineViewModel(()=> { def line =_lineProvider.GetLine(i); (i,line.Message) })));
+    }
 
     _lineProvider : IIndexedLineProvider;
     _logInfo      : ILogInfo;
