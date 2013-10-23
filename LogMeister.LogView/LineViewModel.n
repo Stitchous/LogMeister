@@ -1,0 +1,25 @@
+﻿using Nemerle;
+using Nemerle.Collections;
+using Nemerle.Text;
+using Nemerle.Utility;
+using Nemerle.Extensions;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace LogMeister.LogView
+{
+  public class LineViewModel
+  {
+    public this(lineProvider : Func[int*string])
+    {
+        _line = Lazy(() => lineProvider());   
+    }
+
+    public Index : int { get { _line.Value[0] }  }
+    public Text  : string { get { _line.Value[1] } } 
+
+    _line : Lazy[int*string];
+  }
+}

@@ -1,0 +1,32 @@
+﻿using Nemerle;
+using Nemerle.Collections;
+using Nemerle.Text;
+using Nemerle.Utility;
+
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Threading;
+using System.Linq;
+
+using LogMeister.Module.Core;
+
+namespace LogMeister.LogView
+{
+  public class LogViewModel
+  {
+    public this(lineProvider : IIndexedLineProvider, logInfo : ILogInfo)
+    {
+        _lineProvider = lineProvider;
+        _logInfo = logInfo;
+
+        
+    }
+
+    public Lines : ObservableCollection[LineViewModel] { get; }
+
+    _lineProvider   : IIndexedLineProvider;
+    _logInfo        : ILogInfo;
+  }
+}
