@@ -20,8 +20,6 @@ namespace LogMeister.LogView
     {
         _lineProvider = lineProvider;
         _logInfo = logInfo;
-
-        
     }
 
     public Lines : ObservableCollection[LineViewModel] { get; }

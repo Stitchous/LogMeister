@@ -1,6 +1,6 @@
  using LogMeister.Infrastructure;
  
- namespace LogMeister.Module
+ namespace LogMeister.LogView
  {
   public partial class LogView
   {
