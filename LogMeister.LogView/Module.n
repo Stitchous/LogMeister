@@ -17,13 +17,14 @@ namespace LogMeister.LogView
 {
 
   [Record]
-  [Module(ModuleName = "LogViewModuel")]
+  [Module(ModuleName = "LogViewModule")]
   [ModuleDependency("Core")]
   public class Module : IModule
   {
     
      public Initialize() : void 
     {
+        _container.RegisterType.[LogMeister.Module.Core.IIndexedLineProvider,LogMeister.Module.Core.LogProcessor]();
         _container.RegisterType.[LogView]();
         RegisterForRegion.[LogView, LogViewModel]("DocumentsPane");
     }
