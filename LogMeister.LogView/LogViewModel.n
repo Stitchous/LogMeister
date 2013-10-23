@@ -22,9 +22,11 @@ namespace LogMeister.LogView
         _logInfo = logInfo;
     }
 
-    public Lines : ObservableCollection[LineViewModel] { get; }
+    public    Lines : ObservableCollection[LineViewModel] { get; }
+    public FullPath : string { get { _logInfo.FullPath }}
+    public   Header : string { get { _logInfo.Header }}
 
-    _lineProvider   : IIndexedLineProvider;
-    _logInfo        : ILogInfo;
+    _lineProvider : IIndexedLineProvider;
+    _logInfo      : ILogInfo;
   }
 }
