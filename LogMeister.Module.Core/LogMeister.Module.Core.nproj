@@ -116,6 +116,9 @@
     <Compile Include="ILogInfo.n">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="IndexedLogReader.n">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Line.n">
       <SubType>Code</SubType>
     </Compile>
@@ -127,7 +130,13 @@
     </Compile>
     <Compile Include="Module.n" />
     <Compile Include="Properties\AssemblyInfo.n" />
-    <Compile Include="SplitedLineReader.n">
+    <Compile Include="RandomAccessLogReader.n">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SequentalLogReader.n">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="LineReader.n">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

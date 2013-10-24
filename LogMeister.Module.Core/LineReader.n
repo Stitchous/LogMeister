@@ -1,0 +1,170 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Linq;
+using Nemerle.Assertions;
+
+namespace LogMeister.Module.Core
+{
+    class LineReader: IDisposable, IEnumerable[ILine]
+    {
+        public this([NotNullOrEmpty] filename : string)
+        {
+            Stream = File.OpenRead(filename);
+            Buffer = array(64 * 1024); //has to be more than max string length
+        }
+        
+        public Dispose() : void
+        {
+            Stream.Dispose();
+        }
+        
+        internal StartOfLines : int { get; set; }        
+        internal StartOffset : long { get; private set; }
+        internal Stream :  Stream { get; private set; }
+        internal Buffer : array[byte] { get ; private set; }
+        internal BufferLength : int { get; private set; }
+    
+        public GetEnumerator() : IEnumerator[Line]
+        {
+            def ReadLines(position = StartOfLines, fileOffset = StartOffset)
+            {
+                match (FindEndOfLine(position + MinimalHeadeLength))
+                {
+                    | Some(lineEndPosition) => 
+                        yield CreateLine(position, lineEndPosition, fileOffset); 
+                        ReadLines(lineEndPosition + 2, fileOffset)
+                    | _ =>
+                        Array.Copy(Buffer, position, Buffer, 0, BufferLength - position);
+                        def newfileOffset = fileOffset + position:long;
+                        if (TryReadBuffer(BufferLength - position))
+                            ReadLines(0, newfileOffset)
+                        else
+                            yield CreateLine(0, BufferLength - 2, newfileOffset);
+                }
+            }
+        
+            if (IsLineBegin(StartOfLines))
+                ReadLines()
+            else
+                throw FileLoadException("Cannot find first line at " + StartOfLines)
+        }
+    
+        internal ReadLineAt(offset : long) : Line
+        {
+            SeekAndRead(offset);
+            CreateLine(0, FindEndOfLine(MinimalHeadeLength).Value, offset);
+        }
+           
+        internal TryReadBuffer(bufferOffset = 0) : bool
+        {               
+            def read = Stream.Read(Buffer, bufferOffset, Buffer.Length - bufferOffset);
+            BufferLength = read + bufferOffset;
+            read != 0
+        }
+        
+        internal SeekAndRead(fileOffset  : long) : void
+        {
+            _  = Stream.Seek(fileOffset, SeekOrigin.Begin);
+            StartOffset = fileOffset;
+            when (!TryReadBuffer())
+                throw FileLoadException("Cannot read from offset " + fileOffset);
+        }
+    
+        internal FindPosition(value : byte, startFrom : int) : option[int]
+        {
+            if (startFrom < BufferLength)
+                if (Buffer[startFrom] == value)
+                    Some(startFrom)
+                else
+                    FindPosition(value, startFrom + 1)
+            else
+                None()
+        }
+        
+        internal FindPositionBack(value : byte, startFrom : int) : option[int]
+        {
+            if (startFrom < BufferLength && startFrom > 0)
+                if (Buffer[startFrom] == value)
+                    Some(startFrom)
+                else
+                    FindPositionBack(value, startFrom - 1)
+            else
+                None()
+        }
+    
+        internal FindCRLFPosition(startFrom : int, forward = true) : option[int]
+        {
+            match (if (forward) FindPosition(CRByte, startFrom) else FindPositionBack(CRByte, startFrom))
+            {
+                | Some(position) when position + 1 < BufferLength => 
+                    if (Buffer[position + 1] == LFByte) 
+                        Some(position) 
+                    else 
+                        FindCRLFPosition(position + 2)
+                | _ => None()
+            }
+        }
+    
+        internal CreateLine(startPosition : int, endPosition : int, fileOffset : long) : Line
+        {
+            def timespan = TimeSpan( 0, 
+                                    int.Parse(Encoding.GetString(Buffer, startPosition, 2)),
+                                    int.Parse(Encoding.GetString(Buffer, startPosition + 3, 2)),
+                                    int.Parse(Encoding.GetString(Buffer, startPosition + 6, 2)),
+                                    int.Parse(Encoding.GetString(Buffer, startPosition + 9, 3)));
+                                    
+            def threadIdEnd = FindPosition(TabByte, startPosition + 14).Value;
+                                    
+            Line(timespan,
+                    Encoding.UTF8.GetString(Buffer, startPosition + 13, threadIdEnd - startPosition - 13),
+                    Encoding.UTF8.GetString(Buffer, threadIdEnd + 1, 3),
+                    [], //TODO
+                    Encoding.UTF8.GetString(Buffer, threadIdEnd + 1 + 3 + 1, endPosition - threadIdEnd - 1 - 3 - 1), 
+                    fileOffset + startPosition:long)
+        }
+        
+        internal FindEndOfLine(position : int) : option[int]
+        {
+            match (FindCRLFPosition(position))
+            {
+                | Some(lineEndPosition) when IsLineBegin(lineEndPosition + 2) => Some(lineEndPosition)
+                | Some(lineEndPosition) => FindEndOfLine(lineEndPosition + 2)
+                | _ => None()
+            }
+        }
+        
+        internal FindBeginOfLine(position : int) : option[int]
+        {
+            match (FindCRLFPosition(position, forward = false))
+            {
+                | Some(lineEndPosition) when IsLineBegin(lineEndPosition + 2) => Some(lineEndPosition + 2)
+                | Some(lineEndPosition) => FindBeginOfLine(lineEndPosition - 2)
+                | _ => None()
+            }
+        }
+    
+        internal IsLineBegin(position : int) : bool
+        {
+            position + MinimalHeadeLength  < BufferLength &&
+            Buffer[position + 2] == ColonByte &&
+            Buffer[position + 5] == ColonByte &&
+            Buffer[position + 8] == DotByte && 
+            Buffer[position + 12] == TabByte &&
+            Buffer[position + 13] == ZeroByte &&
+            Buffer[position + 14] == XByte
+        }
+         
+        static internal Encoding = Encoding.UTF8;
+        
+        private static ColonByte = Convert.ToByte(':');
+        private static DotByte = Convert.ToByte('.');
+        private static TabByte = Convert.ToByte('\t');
+        private static ZeroByte = Convert.ToByte('0');
+        private static XByte = Convert.ToByte('x');
+        private static CRByte :byte = 0xd;
+        private static LFByte :byte = 0xa;
+        private static MinimalHeadeLength = 22;    
+    }
+}

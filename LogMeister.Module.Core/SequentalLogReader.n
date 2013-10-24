@@ -1,0 +1,55 @@
+﻿using Nemerle.Assertions;
+using System;
+using System.IO;
+using System.Collections.Generic;
+
+namespace LogMeister.Module.Core
+{
+    class SequentalLogReader : IDisposable, IEnumerable[ILine]
+    {
+        public Dispose() : void
+        {
+            _lineReader.Dispose();
+        }
+        
+        public this([NotNullOrEmpty] filename : string)
+        {
+            def FindHeaderEnd(start = 0, hasEmptyLines = false)
+            {
+                match (_lineReader.FindCRLFPosition(start))
+                {
+                    | Some(position) =>
+                        if (position == start)
+                            if (hasEmptyLines)
+                                Some(position + 2)
+                            else
+                                FindHeaderEnd(position + 2, true)
+                        else
+                           FindHeaderEnd(position + 2)
+                    | _ => None()
+                }
+            }
+                   
+            _lineReader = LineReader(filename);
+        
+            when (!_lineReader.TryReadBuffer())
+                throw FileLoadException("Empty file");
+            
+            match (FindHeaderEnd(0))
+            {
+                | Some(position) =>
+                    _lineReader.StartOfLines  = position;
+                    Header = LineReader.Encoding.GetString(_lineReader.Buffer, 0, position)
+                | _ => throw FileLoadException("Cannot find header in file")
+            }
+        }
+        
+        public Header : string { get; private set; }
+        
+        public FileSize : long { get { _lineReader.Stream.Length } } 
+        
+        public GetEnumerator() : IEnumerator[Line] { _lineReader.GetEnumerator() }
+        
+        private mutable _lineReader : LineReader;
+    }
+}

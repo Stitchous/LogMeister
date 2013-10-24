@@ -5,24 +5,25 @@ using Nemerle.Assertions;
 
 namespace LogMeister.Module.Core
 {
-    public class LogProcessor : IIndexedLineProvider, ILogInfo, IDisposable
+    class LogProcessor : IIndexedLineProvider, ILogInfo, IDisposable
     {
         public this([NotNullOrEmpty] filePath : string, [NotNull] lineConsumers : IEnumerable[ILineConsumer], [NotNull] indexedLineCosubers : IEnumerable[IIndexedLineConsumer])
         {
             Loaded += (_, _) => {};
             FullPath = filePath;
             _lineConsumers = lineConsumers;
-            _indexedLineCosubers = indexedLineCosubers;            
-            _splitedLineReader = SplitedLineReader(FullPath);
+            _indexedLineConsumers = indexedLineCosubers;            
+            _sequentalLogReader = SequentalLogReader(FullPath);
+            _indexedLogReader = IndexedLogReader(_lineIndex, FullPath);
             _lineIndex = LineIndex();
-            Header = _splitedLineReader.Header;
-            FileSize = _splitedLineReader.BaseStream.Length;
+            Header = _sequentalLogReader.Header;
+            FileSize = _sequentalLogReader.FileSize;
         }
         
         public GetLine(index : int) : ILine
         {
-            // assert(IsLoaded)
-            _splitedLineReader.ReadLineAt( _lineIndex.GetLineOffset(index) )
+            assert(index < ProcessedLineCount);
+            _indexedLogReader.GetLine(index)
         }
         
         public FullPath : string { get; private set; }
@@ -36,28 +37,31 @@ namespace LogMeister.Module.Core
         
         public Dispose() : void
         {
-            _splitedLineReader.Dispose();
+            _sequentalLogReader.Dispose();
+            _indexedLogReader.Dispose();
         }
         
         public Load() : void
         {
-            //assert(!IsLoaded)
-            foreach (line in _splitedLineReader)
+            assert(!IsLoaded);
+
+            foreach (line in _sequentalLogReader)
             {
                 _lineConsumers.Iter( x => x.Process( line ) );
                 def index = _lineIndex.AddNextLine(line.Offset);
-                _indexedLineCosubers.Iter( x => x.Process(line, index) );
+                _indexedLineConsumers.Iter( x => x.Process(line, index) );
                 ++ProcessedLineCount;
                 LoadedPercent = (line.Offset:double) / FileSize;
             }
             LoadedPercent  = 100;
             IsLoaded = true;
-            Loaded(this, EventArgs.Empty);
+            Loaded(this, EventArgs.Empty);            
         }
 
         private _lineConsumers : IEnumerable[ILineConsumer];
-        private _indexedLineCosubers : IEnumerable[IIndexedLineConsumer];
-        private _splitedLineReader : SplitedLineReader;
+        private _indexedLineConsumers : IEnumerable[IIndexedLineConsumer];
+        private _sequentalLogReader : SequentalLogReader;
         private _lineIndex : LineIndex;
+        private _indexedLogReader : IndexedLogReader;
     }
 }

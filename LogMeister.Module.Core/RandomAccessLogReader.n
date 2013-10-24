@@ -1,0 +1,79 @@
+﻿using Nemerle.Assertions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.IO;
+
+namespace LogMeister.Module.Core
+{
+    public class RandomAccessLogReader : IDisposable
+    {    
+        public this([NotNullOrEmpty] filename : string)
+        {
+            _lineReader = LineReader(filename);
+        }
+        
+        public Dispose() : void
+        {
+            _lineReader.Dispose();
+        }
+        
+        public ReadLines(searchFromOffset : long, maxCount : int) : IList[ILine]
+        {
+            _lineReader.SeekAndRead(searchFromOffset);
+            
+            match (_lineReader.FindEndOfLine(0))
+            {
+                | Some(position) => _lineReader.StartOfLines = position + 2;
+                | None => throw FileLoadException("too long string at offset " + searchFromOffset);
+            }
+            ReadNextLines(maxCount)
+        }
+        
+        public ReadNextLines(maxCount : int) : IList[ILine]
+        {
+            assert(_lineReader.StartOffset != 0);
+            _readPreviousEnd = _lineReader.StartOffset + _lineReader.StartOfLines;
+            def lines = List(_lineReader.Take(maxCount));
+            when (lines.Any())
+            {
+                def lastLine = lines.Last();
+                //TODO optimize
+                _lineReader.StartOfLines = _lineReader.FindEndOfLine((lastLine.Offset - _lineReader.StartOffset) :> int).Value + 2;
+            }
+            lines
+        }
+        
+        public ReadPreviousLines(maxCount : int) : IList[ILine]
+        {
+            def ReadLinesFromBuffer(start, count, lines) : list[ILine] * int
+            {
+                match(count > 0, _lineReader.FindBeginOfLine(start - 1))
+                {
+                    | (true, Some(lineBegin)) => 
+                        ReadLinesFromBuffer(lineBegin - 2, count - 1, _lineReader.CreateLine(lineBegin, start, _lineReader.StartOffset) :: lines)
+                    | _ => (lines, count)
+                }
+            }
+            
+            def Process(count = maxCount, previousOffset = _readPreviousEnd, lines = [])
+            {
+                def fileOffset = Math.Max(previousOffset - _lineReader.Buffer.Length, 0l);
+                _lineReader.SeekAndRead(fileOffset);
+                
+                def (parsedLines, remainCount) = ReadLinesFromBuffer(_lineReader.BufferLength - 2, count, lines);
+                
+                if (remainCount >=0 && fileOffset > 0)
+                    Process(remainCount, parsedLines.Head.Offset, parsedLines)
+                else
+                    parsedLines
+            }
+                        
+            assert(_lineReader.StartOffset != 0);            
+            List.[ILine](Process(maxCount))
+        }
+        
+        private mutable _readPreviousEnd = 0l;
+        private _lineReader : LineReader;
+    }
+}
