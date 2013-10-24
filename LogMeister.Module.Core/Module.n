@@ -12,17 +12,18 @@ using Microsoft.Practices.Prism.UnityExtensions;
 
 namespace LogMeister.Module.Core
 {
-  [Record]
-  [Module(ModuleName="Core")]
-  public class Module : IModule
-  {
-    public Initialize() : void 
+    [Record]
+    [Module(ModuleName="Core")]
+    public class Module : IModule
     {
-        _ = _container.RegisterType.[LogProcessor](InjectionFactory(
-                                c => LogProcessor(c.Resolve.[string](), c.ResolveAll.[ILineConsumer](), c.ResolveAll.[IIndexedLineConsumer]()) ))
-                      .RegisterType.[ILogInfo, LogProcessor]();
-    }
+        public Initialize() : void 
+        {
+            _ = _container.RegisterType.[LogProcessor](InjectionFactory(
+                                    c => LogProcessor(c.Resolve.[string](), c.ResolveAll.[ILineConsumer](), c.ResolveAll.[IIndexedLineConsumer]()) ))
+                            .RegisterType.[ILogInfo, LogProcessor]()
+                            .RegisterType.[IIndexedLineProvider, LogProcessor]();
+        }
     
-    _container : IUnityContainer
-  }
+        _container : IUnityContainer
+    }
 }

@@ -1,0 +1,14 @@
+ using LogMeister.Infrastructure;
+ 
+ namespace LogMeister.LogView
+ {
+  public partial class LogView
+  {
+      public this()
+      {
+        InitializeComponent();
+        
+        
+      }
+  }
+}

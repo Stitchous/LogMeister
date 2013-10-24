@@ -5,20 +5,18 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>20a9f21f-0b2c-498d-9ae6-97e7093eea7c</ProjectGuid>
+    <ProjectGuid>236ada26-ef7b-4aa8-a1cf-1eb5f69d9a0d</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LogMeister.Index</RootNamespace>
-    <AssemblyName>LogMeister.Index</AssemblyName>
+    <RootNamespace>LogMeister.LogView</RootNamespace>
+    <AssemblyName>LogMeister.LogView</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NoStdLib>true</NoStdLib>
     <NemerleVersion>Net-4.0</NemerleVersion>
     <NemerleBinPathRoot Condition=" '$(NemerleBinPathRoot)' == '' ">$(ProgramFiles)\Nemerle</NemerleBinPathRoot>
     <Nemerle Condition=" '$(Nemerle)' == '' ">$(NemerleBinPathRoot)\$(NemerleVersion)</Nemerle>
-    <Name>LogMeister.Index</Name>
-    <StartupObject />
-    <ApplicationIcon />
+    <Name>LogMeister.LogView</Name>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <DocumentationFile />
@@ -36,23 +34,13 @@
     <DebugSymbols>false</DebugSymbols>
     <Optimize>true</Optimize>
     <OutputPath>..\bin\Release\modules\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
+    <DocumentationFile>bin\Release\\LogMeister.LogView.xml</DocumentationFile>
     <RunDebugger>false</RunDebugger>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73">
-      <Name>ICSharpCode.SharpZipLib</Name>
-      <AssemblyName>ICSharpCode.SharpZipLib.dll</AssemblyName>
-      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
-    </Reference>
-    <Reference Include="Lucene.Net, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181">
-      <Name>Lucene.Net</Name>
-      <AssemblyName>Lucene.Net.dll</AssemblyName>
-      <HintPath>..\packages\Lucene.Net.3.0.3\lib\NET40\Lucene.Net.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <Name>Microsoft.Expression.Interactions</Name>
       <AssemblyName>Microsoft.Expression.Interactions.dll</AssemblyName>
@@ -67,11 +55,6 @@
       <Name>Microsoft.Practices.Prism.Interactivity</Name>
       <AssemblyName>Microsoft.Practices.Prism.Interactivity.dll</AssemblyName>
       <HintPath>..\packages\Prism.4.1.0.0\lib\NET40\Microsoft.Practices.Prism.Interactivity.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.Prism.UnityExtensions, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
-      <Name>Microsoft.Practices.Prism.UnityExtensions</Name>
-      <AssemblyName>Microsoft.Practices.Prism.UnityExtensions.dll</AssemblyName>
-      <HintPath>..\packages\Prism.UnityExtensions.4.1.0.0\lib\NET40\Microsoft.Practices.Prism.UnityExtensions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <Name>Microsoft.Practices.ServiceLocation</Name>
@@ -89,6 +72,16 @@
       <HintPath>..\packages\Unity.2.1.505.2\lib\NET35\Microsoft.Practices.Unity.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
+    <Reference Include="PresentationCore, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <Name>PresentationCore</Name>
+      <AssemblyName>PresentationCore.dll</AssemblyName>
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\PresentationCore.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <Name>PresentationFramework</Name>
+      <AssemblyName>PresentationFramework.dll</AssemblyName>
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\PresentationFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -114,9 +107,23 @@
     <MacroReference Include="Nemerle.Linq">
       <HintPath>$(Nemerle)\Nemerle.Linq.dll</HintPath>
     </MacroReference>
+    <Reference Include="WindowsBase, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <Name>WindowsBase</Name>
+      <AssemblyName>WindowsBase.dll</AssemblyName>
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\WindowsBase.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Indexer.n" />
+    <Compile Include="LineViewModel.n">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="LogView.xaml.n">
+      <SubType>Code</SubType>
+      <DependentUpon>LogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LogViewModel.n">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Module.n">
       <SubType>Code</SubType>
     </Compile>
@@ -126,11 +133,20 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="LogView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Content Include="packages.config">
       <SubType>Content</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LogMeister.Infrastructure\LogMeister.Infrastructure.nproj">
+      <Name>LogMeister.Infrastructure</Name>
+      <Project>{24e9ff55-6333-43cf-a309-b19e2ce31282}</Project>
+      <Private>True</Private>
+    </ProjectReference>
     <ProjectReference Include="..\LogMeister.Module.Core\LogMeister.Module.Core.nproj">
       <Name>LogMeister.Module.Core</Name>
       <Project>{b60b76c2-5ab4-4a34-924b-f5dfd806fcc4}</Project>
@@ -139,6 +155,10 @@
   </ItemGroup>
   <Import Project="$(Nemerle)\Nemerle.MSBuild.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <PropertyGroup>
+    <DefaultLanguageSourceExtension>.cs</DefaultLanguageSourceExtension>
+    <Language>C#</Language>
+  </PropertyGroup>
   <!--
 		To modify your build process, add your task inside one of the targets below and uncomment it. 
 		Other similar extension points exist, see Microsoft.Common.targets.
