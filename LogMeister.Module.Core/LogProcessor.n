@@ -14,8 +14,8 @@ namespace LogMeister.Module.Core
             _lineConsumers = lineConsumers;
             _indexedLineConsumers = indexedLineCosubers;            
             _sequentalLogReader = SequentalLogReader(FullPath);
-            _indexedLogReader = IndexedLogReader(_lineIndex, FullPath);
             _lineIndex = LineIndex();
+            _indexedLogReader = IndexedLogReader(_lineIndex, FullPath);            
             Header = _sequentalLogReader.Header;
             FileSize = _sequentalLogReader.FileSize;
         }

@@ -2,6 +2,7 @@
 using Nemerle.Collections;
 using Nemerle.Text;
 using Nemerle.Utility;
+using Nemerle.WPF;
 
 using System;
 using System.Collections.Generic;
@@ -14,29 +15,31 @@ using LogMeister.Module.Core;
 
 namespace LogMeister.LogView
 {
-  public class LogViewModel
-  {
-    public this(lineProvider : IIndexedLineProvider, logInfo : ILogInfo)
+    [NotifyPropertyChanged]
+    public class LogViewModel 
     {
-        _lineProvider = lineProvider;
-        _logInfo = logInfo;
+        public this(lineProvider : IIndexedLineProvider, logInfo : ILogInfo)
+        {
+            _lineProvider = lineProvider;
+            _logInfo = logInfo;
         
-        _logInfo.Loaded += OnLoaded;
-    }
+            _logInfo.Loaded += OnLoaded;
+        }
     
-    public    Lines : ObservableCollection[LineViewModel] { get; private set;}
-    public FullPath : string { get { _logInfo.FullPath }}
-    public   Header : string { get { _logInfo.Header }}
+        public    Lines : ObservableCollection[LineViewModel] { get; private set;}
+        public FullPath : string { get { _logInfo.FullPath }}
+        public   Header : string { get { _logInfo.Header }}
     
-    private OnLoaded(_: object, _: EventArgs) : void
-    {
-        Lines = 
-            ObservableCollection(
-            Enumerable.Range(10, _logInfo.ProcessedLineCount - 10)
-                      .Select(i => LineViewModel(()=> { def line =_lineProvider.GetLine(i); (i,line.Message) })));
-    }
+        private OnLoaded(_: object, _: EventArgs) : void
+        {
+            Lines = 
+                ObservableCollection(
+                Enumerable.Range(10, _logInfo.ProcessedLineCount - 10)
+                            .Select(i => LineViewModel(()=> { def line =_lineProvider.GetLine(i); (i,line.Message) })));
+        
+        }
 
-    _lineProvider : IIndexedLineProvider;
-    _logInfo      : ILogInfo;
-  }
+        _lineProvider : IIndexedLineProvider;
+        _logInfo      : ILogInfo;
+    }
 }

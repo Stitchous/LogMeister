@@ -4,29 +4,37 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-		    <Grid.ColumnDefinitions>
-			    <ColumnDefinition Width="Auto"/>
-			    <ColumnDefinition Width="*"/>
-		    </Grid.ColumnDefinitions>
-		    <Grid.RowDefinitions>
-			    <RowDefinition Height="Auto"/>
-			    <RowDefinition Height="Auto"/>
-		    </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
-		    <TextBlock Text="Path:"/>
-		    <TextBlock Grid.Row="1" Text="Header:"/>
-		    <TextBlock Grid.Column="1" Text="{Binding FullPath}"/>
-		    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Header}"/>
-	    </Grid>
-        <ListView Grid.Row="1" VerticalAlignment="Top"  ItemsSource="{Binding Lines}">
+            <TextBlock Text="Path:" />
+            <TextBlock Grid.Row="1" Text="Header:" />
+            <TextBlock Grid.Column="1" Text="{Binding FullPath}" />
+            <TextBlock Grid.Row="1"
+                       Grid.Column="1"
+                       Text="{Binding Header}" />
+        </Grid>
+        <ListView Grid.Row="1"
+                  VerticalAlignment="Top"
+                  ItemsSource="{Binding Lines}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="40" Header="Index"  DisplayMemberBinding="{Binding Index}"/>
-                    <GridViewColumn Width="Auto" Header="Text" DisplayMemberBinding="{Binding Text}" />
+                    <GridViewColumn Width="40"
+                                    DisplayMemberBinding="{Binding Index}"
+                                    Header="Index" />
+                    <GridViewColumn Width="Auto"
+                                    DisplayMemberBinding="{Binding Text}"
+                                    Header="Text" />
                 </GridView>
             </ListView.View>
         </ListView>

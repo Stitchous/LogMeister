@@ -54,7 +54,7 @@ namespace LogMeister.Module.Core
         internal ReadLineAt(offset : long) : Line
         {
             SeekAndRead(offset);
-            CreateLine(0, FindEndOfLine(MinimalHeadeLength).Value, offset);
+            CreateLine(0, FindEndOfLine(MinimalHeadeLength).WithDefault(BufferLength), offset);
         }
            
         internal TryReadBuffer(bufferOffset = 0) : bool
