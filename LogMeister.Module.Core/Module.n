@@ -5,6 +5,7 @@ using Nemerle.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
@@ -18,8 +19,13 @@ namespace LogMeister.Module.Core
     {
         public Initialize() : void 
         {
-            _ = _container.RegisterType.[LogProcessor](InjectionFactory(
-                                    c => LogProcessor(c.Resolve.[string](), c.ResolveAll.[ILineConsumer](), c.ResolveAll.[IIndexedLineConsumer]()) ))
+            _ = _container.RegisterType.[LogProcessor](ContainerControlledLifetimeManager(), InjectionFactory(
+                                    c =>
+                                    {
+                                        def r = LogProcessor(c.Resolve.[string](), c.ResolveAll.[ILineConsumer](), c.ResolveAll.[IIndexedLineConsumer]());
+                                        Task( () => r.Load() ).Start();
+                                        r
+                                    }))
                             .RegisterType.[ILogInfo, LogProcessor]()
                             .RegisterType.[IIndexedLineProvider, LogProcessor]();
         }

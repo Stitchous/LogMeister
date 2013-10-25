@@ -54,7 +54,7 @@ namespace LogMeister.Module.Core
                 FirstLine + _lines.Count - 1;
             }
         
-            public GetLineOffset(index : int) : long { _lines[index - FirstLine] }
+            public GetLineOffset(index : int) : long { _lines[index - FirstLine] +  _firstLineOffset }
     
             private _firstLineOffset : long;
             private _lines  : IList[int] = List.[int](LinesInChunk);
