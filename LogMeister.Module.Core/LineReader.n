@@ -72,13 +72,14 @@ namespace LogMeister.Module.Core
                 throw FileLoadException("Cannot read from offset " + fileOffset);
         }
     
-        internal FindPosition(value : byte, startFrom : int) : option[int]
+        internal FindPosition(value : byte, startFrom : int, end = -1) : option[int]
         {
-            if (startFrom < BufferLength)
+            def realEnd = if (end == -1) BufferLength else end;
+            if (startFrom < realEnd)
                 if (Buffer[startFrom] == value)
                     Some(startFrom)
                 else
-                    FindPosition(value, startFrom + 1)
+                    FindPosition(value, startFrom + 1, realEnd)
             else
                 None()
         }
@@ -116,12 +117,23 @@ namespace LogMeister.Module.Core
                                     int.Parse(Encoding.GetString(Buffer, startPosition + 9, 3)));
                                     
             def threadIdEnd = FindPosition(TabByte, startPosition + 14).Value;
+            
+            def FindComponents(startPosition, lineEnd, components = [])
+            {
+                match (FindPosition(TabByte, startPosition, lineEnd))
+                {
+                    | Some(tabPosition) => FindComponents(tabPosition + 1, lineEnd, Encoding.UTF8.GetString(Buffer, startPosition, tabPosition - startPosition) :: components)
+                    | _ => (startPosition, components)
+                }
+            }
+            
+            def (componentsEnd, components) = FindComponents(threadIdEnd + 1 + 3 + 1, endPosition);
                                     
             Line(timespan,
                     Encoding.UTF8.GetString(Buffer, startPosition + 13, threadIdEnd - startPosition - 13),
                     Encoding.UTF8.GetString(Buffer, threadIdEnd + 1, 3),
-                    [], //TODO
-                    Encoding.UTF8.GetString(Buffer, threadIdEnd + 1 + 3 + 1, endPosition - threadIdEnd - 1 - 3 - 1), 
+                    components.ToArray(),
+                    Encoding.UTF8.GetString(Buffer, componentsEnd, endPosition - componentsEnd), 
                     fileOffset + startPosition:long)
         }
         
