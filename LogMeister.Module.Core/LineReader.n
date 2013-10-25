@@ -111,10 +111,10 @@ namespace LogMeister.Module.Core
         internal CreateLine(startPosition : int, endPosition : int, fileOffset : long) : Line
         {
             def timespan = TimeSpan( 0, 
-                                    int.Parse(Encoding.GetString(Buffer, startPosition, 2)),
-                                    int.Parse(Encoding.GetString(Buffer, startPosition + 3, 2)),
-                                    int.Parse(Encoding.GetString(Buffer, startPosition + 6, 2)),
-                                    int.Parse(Encoding.GetString(Buffer, startPosition + 9, 3)));
+                                    ParseTwoDigitInt(startPosition),
+                                    ParseTwoDigitInt(startPosition + 3),
+                                    ParseTwoDigitInt(startPosition + 6),
+                                    ParseThreeDigitInt(startPosition + 9));
                                     
             def threadIdEnd = FindPosition(TabByte, startPosition + 14).Value;
             
@@ -166,6 +166,16 @@ namespace LogMeister.Module.Core
             Buffer[position + 12] == TabByte &&
             Buffer[position + 13] == ZeroByte &&
             Buffer[position + 14] == XByte
+        }
+        
+        internal ParseTwoDigitInt(position : int)  : int
+        {
+            (Buffer[position] - ZeroByte) * 10 + Buffer[position + 1] - ZeroByte
+        }
+        
+        internal ParseThreeDigitInt(position : int)  : int
+        {
+            ParseTwoDigitInt(position) * 10 + Buffer[position + 2] - ZeroByte
         }
          
         static internal Encoding = Encoding.UTF8;
