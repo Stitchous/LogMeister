@@ -34,7 +34,7 @@ namespace LogMeister.LogView
         {
             Lines = 
                 ObservableCollection(
-                Enumerable.Range(10, _logInfo.ProcessedLineCount - 10)
+                Enumerable.Range(0, _logInfo.ProcessedLineCount)
                             .Select(i => LineViewModel(()=> { def line =_lineProvider.GetLine(i); (i,line.Message) })));
         
         }
