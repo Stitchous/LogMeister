@@ -1,13 +1,13 @@
  using LogMeister.Infrastructure;
- 
+
  namespace LogMeister.Module
  {
-  [ModuleMetaInfo("File Info")]
-  public partial class FileInfoView
-  {
-      public this()
-      {
-        InitializeComponent();
-      }
-  }
+    [ModuleMetaInfo("File Info")]
+    public partial class FileInfoView
+    {
+        public this()
+        {
+            InitializeComponent();
+        }
+    }
 }

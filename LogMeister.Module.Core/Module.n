@@ -22,7 +22,7 @@ namespace LogMeister.Module.Core
             _ = _container.RegisterType.[LogProcessor](ContainerControlledLifetimeManager(), InjectionFactory(
                                     c =>
                                     {
-                                        def r = LogProcessor(c.Resolve.[string](), c.ResolveAll.[ILineConsumer](), c.ResolveAll.[IIndexedLineConsumer]());
+                                        def r = LogProcessor(c.Resolve.[string](), c.ResolveAll.[ILineConsumer]().ToArray(), c.ResolveAll.[IIndexedLineConsumer]().ToArray());
                                         Task( () => r.Load() ).Start();
                                         r
                                     }))

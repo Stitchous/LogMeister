@@ -11,12 +11,15 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         
         <TextBlock Text="Path:"/>
         <TextBlock Grid.Row="1" Text="Header:"/>
+        <TextBlock Grid.Row="2" Text="End Timer:"/>
         <TextBlock Grid.Column="1" Text="{Binding FullPath}"/>
         <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Header}"/>
+        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Count}"/>
         
     </Grid>
 </UserControl>
