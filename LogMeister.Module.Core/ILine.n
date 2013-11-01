@@ -6,7 +6,7 @@ namespace LogMeister.Module.Core
     public interface ILine
     {
         Time : TimeSpan { get;}
-        Thread : string { get;}
+        Thread : int { get;}
         Severity : string { get;}
         Components : IEnumerable[string] { get;}
         Message: string { get; }

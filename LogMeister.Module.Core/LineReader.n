@@ -130,10 +130,10 @@ namespace LogMeister.Module.Core
             def (componentsEnd, components) = FindComponents(threadIdEnd + 1 + 3 + 1, endPosition);
                                     
             Line(timespan,
-                    Encoding.UTF8.GetString(Buffer, startPosition + 13, threadIdEnd - startPosition - 13),
-                    Encoding.UTF8.GetString(Buffer, threadIdEnd + 1, 3),
+                    ParseHex(startPosition + 13 + 2, threadIdEnd),
+                    Encoding.GetString(Buffer, threadIdEnd + 1, 3),
                     components.ToArray(),
-                    Encoding.UTF8.GetString(Buffer, componentsEnd, endPosition - componentsEnd), 
+                    string.Empty,//Encoding.GetString(Buffer, componentsEnd, endPosition - componentsEnd), 
                     fileOffset + startPosition:long)
         }
         
@@ -177,6 +177,29 @@ namespace LogMeister.Module.Core
         {
             ParseTwoDigitInt(position) * 10 + Buffer[position + 2] - ZeroByte
         }
+        
+        private ParseHex(startPosition: int, endPosition : int) : int
+        {
+            def ConvertHex(utf8Char)
+            {
+                if (utf8Char >= ZeroByte && utf8Char <= NineByte)
+					utf8Char - ZeroByte
+				else if (utf8Char >= AByte && utf8Char <= FByte)
+					utf8Char - AByte + 10
+				else
+					throw FileLoadException("Invalid hex char");
+            }
+                        
+            def Do(startPosition, endPosition, result = 0)
+            {
+                if (startPosition == endPosition)
+					result
+				else 
+					Do(startPosition + 1, endPosition, (result << 4) + ConvertHex(Buffer[startPosition]))
+			}
+			
+			Do(startPosition, endPosition)
+        }
          
         static internal Encoding = Encoding.UTF8;
         
@@ -185,6 +208,9 @@ namespace LogMeister.Module.Core
         private static TabByte = Convert.ToByte('\t');
         private static ZeroByte = Convert.ToByte('0');
         private static XByte = Convert.ToByte('x');
+        private static NineByte = Convert.ToByte('9');
+        private static AByte = Convert.ToByte('a');
+        private static FByte = Convert.ToByte('f');
         private static CRByte :byte = 0xd;
         private static LFByte :byte = 0xa;
         private static MinimalHeadeLength = 22;    

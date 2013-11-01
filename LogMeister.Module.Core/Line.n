@@ -7,10 +7,10 @@ namespace LogMeister.Module.Core
     internal class Line : ILine
     {
         public this(time : TimeSpan, 
-                    [NotNullOrEmpty] thread : string, 
+                    thread : int, 
                     [NotNullOrEmpty] severity : string,
                     [NotNull ]components : IEnumerable[string],
-                    [NotNullOrEmpty] message : string,
+                    [NotNull] message : string,
                     offset : long )
         {
             Time = time;
@@ -22,7 +22,7 @@ namespace LogMeister.Module.Core
         }
     
         public Time : TimeSpan { get; private set; }
-        public Thread : string { get; private set; }
+        public Thread : int { get; private set; }
         public Severity : string { get; private set; }
         public Components : IEnumerable[string] { get; private set; }
         public Message: string { get; private set; }
