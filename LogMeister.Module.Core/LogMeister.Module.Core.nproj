@@ -147,6 +147,9 @@
     <Compile Include="LineReader.n">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TimeIndex.n">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

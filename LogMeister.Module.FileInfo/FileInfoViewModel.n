@@ -43,20 +43,35 @@ namespace LogMeister.Module.FileInfo
     [NotifyPropertyChanged]
     public class FileInfoViewModel
     {
-        public this(logInfo : ILogInfo)
+        public this(logInfo : ILogInfo, timeIndex : TimeIndex)
         {
             _logInfo = logInfo;
-            _timer = WeakDispatcherTimer( (_,_) => Count = logInfo.ProcessedLineCount :> int, TimeSpan.FromSeconds(1) );
+            _timer = WeakDispatcherTimer( (_, _) => Update(), TimeSpan.FromSeconds(1) );
             _logInfo.Loaded += (_, _) => _timer.Stop();
+			_timeIndex = timeIndex;
         }
 
         public FullPath : string { get { _logInfo.FullPath }}
 
         public Header : string { get { _logInfo.Header }}
         
-        public Count : int { get; private set; }
+        public LineCount : int { get; private set; }
+        
+        public LinePerSecond : int { get; private set; }
+        
+        public EndTime : TimeSpan { get; private set; }
+        
+        private Update() : void
+        {
+            _tickCount = _tickCount + 1;
+            LineCount = _logInfo.ProcessedLineCount : int;
+            LinePerSecond = LineCount / _tickCount;
+            EndTime = _timeIndex.EndTime;
+        }
         
         private _logInfo : ILogInfo;
         private _timer : WeakDispatcherTimer;
+        private mutable _tickCount = 0;
+        private _timeIndex : TimeIndex;
     }
 }

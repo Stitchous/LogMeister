@@ -27,7 +27,9 @@ namespace LogMeister.Module.Core
                                         r
                                     }))
                             .RegisterType.[ILogInfo, LogProcessor]()
-                            .RegisterType.[IIndexedLineProvider, LogProcessor]();
+                            .RegisterType.[IIndexedLineProvider, LogProcessor]()
+                            .RegisterType.[TimeIndex](ExternallyControlledLifetimeManager())
+                            .RegisterType.[IIndexedLineConsumer]("abc", InjectionFactory( x => { def z : TimeIndex = x.Resolve(); z}));
         }
     
         _container : IUnityContainer

@@ -1,0 +1,47 @@
+﻿using Nemerle;
+using Nemerle.Collections;
+using Nemerle.Text;
+using Nemerle.Utility;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace LogMeister.Module.Core
+{
+    public class TimeIndex : IIndexedLineConsumer
+    {
+        public StartTime : TimeSpan { get; private set; }
+        public EndTime : TimeSpan { get; private set; }
+        
+        public Process(line : ILine, index : int) : void
+        {
+            if (_first)
+            {
+                StartTime = line.Time;
+                EndTime = line.Time;
+                _first = false;
+            }
+
+            else when (EndTime.Hours < line.Time.Hours || 
+					   EndTime.Minutes < line.Time.Minutes ||
+					   EndTime.Seconds < line.Time.Seconds )
+            {
+                EndTime = TimeSpan(0, line.Time.Hours, line.Time.Minutes, line.Time.Seconds);
+                _timeMap[EndTime] = index;
+            }
+        }
+        
+        public TryGetLine(time : TimeSpan) : option[int]
+        {
+            mutable index;
+            if (_timeMap.TryGetValue(time, out index))
+				Some(index)
+			else
+				None()
+        }
+        
+        private mutable _first = true;
+        private _timeMap = Dictionary.[TimeSpan, int]();
+    }
+}

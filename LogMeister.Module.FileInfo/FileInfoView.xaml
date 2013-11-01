@@ -12,14 +12,21 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         
         <TextBlock Text="Path:"/>
         <TextBlock Grid.Row="1" Text="Header:"/>
-        <TextBlock Grid.Row="2" Text="End Timer:"/>
+        <TextBlock Grid.Row="2" Text="EndTimer:"/>
+        <TextBlock Grid.Row="3" Text="Line Count:"/>
+        <TextBlock Grid.Row="4" Text="Line per second:"/>
+        
         <TextBlock Grid.Column="1" Text="{Binding FullPath}"/>
         <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Header}"/>
-        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Count}"/>
+        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding EndTime}"/>
+        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding LineCount}"/>
+        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding LinePerSecond}"/>
         
     </Grid>
 </UserControl>
