@@ -10,22 +10,33 @@ namespace LogMeister.Module.Core
                     thread : int, 
                     [NotNullOrEmpty] severity : string,
                     [NotNull ]components : IEnumerable[string],
-                    [NotNull] message : string,
-                    offset : long )
+                    offset : long,
+                    lineGetter : Func[array[byte], int, int, string],
+                    buffer : array[byte],
+                    begin : int,
+                    size: int)
         {
             Time = time;
             Thread = thread;
             Severity = severity;
             Components = components;
-            Message = message;
             Offset = offset;
+            _lineGetter = lineGetter;
+            _buffer = buffer;
+            _begin  = begin;
+            _size = size;
         }
-    
+
         public Time : TimeSpan { get; private set; }
         public Thread : int { get; private set; }
         public Severity : string { get; private set; }
         public Components : IEnumerable[string] { get; private set; }
-        public Message: string { get; private set; }
+        public Message: string { get { _lineGetter(_buffer, _begin, _size) } }
         public Offset : long { get; private set; }
+
+        private _lineGetter : Func[array[byte], int, int, string];
+        private _buffer : array[byte];
+        private _begin : int;
+        private _size: int;
     }
 }

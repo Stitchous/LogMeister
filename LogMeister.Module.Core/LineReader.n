@@ -133,8 +133,9 @@ namespace LogMeister.Module.Core
                     ParseHex(startPosition + 13 + 2, threadIdEnd),
                     Encoding.GetString(Buffer, threadIdEnd + 1, 3),
                     components.ToArray(),
-                    string.Empty,//Encoding.GetString(Buffer, componentsEnd, endPosition - componentsEnd), 
-                    fileOffset + startPosition:long)
+                    fileOffset + startPosition:long,
+                    Encoding.GetString, Buffer, componentsEnd, endPosition - componentsEnd
+                    )
         }
         
         internal FindEndOfLine(position : int) : option[int]
