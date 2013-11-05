@@ -47,7 +47,6 @@ namespace LogMeister.Module.FileInfo
         {
             _logInfo = logInfo;
             _timer = WeakDispatcherTimer( (_, _) => Update(), TimeSpan.FromSeconds(1) );
-            _logInfo.Loaded += (_, _) => _timer.Stop();
 			_timeIndex = timeIndex;
         }
 
@@ -63,6 +62,9 @@ namespace LogMeister.Module.FileInfo
         
         private Update() : void
         {
+            when (_logInfo.IsLoaded)
+                _timer.Stop();
+            
             _tickCount = _tickCount + 1;
             LineCount = _logInfo.ProcessedLineCount : int;
             LinePerSecond = LineCount / _tickCount;

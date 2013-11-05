@@ -3,14 +3,23 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Grid>
-        <ListView ItemsSource="{Binding Lines}">
+        <ListView VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Lines}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="40"
+                    <GridViewColumn Width="60"
                                     DisplayMemberBinding="{Binding Index}"
                                     Header="Index" />
+                    <GridViewColumn Width="120"
+                                    DisplayMemberBinding="{Binding Time}"
+                                    Header="Time" />
+                    <GridViewColumn Width="60"
+                                    DisplayMemberBinding="{Binding Thread}"
+                                    Header="Thread" />
+                    <GridViewColumn Width="50"
+                                    DisplayMemberBinding="{Binding Severity}"
+                                    Header="Severity" />
                     <GridViewColumn Width="Auto"
-                                    DisplayMemberBinding="{Binding Text}"
+                                    DisplayMemberBinding="{Binding Message}"
                                     Header="Text" />
                 </GridView>
             </ListView.View>

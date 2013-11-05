@@ -117,6 +117,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LineInfoObservableList.n">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="LineViewModel.n">
       <SubType>Code</SubType>
     </Compile>
@@ -128,6 +131,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Module.n">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="NullEnumerator.n">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.n" />

@@ -9,19 +9,89 @@ using System.Collections.Generic;
 using System.Linq;
 using Nemerle.WPF;
 
+using LogMeister.Module.Core;
+
 namespace LogMeister.LogView
 {
-    [NotifyPropertyChanged]
     public class LineViewModel
     {
-        public this(lineProvider : Func[int*string])
+        public this(index : int, lineInfo : ILine)
         {
-            _line = Lazy(() => lineProvider());   
+            _index = index;
+            _line = WeakReference(lineInfo)
+        }
+        
+        public Index : int { get { _index; } }
+        
+        public Time : TimeSpan 
+        { 
+            get
+            {
+                def line = _line.Target :> ILine;
+                
+                if (line != null)
+                {
+                    line.Time;
+                }
+                else
+                {
+                    TimeSpan();
+                }
+            }
+        }
+        
+        public Thread : int 
+        { 
+            get
+            {
+                def line = _line.Target :> ILine;
+                
+                if (line != null)
+                {
+                    line.Thread;
+                }
+                else
+                {
+                    0;
+                }
+            }
+        }
+        
+        public Severity : string 
+        { 
+            get
+            {
+                def line = _line.Target :> ILine;
+                
+                if (line != null)
+                {
+                    line.Severity;
+                }
+                else
+                {
+                    string.Empty;
+                }
+            }
         }
 
-        public Index : int { get { _line.Value[0] }  }
-        public Text  : string { get { _line.Value[1] } } 
+        public Message  : string 
+        { 
+            get 
+            { 
+                def line = _line.Target :> ILine;
+                
+                if (line != null)
+                {
+                    line.Message;
+                }
+                else
+                {
+                    string.Empty;
+                }
+            } 
+        } 
 
-        _line : Lazy[int*string];
+        private _index : int;
+        private _line : WeakReference;
     }
 }
