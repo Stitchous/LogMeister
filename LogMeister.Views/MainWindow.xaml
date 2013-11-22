@@ -3,18 +3,22 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
         xmlns:views="clr-namespace:LogMeister.Views"
-        
         Title="MainWindow"
         Width="525"
         Height="350">
 	<Grid>
-        <ContentControl />
-		<avalonDock:DockingManager>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition />
+		</Grid.RowDefinitions>
+		<Menu IsMainMenu="True">
+			<MenuItem Header="Hi" />
+		</Menu>
+		<avalonDock:DockingManager Grid.Row="1">
 			<avalonDock:LayoutRoot>
 				<avalonDock:LayoutPanel Orientation="Horizontal">
-                    <avalonDock:LayoutDocumentPane views:AvalonDockRegion.Nomen="DocumentsPane" />
-                    <avalonDock:LayoutAnchorablePane views:AvalonDockRegion.Nomen="PropertiesPane"  DockMinWidth="150">
-					</avalonDock:LayoutAnchorablePane>
+					<avalonDock:LayoutDocumentPane views:AvalonDockRegion.Nomen="DocumentsPane" />
+					<avalonDock:LayoutAnchorablePane DockMinWidth="150" views:AvalonDockRegion.Nomen="PropertiesPane" />
 				</avalonDock:LayoutPanel>
 			</avalonDock:LayoutRoot>
 		</avalonDock:DockingManager>
