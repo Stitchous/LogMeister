@@ -14,21 +14,19 @@ using System.Diagnostics;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.ServiceLocation;
 
-
 namespace LogMeister.Infrastructure
 {
     public class AvalonRegion : DependencyObject
     {
-        [DependencyProperty(Metadata = PropertyMetadata(string.Empty, OnNameChanged))]
+        [DependencyProperty(IsAttached, Metadata = PropertyMetadata(string.Empty, OnNameChanged))]
         public static GetName(f : DependencyObject) : string;
 
         private static OnNameChanged(d : DependencyObject , e : DependencyPropertyChangedEventArgs )  : void 
         {
-            CreateRegion(d :> FrameworkElement, e.NewValue :> string);
-            Debug.Assert(false);
+            CreateRegion(d, e.NewValue :> string);
         }
         
-        private static CreateRegion([NotNull] element : FrameworkElement, [NotNullOrEmpty] regionName : string) : void 
+        private static CreateRegion([NotNull] element : DependencyObject, [NotNullOrEmpty] regionName : string) : void 
         {
             def mappings = ServiceLocator.Current.GetInstance.[RegionAdapterMappings]();
             def adapter = mappings.GetMapping(element.GetType());
