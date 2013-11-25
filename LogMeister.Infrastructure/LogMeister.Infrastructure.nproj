@@ -159,6 +159,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.n" />
+    <Compile Include="UnityContainerExtensions.n">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ViewExportAttribute.n">
       <SubType>Code</SubType>
     </Compile>

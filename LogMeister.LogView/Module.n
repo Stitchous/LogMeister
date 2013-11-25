@@ -13,6 +13,8 @@ using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Prism.Regions;
 
+using LogMeister.Infrastructure;
+
 namespace LogMeister.LogView
 {
 
@@ -25,21 +27,7 @@ namespace LogMeister.LogView
     public Initialize() : void 
     {
         _container.RegisterType.[LogView]();
-        RegisterForRegion.[LogView, LogViewModel]("DocumentsPane");
-    }
-
-        RegisterForRegion[TView, TViewModel](region : string) : void where TView : FrameworkElement
-    {
-        def name = typeof(TView).FullName;
-        _ = _container.RegisterType.[object](name, 
-            InjectionFactory(
-                c => 
-                {
-                    def dataContext : TViewModel = c.Resolve.[TViewModel]();
-                    c.Resolve.[TView]() : TView <- { DataContext = dataContext; }
-                }));
-                
-        _ = _container.Resolve.[RegionManager]().RegisterViewWithRegion(region, () => _container.Resolve(name));
+        _container.RegisterForRegion.[LogView, LogViewModel]("DocumentsPane");
     }
 
     _container : IUnityContainer;
