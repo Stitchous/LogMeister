@@ -13,30 +13,23 @@ using LogMeister.Module.Core;
 
 namespace LogMeister.LogView
 {
+    [Record]
+    [NotifyPropertyChanged]
     public class LineViewModel
     {
-        public this(index : int, lineInfo : ILine)
-        {
-            _index = index;
-            _line = WeakReference(lineInfo)
+        public Index : int 
+        { 
+            get 
+            { 
+                _index
+            } 
         }
-        
-        public Index : int { get { _index; } }
         
         public Time : TimeSpan 
         { 
             get
             {
-                def line = _line.Target :> ILine;
-                
-                if (line != null)
-                {
-                    line.Time;
-                }
-                else
-                {
-                    TimeSpan();
-                }
+                _line.Time
             }
         }
         
@@ -44,16 +37,7 @@ namespace LogMeister.LogView
         { 
             get
             {
-                def line = _line.Target :> ILine;
-                
-                if (line != null)
-                {
-                    line.Thread;
-                }
-                else
-                {
-                    0;
-                }
+                _line.Thread;
             }
         }
         
@@ -61,16 +45,7 @@ namespace LogMeister.LogView
         { 
             get
             {
-                def line = _line.Target :> ILine;
-                
-                if (line != null)
-                {
-                    line.Severity;
-                }
-                else
-                {
-                    string.Empty;
-                }
+                _line.Severity
             }
         }
 
@@ -78,20 +53,11 @@ namespace LogMeister.LogView
         { 
             get 
             { 
-                def line = _line.Target :> ILine;
-                
-                if (line != null)
-                {
-                    line.Message;
-                }
-                else
-                {
-                    string.Empty;
-                }
+                _line.Message;
             } 
         } 
 
         private _index : int;
-        private _line : WeakReference;
+        private _line : ILine;
     }
 }
