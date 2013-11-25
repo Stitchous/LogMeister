@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
         xmlns:infra="clr-namespace:LogMeister.Infrastructure;assembly=LogMeister.Infrastructure"
+        xmlns:prism="clr-namespace:Microsoft.Practices.Prism.Regions;assembly=Microsoft.Practices.Prism"
         Title="MainWindow"
         Width="525"
         Height="350">
@@ -11,7 +12,7 @@
 			<RowDefinition Height="Auto" />
 			<RowDefinition />
 		</Grid.RowDefinitions>
-		<Menu IsMainMenu="True">
+        <Menu IsMainMenu="True" prism:RegionManager.RegionName="MainMenu">
 			<MenuItem Header="Hi" />
 		</Menu>
 		<avalonDock:DockingManager Grid.Row="1">

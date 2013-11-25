@@ -23,7 +23,9 @@ namespace LogMeister.Infrastructure
 
         private static OnNameChanged(d : DependencyObject , e : DependencyPropertyChangedEventArgs )  : void 
         {
-            CreateRegion(d, e.NewValue :> string);
+            def newValue = e.NewValue :> string;
+            when (d != null && !string.IsNullOrEmpty(newValue))
+                CreateRegion(d, newValue);
         }
         
         private static CreateRegion([NotNull] element : DependencyObject, [NotNullOrEmpty] regionName : string) : void 

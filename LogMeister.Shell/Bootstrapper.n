@@ -51,7 +51,6 @@ namespace LogMeister.Shell
 	    {
 	        | e => _ = MessageBox.Show(e.ToString()); throw;
 	    }
-	    
 	}
   
     protected override ConfigureContainer() : void
@@ -86,7 +85,6 @@ namespace LogMeister.Shell
         
         mappings.RegisterMapping(typeof(LayoutAnchorablePane), 
             LayoutGroupRegionAdapter.[LayoutAnchorablePane, LayoutAnchorable](behaviorFactory));
-        
         
         mappings;
     }
