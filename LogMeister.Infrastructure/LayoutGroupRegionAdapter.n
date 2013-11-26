@@ -19,45 +19,19 @@ using Xceed.Wpf.AvalonDock.Layout;
 
 namespace LogMeister.Infrastructure
 {
-    public class LayoutGroupRegionAdapter[T, U] : RegionAdapterBase.[T] 
+    [Record]
+    public class LayoutGroupRegionAdapter[T, U] : AddingRegionAdpaterBase[T, SingleActiveRegion]
         where T : LayoutGroup[U] 
         where U : LayoutContent, new()
     {
-        public this(regionBehaviorFactory : IRegionBehaviorFactory)
+        protected override AddView(view : object, pane : T) : void
         {
-            base(regionBehaviorFactory)
+            def attr = view.GetType()
+                .GetCustomAttributes(typeof(ModuleMetaInfoAttribute), false)
+                .Cast.[ModuleMetaInfoAttribute]()
+                .SingleOrDefault();
+
+            pane.Children.Add(U() <- { Content = view; Title = attr?.Name ?? "Title"; });
         }
-        
-        protected override Adapt(region : IRegion, regionTarget : T) : void 
-        {
-            region.Views.CollectionChanged += 
-            (_, e) =>
-            {
-                match(e.Action)
-                {
-                    | NotifyCollectionChangedAction.Add => 
-                        foreach(view in e.NewItems)
-                        {
-                            AddViewToPane(view, regionTarget)
-                        }
-                    | _ => ()
-                }
-            }
-        }
-      
-    protected override CreateRegion() : IRegion
-    {
-        def region = SingleActiveRegion();
-        region
-    }
-    
-    private AddViewToPane(view : object, pane : T) : void
-    {
-        def attr = view.GetType().GetCustomAttributes(typeof(ModuleMetaInfoAttribute), false).SingleOrDefault();
-        def title = if(attr == null) "Title" else (attr :> ModuleMetaInfoAttribute).Name;
-        
-        mutable u = U() <- { Content = view; Title = title; };
-        pane.Children.Add(u);
-    }
   }
 }

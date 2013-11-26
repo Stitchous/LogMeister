@@ -18,21 +18,21 @@ namespace LogMeister.Infrastructure
 {
     public class AvalonRegion : DependencyObject
     {
-        [DependencyProperty(IsAttached, Metadata = PropertyMetadata(string.Empty, OnNameChanged))]
+        [DependencyProperty(IsAttached, Metadata = PropertyMetadata(OnNameChanged))]
         public static GetName(f : DependencyObject) : string;
 
-        private static OnNameChanged(d : DependencyObject , e : DependencyPropertyChangedEventArgs )  : void 
+        private static OnNameChanged(d : DependencyObject, e : DependencyPropertyChangedEventArgs )  : void 
         {
+            def CreateRegion(element, regionName)
+            {
+                def mappings = ServiceLocator.Current.GetInstance.[RegionAdapterMappings]();
+                def adapter = mappings.GetMapping(element.GetType());
+                _ = adapter.Initialize(element, regionName);
+            }
+            
             def newValue = e.NewValue :> string;
-            when (d != null && !string.IsNullOrEmpty(newValue))
+            when (d != null && newValue != null)
                 CreateRegion(d, newValue);
-        }
-        
-        private static CreateRegion([NotNull] element : DependencyObject, [NotNullOrEmpty] regionName : string) : void 
-        {
-            def mappings = ServiceLocator.Current.GetInstance.[RegionAdapterMappings]();
-            def adapter = mappings.GetMapping(element.GetType());
-            _ = adapter.Initialize(element, regionName);
         }
     }
 }
