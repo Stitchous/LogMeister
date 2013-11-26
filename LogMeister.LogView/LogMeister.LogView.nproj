@@ -133,9 +133,6 @@
     <Compile Include="Module.n">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="NullEnumerator.n">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.n" />
     <Compile Include="WeakDispatcherTimer.n">
       <SubType>Code</SubType>

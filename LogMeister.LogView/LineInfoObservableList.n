@@ -92,7 +92,10 @@ namespace LogMeister.LogView
 
         public GetEnumerator() : IEnumerator
         {
-            NullEnumerator();
+            for(mutable idx = 0; idx< Count; idx++)
+            {
+                yield Item[idx]   
+            }
         }
 
         public Contains(_ : object) : bool
