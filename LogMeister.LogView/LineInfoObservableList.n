@@ -13,39 +13,38 @@ using LogMeister.Module.Core;
 
 namespace LogMeister.LogView
 {
-    
-  public class LineInfoObservableList : IList, INotifyCollectionChanged, INotifyPropertyChanged
-  {
-              // this class helps prevent reentrant calls
+
+    public class LineInfoObservableList : IList, INotifyCollectionChanged, INotifyPropertyChanged
+    {
         private class SimpleMonitor : IDisposable 
         {
             public Enter() : void
             { 
-                ++ _busyCount;
+              ++ _busyCount;
             } 
 
             public Dispose() : void
             {
-                -- _busyCount; 
+              -- _busyCount; 
             }
- 
+
             public  Busy : bool { get { _busyCount > 0; } } 
 
             private mutable _busyCount : int; 
         }
-        
-      public this(lineProvider : IIndexedLineProvider)
-      {
-		_lineProvider = lineProvider;
-        Count = 0;
-      }
-      
+
+        public this(lineProvider : IIndexedLineProvider)
+        {
+            _lineProvider = lineProvider;
+            Count = 0;
+        }
+
         public UpdateCount(newCount : int) : void
         {
             when (newCount > Count)
             {
                 CheckReentrancy();
-                
+
                 Count = newCount;
 
                 OnPropertyChanged(PropertyChangedEventArgs("Count"));
@@ -53,109 +52,102 @@ namespace LogMeister.LogView
                 OnCollectionChanged(NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
             }
         }      
-      
-      public IndexOf(value : object) : int
-		{
-			// TODO
-			0;
-		}
 
-		public Item[index : int] : object
-		{
-			get
-			{
-				LineViewModel(index, _lineProvider.GetLine(index));
-			}
-			set
-			{
-				throw NotImplementedException();
-			}
-		}
+        public IndexOf(value : object) : int
+        {
+            def lineViewModel = value :> LineViewModel;
+            lineViewModel.Index;
+        }
 
-		private mutable _count : int;
-		
-		public Count : int
-		{
-			get { _count;}
-			private set {_count = value;}
-		}
+        public Item[index : int] : object
+        {
+            get
+            {
+                LineViewModel(index, () => _lineProvider.GetLine(index));
+            }
 
-		public SyncRoot : object
-		{
-			get
-			{
-				if (_syncRoot == null)
-				{
-					_ = System.Threading.Interlocked.CompareExchange(ref _syncRoot, object(), null);
-					_syncRoot;
-				}
-				else
-				{
-				    _syncRoot;
-				}
-			}
-		}
+            set
+            {
+                throw NotSupportedException();
+            }
+        }
 
-		public GetEnumerator() : IEnumerator
-		{
-			NullEnumerator();
-		}
-		
-    	public Contains(_ : object) : bool
-		{
-			true;
-		}
+        public Count : int { get; set; }
+        
+        public SyncRoot : object
+        {
+            get
+            {
+                if (_syncRoot == null)
+                {
+                    _ = System.Threading.Interlocked.CompareExchange(ref _syncRoot, object(), null);
+                    _syncRoot;
+                }
+                else
+                {
+                    _syncRoot;
+                }
+            }
+        }
 
+        public GetEnumerator() : IEnumerator
+        {
+            NullEnumerator();
+        }
 
+        public Contains(_ : object) : bool
+        {
+            true;
+        }
 
-		public Add(_ : object) : int
-		{
-			throw NotImplementedException();
-		}
+        public Add(_ : object) : int
+        {
+            throw NotImplementedException();
+        }
 
-		public Clear() : void
-		{
-			throw NotImplementedException();
-		}
+        public Clear() : void
+        {
+            throw NotImplementedException();
+        }
 
-		public Insert(_ : int, _ : object) : void
-		{
-			throw NotImplementedException();
-		}
+        public Insert(_ : int, _ : object) : void
+        {
+            throw NotImplementedException();
+        }
 
-		public IsFixedSize : bool
-		{
-			get { throw NotImplementedException(); }
-		}
+        public IsFixedSize : bool
+        {
+            get { throw NotImplementedException(); }
+        }
 
-		public IsReadOnly : bool
-		{
-			get { throw NotImplementedException(); }
-		}
+        public IsReadOnly : bool
+        {
+            get { throw NotImplementedException(); }
+        }
 
-		public Remove(_ : object) : void
-		{
-			throw NotImplementedException();
-		}
+        public Remove(_ : object) : void
+        {
+            throw NotImplementedException();
+        }
 
-		public RemoveAt(_ : int) : void
-		{
-			throw NotImplementedException();
-		}
-		
-		public CopyTo(_ : Array, _ : int) : void
-		{
-			throw NotImplementedException();
-		}
+        public RemoveAt(_ : int) : void
+        {
+            throw NotImplementedException();
+        }
 
-		public IsSynchronized : bool
-		{
-			get { throw NotImplementedException(); }
-		}
+        public CopyTo(_ : Array, _ : int) : void
+        {
+            throw NotImplementedException();
+        }
 
-		public event CollectionChanged : NotifyCollectionChangedEventHandler;
-		public event PropertyChanged : PropertyChangedEventHandler;
-		
+        public IsSynchronized : bool
+        {
+            get { throw NotImplementedException(); }
+        }
+
+        public event CollectionChanged : NotifyCollectionChangedEventHandler;
+        public event PropertyChanged : PropertyChangedEventHandler;
+
         protected virtual OnPropertyChanged(e : PropertyChangedEventArgs) : void
         { 
             when (PropertyChanged != null)
@@ -163,7 +155,7 @@ namespace LogMeister.LogView
                 PropertyChanged(this, e);
             } 
         }
-        
+
         protected virtual OnCollectionChanged(e : NotifyCollectionChangedEventArgs) : void
         {
             when (CollectionChanged != null) 
@@ -174,7 +166,7 @@ namespace LogMeister.LogView
                 }
             }
         } 
-        
+
         protected BlockReentrancy() : IDisposable
         {
             _monitor.Enter();
@@ -195,11 +187,11 @@ namespace LogMeister.LogView
                 }
             }
         }
-        
-        
-		private _monitor : SimpleMonitor = SimpleMonitor();
 
-		private mutable _syncRoot : object;
-		private _lineProvider : IIndexedLineProvider;
-  }
+
+        private _monitor : SimpleMonitor = SimpleMonitor();
+
+        private mutable _syncRoot : object;
+        private _lineProvider : IIndexedLineProvider;
+    }
 }

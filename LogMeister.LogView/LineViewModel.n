@@ -13,10 +13,15 @@ using LogMeister.Module.Core;
 
 namespace LogMeister.LogView
 {
-    [Record]
     [NotifyPropertyChanged]
     public class LineViewModel
     {
+        public this(index : int, lineFactory : Func[ILine])
+        {
+            _index = index;
+            _line = Lazy.[ILine](lineFactory);
+        }
+        
         public Index : int 
         { 
             get 
@@ -29,7 +34,7 @@ namespace LogMeister.LogView
         { 
             get
             {
-                _line.Time
+                _line.Value.Time
             }
         }
         
@@ -37,7 +42,7 @@ namespace LogMeister.LogView
         { 
             get
             {
-                _line.Thread;
+                _line.Value.Thread;
             }
         }
         
@@ -45,7 +50,7 @@ namespace LogMeister.LogView
         { 
             get
             {
-                _line.Severity
+                _line.Value.Severity
             }
         }
 
@@ -53,11 +58,11 @@ namespace LogMeister.LogView
         { 
             get 
             { 
-                _line.Message;
+                _line.Value.Message;
             } 
         } 
 
         private _index : int;
-        private _line : ILine;
+        private _line : Lazy[ILine];
     }
 }
