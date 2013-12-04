@@ -17,16 +17,7 @@ namespace LogMeister.Shell
         [STAThread]
         public static Main() : void
         {
-            /*def dialog = Forms.OpenFileDialog() <- 
-                {
-                         DefaultExt = "log"; 
-                         Filter = "Executable files(*.log)|*.log";
-                         InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
-                };
-            when (dialog.ShowDialog() == Forms.DialogResult.OK)
-            {
-                _ = ShellApplication(dialog.FileName).Run();
-            }*/
+            _ = ShellApplication().Run();
         }
 
         public this()

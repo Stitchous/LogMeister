@@ -24,10 +24,10 @@ namespace LogMeister.LogView
   [ModuleDependency("Core")]
   public class Module : IModule
   {
-    
     public Initialize() : void 
     {
         _container.RegisterType.[LogView]();
+        _container.RegisterType.[Document.DocumentManager](ContainerControlledLifetimeManager());
         _container.RegisterForRegion.[LogView, LogViewModel]("DocumentsPane");
         _container.RegisterForRegion.[FileMenuView, FileMenuViewModel]("MainMenu");
     }

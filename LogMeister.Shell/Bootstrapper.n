@@ -35,7 +35,6 @@ namespace LogMeister.Shell
 	protected override InitializeShell() : void 
 	{
 		base.InitializeShell();
-
 		Application.Current.MainWindow = this.Shell :> Window;
 		Application.Current.MainWindow.Show();
 	}

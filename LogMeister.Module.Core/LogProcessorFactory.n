@@ -15,7 +15,10 @@ namespace LogMeister.Module.Core
     {
         public Create(fileName : string) : LogProcessor
         {
-            _container.Resolve.[LogProcessor](DependencyOverride.[string](fileName));
+            _container.Resolve.[LogProcessor](
+                DependencyOverride.[string](fileName), 
+                DependencyOverride.[IEnumerable[ILineConsumer]](_container.ResolveAll.[ILineConsumer]()),
+                DependencyOverride.[IEnumerable[IIndexedLineConsumer]](_container.ResolveAll.[IIndexedLineConsumer]())                );
         }
         
         _container : IUnityContainer

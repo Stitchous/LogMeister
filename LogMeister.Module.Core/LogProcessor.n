@@ -8,7 +8,9 @@ namespace LogMeister.Module.Core
 {
     public class LogProcessor : IIndexedLineProvider, ILogInfo, IDisposable
     {
-        public this([NotNullOrEmpty] filePath : string, [NotNull] lineConsumers : IEnumerable[ILineConsumer], [NotNull] indexedLineCosubers : IEnumerable[IIndexedLineConsumer])
+        public this([NotNullOrEmpty] filePath : string, 
+                    [NotNull] lineConsumers : IEnumerable[ILineConsumer], 
+                    [NotNull] indexedLineCosubers : IEnumerable[IIndexedLineConsumer])
         {
             Loaded += (_, _) => {};
             FullPath = filePath;

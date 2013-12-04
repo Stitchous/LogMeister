@@ -16,32 +16,32 @@ using System.Linq;
 using Nemerle.Extensions;
 
 using LogMeister.Module.Core;
+using LogMeister.LogView.Document;
+using LogMeister.Infrastructure;
 
 namespace LogMeister.LogView
 {
+    [NotifyPropertyChanged]
     public class LogViewModel 
     {
-        public this(lineProvider : IIndexedLineProvider, logInfo : ILogInfo)
+        public this(documentManager : Document.DocumentManager)
         {
-            Lines = LineInfoObservableList(lineProvider);
-
-            _lineProvider = lineProvider;
-            _logInfo = logInfo;
-            _timer = WeakDispatcherTimer( (_, _) => Update(), TimeSpan.FromSeconds(1) );
+            documentManager.CurrentDocumentChanged += (_, newDocument) => 
+                {
+                    _lineProvider = newDocument.Value.LineProvider;
+                    _logInfo      = newDocument.Value.LogInfo;
+                    Lines         = LineInfoObservableList(_lineProvider);
+                    
+                    _timer = WeakDispatcherTimer((_, _) => 
+                        Lines.UpdateCount(_logInfo.ProcessedLineCount), TimeSpan.FromSeconds(1));
+                    _logInfo.Loaded += (_,_) => _timer.Stop();
+                }
         }
     
         public Lines : LineInfoObservableList { get; private set;}
-    
-        private Update() : void
-        {
-            when (_logInfo.IsLoaded)
-                _timer.Stop();
-                
-            Lines.UpdateCount(_logInfo.ProcessedLineCount);
-        }
-
-        private _lineProvider : IIndexedLineProvider;
-        private _logInfo      : ILogInfo;
-        private _timer : WeakDispatcherTimer;
+        
+        private mutable _lineProvider : IIndexedLineProvider;
+        private mutable _logInfo      : ILogInfo;
+        private mutable _timer : WeakDispatcherTimer;
     }
 }

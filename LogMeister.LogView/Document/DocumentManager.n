@@ -7,7 +7,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
+using Microsoft.Practices.Prism.Events;
+
 using LogMeister.Module.Core;
+
 
 namespace LogMeister.LogView.Document
 {
@@ -16,21 +19,30 @@ namespace LogMeister.LogView.Document
         public this(logProcessorFactory : LogProcessorFactory)
         {
             _logProcessorFactory = logProcessorFactory;
-            Documents = ObservableCollection.[Document]();
+            CurrentDocumentChanged += (_,_) => {};
         }
         
         public LoadNew(fileName : string) : Document 
         {
             def newDocument = Document(fileName, _logProcessorFactory);
-            Documents.Add(newDocument);
             CurrentDocument = newDocument;
             newDocument
         }
         
-        public Documents : ObservableCollection[Document] { get; private set; }  
+        public CurrentDocument : Document 
+        { 
+            get { _currentDocument }
+            
+            set 
+            {
+                _currentDocument = value;
+                CurrentDocumentChanged(this, DataEventArgs(value));
+            }; 
+        }
         
-        public CurrentDocument : Document { get; set; }
+        public event CurrentDocumentChanged : EventHandler[DataEventArgs[Document]];
         
         _logProcessorFactory : LogProcessorFactory;
+        mutable _currentDocument : Document;
     }
 }

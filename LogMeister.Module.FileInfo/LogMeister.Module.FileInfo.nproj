@@ -156,6 +156,11 @@
       <Project>{24e9ff55-6333-43cf-a309-b19e2ce31282}</Project>
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\LogMeister.LogView\LogMeister.LogView.nproj">
+      <Name>LogMeister.LogView</Name>
+      <Project>{236ada26-ef7b-4aa8-a1cf-1eb5f69d9a0d}</Project>
+      <Private>True</Private>
+    </ProjectReference>
     <ProjectReference Include="..\LogMeister.Module.Core\LogMeister.Module.Core.nproj">
       <Name>LogMeister.Module.Core</Name>
       <Project>{b60b76c2-5ab4-4a34-924b-f5dfd806fcc4}</Project>

@@ -10,7 +10,7 @@ using System.Linq;
 using System.Windows.Threading;
 using System.Threading;
 
-namespace LogMeister.LogView
+namespace LogMeister.Infrastructure
 {
     public class WeakDispatcherTimer
 	{
