@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Nemerle.Collections;
 using Nemerle.Assertions;
 
 namespace LogMeister.Module.Core
 {
-    class LogProcessor : IIndexedLineProvider, ILogInfo, IDisposable
+    public class LogProcessor : IIndexedLineProvider, ILogInfo, IDisposable
     {
         public this([NotNullOrEmpty] filePath : string, [NotNull] lineConsumers : IEnumerable[ILineConsumer], [NotNull] indexedLineCosubers : IEnumerable[IIndexedLineConsumer])
         {
@@ -18,6 +19,8 @@ namespace LogMeister.Module.Core
             _indexedLogReader = IndexedLogReader(_lineIndex, FullPath);            
             Header = _sequentalLogReader.Header;
             FileSize = _sequentalLogReader.FileSize;
+            
+            LoadAsync();
         }
         
         public GetLine(index : int) : ILine
@@ -41,10 +44,14 @@ namespace LogMeister.Module.Core
             _indexedLogReader.Dispose();
         }
         
-        public Load() : void
+        public LoadAsync() : void
+        {
+            _ = Task.Factory.StartNew(Load);
+        }
+        
+        private Load() : void
         {
             assert(!IsLoaded);
-
             foreach (line in _sequentalLogReader)
             {
                 _lineConsumers.Iter( x => x.Process( line ) );

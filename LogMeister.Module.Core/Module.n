@@ -19,17 +19,17 @@ namespace LogMeister.Module.Core
     {
         public Initialize() : void 
         {
-            _ = _container.RegisterType.[LogProcessor](ContainerControlledLifetimeManager(), InjectionFactory(
-                                    c =>
-                                    {
-                                        def r = LogProcessor(c.Resolve.[string](), c.ResolveAll.[ILineConsumer]().ToArray(), c.ResolveAll.[IIndexedLineConsumer]().ToArray());
-                                        Task( () => r.Load() ).Start();
-                                        r
-                                    }))
-                            .RegisterType.[ILogInfo, LogProcessor]()
-                            .RegisterType.[IIndexedLineProvider, LogProcessor]()
-                            .RegisterType.[TimeIndex](ExternallyControlledLifetimeManager())
-                            .RegisterType.[IIndexedLineConsumer]("abc", InjectionFactory( x => { def z : TimeIndex = x.Resolve(); z}));
+            
+            //_ = _container.RegisterType.[LogProcessor](ContainerControlledLifetimeManager(), InjectionFactory(
+            //                        c =>
+            //                        {
+            //                            def r = LogProcessor(c.Resolve.[string](), c.ResolveAll.[ILineConsumer]().ToArray(), c.ResolveAll.[IIndexedLineConsumer]().ToArray());
+            //                            r
+            //                        }))
+            //                .RegisterType.[ILogInfo, LogProcessor]()
+            //                .RegisterType.[IIndexedLineProvider, LogProcessor]()
+            //                .RegisterType.[TimeIndex](ExternallyControlledLifetimeManager())
+            //                .RegisterType.[IIndexedLineConsumer]("abc", InjectionFactory( x => { def z : TimeIndex = x.Resolve(); z}));
         }
     
         _container : IUnityContainer

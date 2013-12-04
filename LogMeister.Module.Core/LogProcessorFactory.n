@@ -1,0 +1,23 @@
+﻿using Nemerle.Collections;
+using Nemerle.Text;
+using Nemerle.Utility;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+using Microsoft.Practices.Unity;
+
+namespace LogMeister.Module.Core
+{
+    [Record]
+    public class LogProcessorFactory
+    {
+        public Create(fileName : string) : LogProcessor
+        {
+            _container.Resolve.[LogProcessor](DependencyOverride.[string](fileName));
+        }
+        
+        _container : IUnityContainer
+    }
+}

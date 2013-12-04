@@ -14,6 +14,7 @@ using Microsoft.Practices.Unity;
 using Microsoft.Practices.Prism.Regions;
 
 using LogMeister.Infrastructure;
+using LogMeister.LogView.FileMenu;
 
 namespace LogMeister.LogView
 {
@@ -28,6 +29,7 @@ namespace LogMeister.LogView
     {
         _container.RegisterType.[LogView]();
         _container.RegisterForRegion.[LogView, LogViewModel]("DocumentsPane");
+        _container.RegisterForRegion.[FileMenuView, FileMenuViewModel]("MainMenu");
     }
 
     _container : IUnityContainer;

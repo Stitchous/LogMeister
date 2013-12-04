@@ -208,6 +208,11 @@
       <Project>{24e9ff55-6333-43cf-a309-b19e2ce31282}</Project>
       <Private>True</Private>
     </ProjectReference>
+    <ProjectReference Include="..\LogMeister.Module.Core\LogMeister.Module.Core.nproj">
+      <Name>LogMeister.Module.Core</Name>
+      <Project>{b60b76c2-5ab4-4a34-924b-f5dfd806fcc4}</Project>
+      <Private>True</Private>
+    </ProjectReference>
     <ProjectReference Include="..\LogMeister.Views\LogMeister.Views.csproj">
       <Name>LogMeister.Views</Name>
       <Project>{e21361b1-5613-4ad9-8f9e-3e12182e0e8b}</Project>
@@ -216,6 +221,10 @@
   </ItemGroup>
   <Import Project="$(Nemerle)\Nemerle.MSBuild.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <PropertyGroup>
+    <DefaultLanguageSourceExtension>.cs</DefaultLanguageSourceExtension>
+    <Language>C#</Language>
+  </PropertyGroup>
   <!--
 		To modify your build process, add your task inside one of the targets below and uncomment it. 
 		Other similar extension points exist, see Microsoft.Common.targets.

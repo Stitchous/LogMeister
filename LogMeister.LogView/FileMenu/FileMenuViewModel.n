@@ -1,0 +1,47 @@
+using Nemerle.WPF;
+using Nemerle.Extensions;
+
+using Microsoft.Practices.Prism.Commands;
+
+using Microsoft.Win32;
+
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Windows;
+using System.Windows.Input;
+
+using System;
+
+using LogMeister.Module.Core;
+using LogMeister.LogView.Document;
+
+namespace LogMeister.LogView.FileMenu
+{
+    
+    [NotifyPropertyChanged]
+    public class  FileMenuViewModel
+    {
+        public this(documentManager : DocumentManager)
+        {
+            def openFile()
+            {
+                def dialog =  OpenFileDialog() <-
+                {
+                         DefaultExt = "log"; 
+                         Filter = "Executable files(*.log)|*.log";
+                         InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+                };
+                
+                when (dialog.ShowDialog() == true)
+                {
+                    _ = documentManager.LoadNew(dialog.FileName);
+                }
+            }
+
+            OpenFile = DelegateCommand(() => openFile());
+        }
+        
+        public OpenFile : ICommand {get; private set;}
+    }
+
+}

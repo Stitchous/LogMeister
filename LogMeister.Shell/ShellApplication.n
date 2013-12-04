@@ -17,29 +17,29 @@ namespace LogMeister.Shell
         [STAThread]
         public static Main() : void
         {
-            def dialog = Forms.OpenFileDialog() <- 
+            /*def dialog = Forms.OpenFileDialog() <- 
                 {
-                    DefaultExt = "log"; 
-                    Filter = "Executable files(*.log)|*.log";
-                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+                         DefaultExt = "log"; 
+                         Filter = "Executable files(*.log)|*.log";
+                         InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
                 };
             when (dialog.ShowDialog() == Forms.DialogResult.OK)
             {
                 _ = ShellApplication(dialog.FileName).Run();
-            }
-      }
-      
-      public this(filePath : string)
-      {
-          _bootstrapper = Bootstrapper(filePath);   
-      }
+            }*/
+        }
 
-      protected override OnStartup(_ : StartupEventArgs) : void 
-      {
-          _bootstrapper.Run();
-          Current.MainWindow.Show();
-      }
+        public this()
+        {
+            _bootstrapper = Bootstrapper();
+        }
 
-      _bootstrapper : Bootstrapper
-  }
+        protected override OnStartup(_ : StartupEventArgs) : void 
+        {
+            _bootstrapper.Run();
+            Current.MainWindow.Show();
+        }
+
+        _bootstrapper : Bootstrapper
+    }
 }

@@ -117,6 +117,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Document\Document.n">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Document\DocumentManager.n">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FileMenu\FileMenuView.xaml.n">
+      <SubType>Code</SubType>
+      <DependentUpon>FileMenu\FileMenuView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FileMenu\FileMenuViewModel.n">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="LineInfoObservableList.n">
       <SubType>Code</SubType>
     </Compile>
@@ -139,10 +152,16 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="FileMenu" />
+    <Folder Include="Document" />
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="LogView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="FileMenu\FileMenuView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

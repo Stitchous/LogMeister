@@ -136,6 +136,9 @@
     <Compile Include="LogProcessor.n">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="LogProcessorFactory.n">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Module.n" />
     <Compile Include="Properties\AssemblyInfo.n" />
     <Compile Include="RandomAccessLogReader.n">

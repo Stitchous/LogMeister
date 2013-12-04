@@ -1,0 +1,12 @@
+using LogMeister.Infrastructure;
+
+namespace LogMeister.LogView.FileMenu
+{
+    public partial class FileMenuView 
+    {
+        public this()
+        {
+            InitializeComponent();
+        }
+    }
+}

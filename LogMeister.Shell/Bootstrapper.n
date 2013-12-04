@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
@@ -24,11 +25,11 @@ using LogMeister.Infrastructure;
 
 namespace LogMeister.Shell
 {
+   
   public class Bootstrapper : UnityBootstrapper
   {
-    public this([NotNullOrEmpty] filename : string)
+    public this()
     {
-        _filename = filename;
     }
       
 	protected override InitializeShell() : void 
@@ -39,6 +40,11 @@ namespace LogMeister.Shell
 		Application.Current.MainWindow.Show();
 	}
 
+	protected override ConfigureServiceLocator() : void
+	{
+	    base.ConfigureServiceLocator();
+	}
+	
     protected override CreateShell() : DependencyObject
 	{
 		try
@@ -58,7 +64,6 @@ namespace LogMeister.Shell
         base.ConfigureContainer();
         _ = Container
             .RegisterType.[object, MainWindow](typeof(MainWindow).FullName)
-            .RegisterInstance(_filename)
             .RegisterType.[IEnumerable[object]](InjectionFactory(
                 _ => 
                     {
@@ -85,10 +90,13 @@ namespace LogMeister.Shell
         
         mappings.RegisterMapping(typeof(LayoutAnchorablePane), 
             LayoutGroupRegionAdapter.[LayoutAnchorablePane, LayoutAnchorable](behaviorFactory));
+            
+        mappings.RegisterMapping(typeof(Menu),
+            ItemsControlRegionAdapter(behaviorFactory));
         
         mappings;
     }
     
-    private _filename : string;
+
   }
 }

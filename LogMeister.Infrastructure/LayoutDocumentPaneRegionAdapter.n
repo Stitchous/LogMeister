@@ -7,6 +7,7 @@ using Nemerle.Utility;
 
 using System;
 using System.Collections.Generic;
+using System.Windows.Controls;
 
 using System.Linq;
 
@@ -19,6 +20,15 @@ using Xceed.Wpf.AvalonDock.Layout;
 
 namespace LogMeister.Infrastructure
 {
+    [Record]
+    public class MenuRegionAdapter : AddingRegionAdpaterBase[Menu, AllActiveRegion]
+    {
+        protected override AddView(view : object, menu : Menu) : void
+        {   
+            _ = menu.Items.Add(view);
+        }
+    }
+    
     [Record]
     public class LayoutDocumentPaneRegionAdapter[T, U] : AddingRegionAdpaterBase[T, SingleActiveRegion]
         where T : LayoutDocumentPane

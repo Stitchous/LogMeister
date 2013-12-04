@@ -1,0 +1,36 @@
+﻿using Nemerle.Collections;
+using Nemerle.Text;
+using Nemerle.Utility;
+
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+
+using LogMeister.Module.Core;
+
+namespace LogMeister.LogView.Document
+{
+   public class DocumentManager
+    {
+        public this(logProcessorFactory : LogProcessorFactory)
+        {
+            _logProcessorFactory = logProcessorFactory;
+            Documents = ObservableCollection.[Document]();
+        }
+        
+        public LoadNew(fileName : string) : Document 
+        {
+            def newDocument = Document(fileName, _logProcessorFactory);
+            Documents.Add(newDocument);
+            CurrentDocument = newDocument;
+            newDocument
+        }
+        
+        public Documents : ObservableCollection[Document] { get; private set; }  
+        
+        public CurrentDocument : Document { get; set; }
+        
+        _logProcessorFactory : LogProcessorFactory;
+    }
+}

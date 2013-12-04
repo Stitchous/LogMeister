@@ -12,8 +12,10 @@
 			<RowDefinition Height="Auto" />
 			<RowDefinition />
 		</Grid.RowDefinitions>
-        <Menu IsMainMenu="True" prism:RegionManager.RegionName="MainMenu">
-			<MenuItem Header="Hi" />
+        <Menu infra:AvalonRegion.Name="MainMenu">
+   
+            <!--:AvalonRegion.Name="MainMenu"> -->
+			<!-- MenuItem Header="Hi" /> -->
 		</Menu>
 		<avalonDock:DockingManager Grid.Row="1">
 			<avalonDock:LayoutRoot>

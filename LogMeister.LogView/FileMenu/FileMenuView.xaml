@@ -1,0 +1,12 @@
+<MenuItem x:Class="LogMeister.LogView.FileMenu.FileMenuView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:prism="clr-namespace:Microsoft.Practices.Prism.Regions;assembly=Microsoft.Practices.Prism"
+        xmlns:infra="clr-namespace:LogMeister.Infrastructure;assembly=LogMeister.Infrastructure"
+        Header="File" 
+        >
+    <MenuItem Header="Open..." Command="{Binding OpenFile}"/>
+</MenuItem>
+<!-- :AvalonRegion.Name="MainMenu.File" -->
+        
+        
