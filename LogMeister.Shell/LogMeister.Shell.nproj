@@ -75,6 +75,66 @@
     <Platform>x86</Platform>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73">
+      <Name>ICSharpCode.SharpZipLib</Name>
+      <AssemblyName>ICSharpCode.SharpZipLib.dll</AssemblyName>
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181">
+      <Name>Lucene.Net</Name>
+      <AssemblyName>Lucene.Net.dll</AssemblyName>
+      <HintPath>..\packages\Lucene.Net.3.0.3\lib\NET40\Lucene.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Analyzers, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181">
+      <Name>Lucene.Net.Contrib.Analyzers</Name>
+      <AssemblyName>Lucene.Net.Contrib.Analyzers.dll</AssemblyName>
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Analyzers.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Core, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181">
+      <Name>Lucene.Net.Contrib.Core</Name>
+      <AssemblyName>Lucene.Net.Contrib.Core.dll</AssemblyName>
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.FastVectorHighlighter, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181">
+      <Name>Lucene.Net.Contrib.FastVectorHighlighter</Name>
+      <AssemblyName>Lucene.Net.Contrib.FastVectorHighlighter.dll</AssemblyName>
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.FastVectorHighlighter.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Highlighter, Version=2.3.2.1, Culture=neutral, PublicKeyToken=85089178b9ac3181">
+      <Name>Lucene.Net.Contrib.Highlighter</Name>
+      <AssemblyName>Lucene.Net.Contrib.Highlighter.dll</AssemblyName>
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Highlighter.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Memory, Version=1.0.0.0, Culture=neutral, PublicKeyToken=85089178b9ac3181">
+      <Name>Lucene.Net.Contrib.Memory</Name>
+      <AssemblyName>Lucene.Net.Contrib.Memory.dll</AssemblyName>
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Queries, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181">
+      <Name>Lucene.Net.Contrib.Queries</Name>
+      <AssemblyName>Lucene.Net.Contrib.Queries.dll</AssemblyName>
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Queries.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Regex, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181">
+      <Name>Lucene.Net.Contrib.Regex</Name>
+      <AssemblyName>Lucene.Net.Contrib.Regex.dll</AssemblyName>
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Regex.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.SimpleFacetedSearch, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181">
+      <Name>Lucene.Net.Contrib.SimpleFacetedSearch</Name>
+      <AssemblyName>Lucene.Net.Contrib.SimpleFacetedSearch.dll</AssemblyName>
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.SimpleFacetedSearch.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Snowball, Version=2.0.0.1, Culture=neutral, PublicKeyToken=85089178b9ac3181">
+      <Name>Lucene.Net.Contrib.Snowball</Name>
+      <AssemblyName>Lucene.Net.Contrib.Snowball.dll</AssemblyName>
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Snowball.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.SpellChecker, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181">
+      <Name>Lucene.Net.Contrib.SpellChecker</Name>
+      <AssemblyName>Lucene.Net.Contrib.SpellChecker.dll</AssemblyName>
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.SpellChecker.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <Name>Microsoft.Expression.Interactions</Name>
       <AssemblyName>Microsoft.Expression.Interactions.dll</AssemblyName>

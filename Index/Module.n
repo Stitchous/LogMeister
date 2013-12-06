@@ -18,6 +18,7 @@ namespace LogMeister.Index
   {
     public Initialize() : void 
     {        
+        _ = _container.RegisterType.[LogMeister.Module.Core.IIndexedLineConsumer, Indexer]("Indexer", ExternallyControlledLifetimeManager())
     }
     
     _container : IUnityContainer

@@ -17,8 +17,8 @@ namespace LogMeister.Module.Core
         {
             _container.Resolve.[LogProcessor](
                 DependencyOverride.[string](fileName), 
-                DependencyOverride.[IEnumerable[ILineConsumer]](_container.ResolveAll.[ILineConsumer]()),
-                DependencyOverride.[IEnumerable[IIndexedLineConsumer]](_container.ResolveAll.[IIndexedLineConsumer]())                );
+                DependencyOverride.[IEnumerable[ILineConsumer]](_container.ResolveAll.[ILineConsumer]().ToList()),
+                DependencyOverride.[IEnumerable[IIndexedLineConsumer]](_container.ResolveAll.[IIndexedLineConsumer]().ToList()));
         }
         
         _container : IUnityContainer

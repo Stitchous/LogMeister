@@ -24,8 +24,9 @@ namespace LogMeister.LogView
     [NotifyPropertyChanged]
     public class LogViewModel 
     {
-        public this(documentManager : Document.DocumentManager)
+        public this(documentManager : Document.DocumentManager, indexer : LogMeister.Index.Indexer)
         {
+            _indexer = indexer;
             documentManager.CurrentDocumentChanged += (_, newDocument) => 
                 {
                     _lineProvider = newDocument.Value.LineProvider;
@@ -40,8 +41,29 @@ namespace LogMeister.LogView
     
         public Lines : LineInfoObservableList { get; private set;}
         
+        public SearchText : string 
+        { 
+            get 
+            {
+                _searchText;
+            }; 
+            
+            set
+            {
+                _searchText = value;
+                when (!string.IsNullOrEmpty(value))
+                {    
+                    def v = _indexer.Search(value);
+                    Console.WriteLine(v);
+                }
+            }
+        }
+        
         private mutable _lineProvider : IIndexedLineProvider;
         private mutable _logInfo      : ILogInfo;
         private mutable _timer : WeakDispatcherTimer;
-    }
+        private mutable _searchText : string;
+        
+        private _indexer : LogMeister.Index.Indexer;
+    }   
 }

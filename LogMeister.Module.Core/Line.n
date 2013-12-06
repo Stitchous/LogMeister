@@ -6,7 +6,7 @@ namespace LogMeister.Module.Core
 {
     internal class Line : ILine
     {
-        public this(time : TimeSpan, 
+        public this(time : TimeSpan,
                     thread : int, 
                     [NotNullOrEmpty] severity : string,
                     [NotNull ]components : IEnumerable[string],
