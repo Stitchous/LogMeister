@@ -1,34 +1,35 @@
 <UserControl x:Class="LogMeister.LogView.LogView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-
-    
-    <Grid>
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:dec="clr-namespace:LogMeister.Infrastructure.Decoration;assembly=LogMeister.Infrastructure"
+             xmlns:infra="clr-namespace:LogMeister.Infrastructure;assembly=LogMeister.Infrastructure">
+    <Grid> 
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <ListView VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Lines}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Width="60"
+        <dec:DecoratorContentControl infra:AvalonRegion.Name="MainDocumentView">
+            <ListView VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Lines}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Width="60"
                                     DisplayMemberBinding="{Binding Index}"
                                     Header="Index" />
-                    <GridViewColumn Width="120"
+                        <GridViewColumn Width="120"
                                     DisplayMemberBinding="{Binding Time}"
                                     Header="Time" />
-                    <GridViewColumn Width="60"
+                        <GridViewColumn Width="60"
                                     DisplayMemberBinding="{Binding Thread}"
                                     Header="Thread" />
-                    <GridViewColumn Width="50"
+                        <GridViewColumn Width="50"
                                     DisplayMemberBinding="{Binding Severity}"
                                     Header="Severity" />
-                    <GridViewColumn Width="Auto"
+                        <GridViewColumn Width="Auto"
                                     DisplayMemberBinding="{Binding Message}"
                                     Header="Text" />
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <TextBox Grid.Row="1" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </dec:DecoratorContentControl>
     </Grid>
 </UserControl>

@@ -64,7 +64,9 @@ namespace LogMeister.Module.Core
             }
             LoadedPercent  = 100;
             IsLoaded = true;
-            Loaded(this, EventArgs.Empty);            
+            Loaded(this, EventArgs.Empty);
+            
+            _indexedLineConsumers.Iter(consumer => consumer.Finish())
         }
 
         private _lineConsumers : IEnumerable[ILineConsumer];

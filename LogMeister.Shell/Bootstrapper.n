@@ -22,6 +22,7 @@ using Xceed.Wpf.AvalonDock.Layout;
 
 using LogMeister.Views;
 using LogMeister.Infrastructure;
+using LogMeister.Infrastructure.Decoration;
 
 namespace LogMeister.Shell
 {
@@ -93,6 +94,9 @@ namespace LogMeister.Shell
         mappings.RegisterMapping(typeof(Menu),
             ItemsControlRegionAdapter(behaviorFactory));
         
+        mappings.RegisterMapping(typeof(DecoratorContentControl),
+            DecoratorRegionAdapter(behaviorFactory));
+            
         mappings;
     }
     

@@ -1,31 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>24e9ff55-6333-43cf-a309-b19e2ce31282</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LogMeister.Infrastructure</RootNamespace>
-    <AssemblyName>LogMeister.Infrastructure</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
     <NoStdLib>true</NoStdLib>
     <NemerleVersion>Net-4.0</NemerleVersion>
     <NemerleBinPathRoot Condition=" '$(NemerleBinPathRoot)' == '' ">$(ProgramFiles)\Nemerle</NemerleBinPathRoot>
     <Nemerle Condition=" '$(Nemerle)' == '' ">$(NemerleBinPathRoot)\$(NemerleVersion)</Nemerle>
-    <Name>LogMeister.Infrastructure</Name>
+    <Name>LogMeister.Search</Name>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <DocumentationFile />
   </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>04e2de87-abe0-4813-9c7d-463099dee21b</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LogMeister.Search</RootNamespace>
+    <AssemblyName>LogMeister.Search</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <Optimize>false</Optimize>
-    <OutputPath>..\bin\Debug\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <OutputPath>..\bin\Debug\modules\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <RunDebugger>false</RunDebugger>
@@ -33,13 +35,22 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>false</DebugSymbols>
     <Optimize>true</Optimize>
-    <OutputPath>..\bin\Release\</OutputPath>
+    <OutputPath>..\bin\Release\modules\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
+    <DocumentationFile>bin\Release\\LogMeister.Search.xml</DocumentationFile>
+    <RunDebugger>false</RunDebugger>
   </PropertyGroup>
   <ItemGroup>
+    <MacroReference Include="Nemerle.Wpf">
+      <HintPath>$(Nemerle)\Nemerle.WPF.dll</HintPath>
+    </MacroReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Nemerle.Wpf">
+      <HintPath>$(Nemerle)\Nemerle.WPF.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <Name>Microsoft.Expression.Interactions</Name>
       <AssemblyName>Microsoft.Expression.Interactions.dll</AssemblyName>
@@ -87,114 +98,73 @@
       <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\PresentationFramework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Windows, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <Name>System.Windows</Name>
-      <AssemblyName>System.Windows.dll</AssemblyName>
-      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Windows.dll</HintPath>
-    </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <Name>System.Windows.Interactivity</Name>
       <AssemblyName>System.Windows.Interactivity.dll</AssemblyName>
       <HintPath>..\packages\Prism.4.1.0.0\lib\NET40\System.Windows.Interactivity.dll</HintPath>
     </Reference>
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    <Reference Include="System.Xaml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <Name>System.Xaml</Name>
+      <AssemblyName>System.Xaml.dll</AssemblyName>
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xaml.dll</HintPath>
     </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Nemerle">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(Nemerle)\Nemerle.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <MacroReference Include="Nemerle.Linq">
-      <HintPath>$(Nemerle)\Nemerle.Linq.dll</HintPath>
-    </MacroReference>
-    <MacroReference Include="Nemerle.Wpf">
-      <HintPath>$(Nemerle)\Nemerle.WPF.dll</HintPath>
-    </MacroReference>
-    <Reference Include="Xceed.Wpf.AvalonDock, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4">
-      <Name>Xceed.Wpf.AvalonDock</Name>
-      <AssemblyName>Xceed.Wpf.AvalonDock.dll</AssemblyName>
-      <HintPath>..\packages\AvalonDock.2.0.2000\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4">
-      <Name>Xceed.Wpf.AvalonDock.Themes.Aero</Name>
-      <AssemblyName>Xceed.Wpf.AvalonDock.Themes.Aero.dll</AssemblyName>
-      <HintPath>..\packages\AvalonDock.2.0.2000\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Expression, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4">
-      <Name>Xceed.Wpf.AvalonDock.Themes.Expression</Name>
-      <AssemblyName>Xceed.Wpf.AvalonDock.Themes.Expression.dll</AssemblyName>
-      <HintPath>..\packages\AvalonDock.2.0.2000\lib\net40\Xceed.Wpf.AvalonDock.Themes.Expression.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4">
-      <Name>Xceed.Wpf.AvalonDock.Themes.Metro</Name>
-      <AssemblyName>Xceed.Wpf.AvalonDock.Themes.Metro.dll</AssemblyName>
-      <HintPath>..\packages\AvalonDock.2.0.2000\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4">
-      <Name>Xceed.Wpf.AvalonDock.Themes.VS2010</Name>
-      <AssemblyName>Xceed.Wpf.AvalonDock.Themes.VS2010.dll</AssemblyName>
-      <HintPath>..\packages\AvalonDock.2.0.2000\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    <Reference Include="WindowsBase, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <Name>WindowsBase</Name>
+      <AssemblyName>WindowsBase.dll</AssemblyName>
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\WindowsBase.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddingRegionAdapterBase.n">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="AvalonRegion.n">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Decoration\DecoratorContentControl.n">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Decoration\DecoratorControl.n">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Decoration\DecoratorRegionAdapter.n">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="LayoutDocumentPaneRegionAdapter.n">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="LayoutGroupRegionAdapter.n">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="MenuRegionAdapter.n">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ModuleMetaInfoAttribute.n">
+    <Compile Include="Module.n">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.n" />
-    <Compile Include="UnityContainerExtensions.n">
+    <Compile Include="SearchDecorator.n">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ViewExportAttribute.n">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WeakDispatcherTimer.n">
+    <Compile Include="SearchViewModel.n">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Decoration" />
+    <Page Include="SearchDecoratorStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Properties\" />
+    <Folder Include="Themes\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
       <SubType>Content</SubType>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LogMeister.Infrastructure\LogMeister.Infrastructure.nproj">
+      <Name>LogMeister.Infrastructure</Name>
+      <Project>{24e9ff55-6333-43cf-a309-b19e2ce31282}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(Nemerle)\Nemerle.MSBuild.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <PropertyGroup>
+    <DefaultLanguageSourceExtension>.cs</DefaultLanguageSourceExtension>
+    <Language>C#</Language>
+  </PropertyGroup>
   <!--
 		To modify your build process, add your task inside one of the targets below and uncomment it. 
 		Other similar extension points exist, see Microsoft.Common.targets.

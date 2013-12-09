@@ -32,6 +32,9 @@ namespace LogMeister.Module.Core
             }
         }
         
+        public Finish() : void
+        {}
+        
         public TryGetLine(time : TimeSpan) : option[int]
         {
             mutable index;

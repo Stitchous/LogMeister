@@ -17,7 +17,6 @@ using LogMeister.LogView.Document;
 
 namespace LogMeister.LogView.FileMenu
 {
-    
     [NotifyPropertyChanged]
     public class  FileMenuViewModel
     {
@@ -32,7 +31,8 @@ namespace LogMeister.LogView.FileMenu
                          InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
                 };
                 
-                when (dialog.ShowDialog() == true)
+                def dialogResult = dialog.ShowDialog() ;
+                when (dialogResult == true)
                 {
                     _ = documentManager.LoadNew(dialog.FileName);
                 }

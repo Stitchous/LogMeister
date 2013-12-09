@@ -3,17 +3,14 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
 
-[assembly: Nemerle.Macro.Resource(@"Properties\Resources.resx")]
-[assembly: Nemerle.Macro.Settings(@"Properties\Settings.settings")]
-
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("LogMeister.LogView")]
+[assembly: AssemblyTitle("LogMeister.Search")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("LogMeister.LogView")]
+[assembly: AssemblyProduct("LogMeister.Search")]
 [assembly: AssemblyCopyright("Copyright © Microsoft 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -24,7 +21,7 @@ using System.Windows;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("236ada26-ef7b-4aa8-a1cf-1eb5f69d9a0d")]
+[assembly: Guid("04e2de87-abe0-4813-9c7d-463099dee21b")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -37,10 +34,6 @@ using System.Windows;
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 [assembly: ThemeInfo(
-	ResourceDictionaryLocation.None, //where theme specific resource dictionaries are located
-	//(used if a resource is not found in the page, 
-	// or application resource dictionaries)
-	ResourceDictionaryLocation.ExternalAssembly //where the generic resource dictionary is located
-	//(used if a resource is not found in the page, 
-	// app, or any theme specific resource dictionaries)
-)]
+	ResourceDictionaryLocation.None,
+	ResourceDictionaryLocation.SourceAssembly)]
+

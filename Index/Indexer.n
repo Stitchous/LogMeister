@@ -22,154 +22,64 @@ using Lucene.Net.Analysis.Standard;
 
 namespace LogMeister.Index
 {
-    public class Indexer: IIndexedLineConsumer
+    internal class Indexer: IIndexedLineConsumer, ISearchService
     {
-        
-        _lazy : Lazy[bool];
-        
-     /*   private class Indexer1
-        {
-            public Process(message: string, index : int) : void
-            {
-                _task = _task.ContinueWith(t =>
-                {
-                    def doc = Document();
-                    doc.Add(Field("index", index.ToString(), Field.Store.YES, Field.Index.NO));            
-                    doc.Add(Field("text", message, Field.Store.NO, Field.Index.ANALYZED));
-                    _indexWriter.AddDocument(doc);
-                });
-            }
-            
-            _indexWriter = IndexWriter(RAMDirectory(), SimpleAnalyzer(), IndexWriter.MaxFieldLength.LIMITED);
-            
-            mutable _task : Task = Task.Factory.StartNew(() => {});
-        }
-       */ 
         public this()
         {
-            
-            _directory = RAMDirectory();
+            _directory   = Lazy(() => RAMDirectory());
             _indexWriter = Lazy(
-                () =>
-                
-                    IndexWriter(RAMDirectory(), StandardAnalyzer(Version.LUCENE_30), IndexWriter.MaxFieldLength.LIMITED));            
-            _lazy = Lazy.[bool](
-                () =>
-                {
-                    
-                    _indexWriter.Value.Dispose();
-                    
-                    true;
-                })
+                () => IndexWriter(_directory.Value, Analyzer, IndexWriter.MaxFieldLength.LIMITED));            
         }
  
         public Search(searchTerm : string)  : IEnumerable[int]
         {
+            def parser = QueryParser(Version.LUCENE_30, "text", Analyzer);
             
-            {
-                // using(directory = RAMDirectory() /*FSDirectory.Open(directoryName)*/)
-      //{
-        mutable directory : Lucene.Net.Store.Directory;
-        using (_indexWriter.Value)// = IndexWriter(directory, StandardAnalyzer(Version.LUCENE_30), IndexWriter.MaxFieldLength.LIMITED)) 
-        {
-            directory = _indexWriter.Value.Directory;
-            foreach(i in $[1..100])
-            {
-                def doc = Document();
-                doc.Add(Field("index", i.ToString(), Field.Store.YES, Field.Index.NO));            
-                doc.Add(Field("text",  "Module fsdrvplg.ppl 1.2.14.4 loaded", Field.Store.YES, Field.Index.ANALYZED));
-                _indexWriter.Value.AddDocument(doc);
-            }
-        }
-        
-           def parser = QueryParser(Version.LUCENE_30, "text", StandardAnalyzer(Version.LUCENE_30));
-            def query = parser.Parse("loaded");
-            
-            def hitsPerPage = 10;
-            def reader = IndexReader.Open(directory, true);
-            
-            def searcher = IndexSearcher(reader);
-            def collector = TopScoreDocCollector.Create(hitsPerPage, true);
-            searcher.Search(query, collector);
-            //def r = collector.TopDocs().ScoreDocs;
-            
-            collector.TopDocs().ScoreDocs.Select(s => 
-                {
-                    def doc = searcher.Doc(s.Doc);
-                    int.Parse(doc.Get("index"))
-                    
-                }).ToList()
-        
-        
-        
-        
-      }
-            
-            
-            Console.WriteLine(_lazy.Value);
-            
-            def parser = QueryParser(Version.LUCENE_30, "text", StandardAnalyzer(Version.LUCENE_30));
-            def query = parser.Parse("TEXXT");
-            
-            def hitsPerPage = 10;
-            def reader = IndexReader.Open(_directory, true);
-            def searcher = IndexSearcher(reader);
-            def collector = TopScoreDocCollector.Create(hitsPerPage, true);
-            searcher.Search(query, collector);
-            //def r = collector.TopDocs().ScoreDocs;
-            
-            collector.TopDocs().ScoreDocs.Select(s => 
-                {
-                    def doc = searcher.Doc(s.Doc);
-                    int.Parse(doc.Get("index"))
-                    
-                }).ToList()
-         /*   def searcher = IndexSearcher(_directory);
-            
-            
-                                                
             def query = parser.Parse(searchTerm);
-            //def query = TermQuery(Term("text", searchTerm));
             
+            def hitsPerPage = 10;
+            def reader = IndexReader.Open(this.Directory, true);
             
+            def searcher = IndexSearcher(reader);
+            def collector = TopScoreDocCollector.Create(hitsPerPage, true);
+            searcher.Search(query, collector);
             
-            def docs = searcher.Search(query, 5);
-            
-            docs.ScoreDocs.Select(s => 
+            collector.TopDocs().ScoreDocs.Select(s => 
                 {
                     def doc = searcher.Doc(s.Doc);
                     int.Parse(doc.Get("index"))
                     
-                })*/
+                }).ToList()
         }
-        
+
         public Process(line : ILine, index : int) : void
         {
-            //def taskIndex = index % Environment.ProcessorCount;
-            
-            //_workers[ index % _workers.Length].Process(line.Message, index);
-            //_workers[0].Process(line.Message, index);
             def message = line.Message;
-            Console.WriteLine(message);
             when (index < 10)
             {
-          //  _ = _taskFactory.StartNew(() =>
-              //  {
-                    def doc = Document();
-                    doc.Add(Field("index", index.ToString(), Field.Store.YES, Field.Index.NO));            
-                    doc.Add(Field("text",  "TEXXT", Field.Store.YES, Field.Index.ANALYZED));
-                    _indexWriter.Value.AddDocument(doc);
-            //    });
+                def doc = Document();
+                doc.Add(Field("index", index.ToString(), Field.Store.YES, Field.Index.NO));            
+                doc.Add(Field("text",  message, Field.Store.YES, Field.Index.ANALYZED));
+                _indexWriter.Value.AddDocument(doc);
             }   
-                
+        }
+        
+        public Finish() : void
+        {
+            _indexWriter.Value.Dispose()
+        }
+        
+        private Directory : Lucene.Net.Store.Directory
+        {
+            get { _directory.Value; }
+        }
+        
+        private static Analyzer : Analyzer
+        {
+            get { StandardAnalyzer(Version.LUCENE_30) }
         }
         
         private _indexWriter: Lazy[IndexWriter];
-        private _directory : Lucene.Net.Store.Directory;
-        //private _analyzer : Analyzer;// = StandardAnalyzer(Version.LUCENE_30); 
-
-        _taskFactory : TaskFactory = TaskFactory(Schedulers.LimitedConcurrencyLevelTaskScheduler(1));
-                
-        //_workers : array[Indexer1] = $[1 .. 8].Map(_ => Indexer1()).ToArray();    
+        private _directory  : Lazy[Lucene.Net.Store.Directory];
     }
 }

@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{EDCC3B85-0BAD-11DB-BC1A-00112FDE8B61}") = "LogMeister.Index", "Index\LogMeister.Index.nproj", "{20A9F21F-0B2C-498D-9AE6-97E7093EEA7C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogMeister.Views", "LogMeister.Views\LogMeister.Views.csproj", "{E21361B1-5613-4AD9-8F9E-3E12182E0E8B}"
@@ -21,6 +23,8 @@ EndProject
 Project("{EDCC3B85-0BAD-11DB-BC1A-00112FDE8B61}") = "LogMeister.Module.Core", "LogMeister.Module.Core\LogMeister.Module.Core.nproj", "{B60B76C2-5AB4-4A34-924B-F5DFD806FCC4}"
 EndProject
 Project("{EDCC3B85-0BAD-11DB-BC1A-00112FDE8B61}") = "LogMeister.LogView", "LogMeister.LogView\LogMeister.LogView.nproj", "{236ADA26-EF7B-4AA8-A1CF-1EB5F69D9A0D}"
+EndProject
+Project("{EDCC3B85-0BAD-11DB-BC1A-00112FDE8B61}") = "LogMeister.Search", "LogMeister.Search\LogMeister.Search.nproj", "{04E2DE87-ABE0-4813-9C7D-463099DEE21B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -116,6 +120,17 @@ Global
 		{236ADA26-EF7B-4AA8-A1CF-1EB5F69D9A0D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{236ADA26-EF7B-4AA8-A1CF-1EB5F69D9A0D}.Release|x86.ActiveCfg = Release|Any CPU
 		{236ADA26-EF7B-4AA8-A1CF-1EB5F69D9A0D}.Release|x86.Build.0 = Release|Any CPU
+		{04E2DE87-ABE0-4813-9C7D-463099DEE21B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04E2DE87-ABE0-4813-9C7D-463099DEE21B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04E2DE87-ABE0-4813-9C7D-463099DEE21B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{04E2DE87-ABE0-4813-9C7D-463099DEE21B}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{04E2DE87-ABE0-4813-9C7D-463099DEE21B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{04E2DE87-ABE0-4813-9C7D-463099DEE21B}.Debug|x86.Build.0 = Debug|Any CPU
+		{04E2DE87-ABE0-4813-9C7D-463099DEE21B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04E2DE87-ABE0-4813-9C7D-463099DEE21B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04E2DE87-ABE0-4813-9C7D-463099DEE21B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{04E2DE87-ABE0-4813-9C7D-463099DEE21B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{04E2DE87-ABE0-4813-9C7D-463099DEE21B}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

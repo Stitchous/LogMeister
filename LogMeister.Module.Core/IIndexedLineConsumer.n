@@ -2,6 +2,7 @@
 {
     public interface IIndexedLineConsumer
     {
-        Process(line : ILine, index : int) : void
+        Process(line : ILine, index : int) : void;
+        Finish() : void;
     }
 }
