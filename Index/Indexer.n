@@ -37,7 +37,7 @@ namespace LogMeister.Index
             
             def query = parser.Parse(searchTerm);
             
-            def hitsPerPage = 10;
+            def hitsPerPage = 10000;
             def reader = IndexReader.Open(this.Directory, true);
             
             def searcher = IndexSearcher(reader);
@@ -55,13 +55,11 @@ namespace LogMeister.Index
         public Process(line : ILine, index : int) : void
         {
             def message = line.Message;
-            when (index < 10)
-            {
-                def doc = Document();
-                doc.Add(Field("index", index.ToString(), Field.Store.YES, Field.Index.NO));            
-                doc.Add(Field("text",  message, Field.Store.YES, Field.Index.ANALYZED));
-                _indexWriter.Value.AddDocument(doc);
-            }   
+            def doc = Document();
+            doc.Add(Field("index", index.ToString(), Field.Store.YES, Field.Index.NO));            
+            doc.Add(Field("text",  message, Field.Store.YES, Field.Index.ANALYZED));
+            _indexWriter.Value.AddDocument(doc);
+
         }
         
         public Finish() : void

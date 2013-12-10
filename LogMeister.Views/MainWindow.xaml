@@ -13,9 +13,6 @@
 			<RowDefinition />
 		</Grid.RowDefinitions>
         <Menu infra:AvalonRegion.Name="MainMenu">
-   
-            <!--:AvalonRegion.Name="MainMenu"> -->
-			<!-- MenuItem Header="Hi" /> -->
 		</Menu>
 		<avalonDock:DockingManager Grid.Row="1">
 			<avalonDock:LayoutRoot>

@@ -153,9 +153,19 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Index\LogMeister.Index.nproj">
+      <Name>LogMeister.Index</Name>
+      <Project>{20a9f21f-0b2c-498d-9ae6-97e7093eea7c}</Project>
+      <Private>True</Private>
+    </ProjectReference>
     <ProjectReference Include="..\LogMeister.Infrastructure\LogMeister.Infrastructure.nproj">
       <Name>LogMeister.Infrastructure</Name>
       <Project>{24e9ff55-6333-43cf-a309-b19e2ce31282}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\LogMeister.LogView\LogMeister.LogView.nproj">
+      <Name>LogMeister.LogView</Name>
+      <Project>{236ada26-ef7b-4aa8-a1cf-1eb5f69d9a0d}</Project>
       <Private>True</Private>
     </ProjectReference>
   </ItemGroup>

@@ -19,18 +19,7 @@ namespace LogMeister.Search
   {
     public Initialize() : void 
     {        
-    
         _ = _container.RegisterForRegion.[SearchDecorator, SearchViewModel]("MainDocumentView");
-        //_ = RegisterForRegion
-    
-  /*      _ = _container.RegisterType.[Indexer](ExternallyControlledLifetimeManager());
-        _ = _container.RegisterType.[IIndexedLineConsumer, Indexer]("Index", 
-                InjectionFactory(c => 
-                {
-                    def indexer : Indexer = c.Resolve.[Indexer]();
-                    indexer
-                }));
-        _ = _container.RegisterType.[ISearchService, Indexer]();*/
     }
     
     _container : IUnityContainer

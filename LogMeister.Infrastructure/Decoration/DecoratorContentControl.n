@@ -28,14 +28,17 @@ namespace LogMeister.Infrastructure.Decoration
 
     static private CoerseContent(d : DependencyObject, baseValue : object ) : object
     {
-        if(baseValue == null)
-            null
-        else
+        def dcc = d :> DecoratorContentControl;
+        match (baseValue, dcc.Decorator)
         {
-            def dcc = d :> DecoratorContentControl;
-            dcc.Decorator.Child = baseValue :> FrameworkElement;
-            dcc.Decorator.Child.DataContext = dcc.DataContext;
-            dcc.Decorator;
+            | (null, _) => null
+            | (_, null) => baseValue
+            | _         =>
+            {
+                dcc.Decorator.Child = baseValue :> FrameworkElement;
+                dcc.Decorator.Child.DataContext = dcc.DataContext;
+                dcc.Decorator;
+            }
         }
     } 
     
@@ -51,7 +54,8 @@ namespace LogMeister.Infrastructure.Decoration
     private static OnDataContextChanged(d : DependencyObject , e : DependencyPropertyChangedEventArgs) : void 
     {
         def dcc = d :> DecoratorContentControl;
-        dcc.Decorator.Child.DataContext = e.NewValue;
+        when (dcc.Decorator?.Child != null)
+            dcc.Decorator.Child.DataContext = e.NewValue;
     }
     
     protected override OnContentChanged(oldContent : object, newContent : object) : void 

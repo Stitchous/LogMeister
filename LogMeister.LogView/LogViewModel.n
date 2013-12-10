@@ -21,8 +21,22 @@ using LogMeister.Infrastructure;
 
 namespace LogMeister.LogView
 {
+    [Record]
+    public class FilteredLinesProvider : IIndexedLineProvider 
+    {
+        public GetLine(index : int) : ILine
+        {
+            _originalProvider.GetLine(_filter.ElementAt(index))
+        }
+        
+        private _filter : IEnumerable[int];
+        
+        private _originalProvider : IIndexedLineProvider;
+    }
+    
+    
     [NotifyPropertyChanged]
-    public class LogViewModel 
+    public class LogViewModel : ILogNavigation, ILogSelection, ILogFilter
     {
         public this(documentManager : Document.DocumentManager)
         {
@@ -30,15 +44,40 @@ namespace LogMeister.LogView
                 {
                     _lineProvider = newDocument.Value.LineProvider;
                     _logInfo      = newDocument.Value.LogInfo;
-                    Lines         = LineInfoObservableList(_lineProvider);
+                     Lines         = LineInfoObservableList(_lineProvider);
                     
                     _timer = WeakDispatcherTimer((_, _) => 
                         Lines.UpdateCount(_logInfo.ProcessedLineCount), TimeSpan.FromSeconds(1));
-                    _logInfo.Loaded += (_,_) => _timer.Stop();
+                    _logInfo.Loaded += (_,_) => 
+                    {
+                        Lines.UpdateCount(_logInfo.ProcessedLineCount);
+                        _timer.Stop();
+                    }
                 }
         }
     
         public Lines : LineInfoObservableList { get; private set;}
+        
+      
+        public SetLineFilter(filter : IEnumerable[int]) : void
+        {
+            Lines = LineInfoObservableList(FilteredLinesProvider(filter, _lineProvider));
+            Lines.UpdateCount(filter.Count());
+        }
+        
+        public ResetFilter() : void
+        {
+            Lines = LineInfoObservableList(_lineProvider);
+            Lines.UpdateCount(_logInfo.ProcessedLineCount);
+        }
+        
+        public Select(line : IEnumerable[long]) : void
+        {
+        }
+        
+        public NavigateTo(position : long) : void
+        {}
+        
         
         private mutable _lineProvider : IIndexedLineProvider;
         private mutable _logInfo      : ILogInfo;

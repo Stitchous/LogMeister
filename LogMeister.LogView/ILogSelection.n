@@ -1,0 +1,15 @@
+﻿using Nemerle.Collections;
+using Nemerle.Text;
+using Nemerle.Utility;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace LogMeister.LogView
+{
+  public interface ILogSelection
+  {
+      Select(lines : IEnumerable[long]) : void;
+  }
+}

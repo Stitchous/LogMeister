@@ -130,6 +130,15 @@
     <Compile Include="FileMenu\FileMenuViewModel.n">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ILogFilter.n">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ILogNavigation.n">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ILogSelection.n">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="LineInfoObservableList.n">
       <SubType>Code</SubType>
     </Compile>

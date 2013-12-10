@@ -28,6 +28,11 @@ namespace LogMeister.LogView
     {
         _container.RegisterType.[LogView]();
         _container.RegisterType.[Document.DocumentManager](ContainerControlledLifetimeManager());
+        _container.RegisterType.[LogViewModel](ExternallyControlledLifetimeManager());
+        _container.RegisterType.[ILogNavigation, LogViewModel]();
+        _container.RegisterType.[ILogSelection, LogViewModel]();
+        _container.RegisterType.[ILogFilter, LogViewModel]();
+        
         _container.RegisterForRegion.[LogView, LogViewModel]("DocumentsPane");
         _container.RegisterForRegion.[FileMenuView, FileMenuViewModel]("MainMenu");
     }
