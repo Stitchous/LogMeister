@@ -22,24 +22,31 @@ namespace LogMeister.Module.FileInfo
     {
         public this(documentManager : Document.DocumentManager, timeIndex : TimeIndex)
         {
+            def start = DateTime.Now;
+            
             def Update(logInfo)
             {
-                _tickCount = _tickCount + 1;
+                when (StartTime == TimeSpan())
+                {
+					def time = _timeIndex.StartTime;
+					StartTime = TimeSpan(0, time.Hours, time.Minutes, time.Seconds)
+				}
                 LineCount = logInfo.ProcessedLineCount : int;
-                LinePerSecond = LineCount / _tickCount;
+                LinePerSecond = ((LineCount / (DateTime.Now - start).TotalMilliseconds) * 1000) :> int;
                 EndTime = _timeIndex.EndTime;
             }
             
             documentManager.CurrentDocumentChanged +=
                 (_, doc) =>
                 {
+                    StartTime = TimeSpan();
                     def logInfo = doc.Value.LogInfo;
                     FullPath = logInfo.FullPath;
                     Header   = logInfo.Header;
                     _timer = WeakDispatcherTimer((_, _) => Update(logInfo),
                         TimeSpan.FromSeconds(1));
                     _timeIndex = timeIndex;
-                    logInfo.Loaded += (_, _) => _timer.Stop();
+                    logInfo.Loaded += (_, _) =>  { Update(logInfo); _timer.Stop(); }
                 }
         }
 
@@ -51,10 +58,11 @@ namespace LogMeister.Module.FileInfo
         
         public LinePerSecond : int { get; private set; }
         
+        public StartTime : TimeSpan { get; private set; }
+        
         public EndTime : TimeSpan { get; private set; }
         
         private mutable _timer : WeakDispatcherTimer;
-        private mutable _tickCount = 0;
         private mutable _timeIndex : TimeIndex;
     }
 }

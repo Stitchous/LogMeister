@@ -36,7 +36,7 @@ namespace LogMeister.Shell
             {
                 | 1 => None()
 				| 2 => Some(args[1])
-				| _ =>  _ = MessageBox.Show("Unsupported args cout use " + args[0] + " <filename>"); None()
+				| _ =>  _ = MessageBox.Show("Unsupported args count use " + args[0] + " <filename>"); None()
 			}
 
             _bootstrapper.Run();
