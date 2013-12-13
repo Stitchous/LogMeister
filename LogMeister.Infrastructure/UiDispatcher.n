@@ -1,0 +1,19 @@
+﻿using System;
+using System.Windows;
+
+namespace LogMeister.Infrastructure
+{
+    public static class UiDispatcher
+    {
+        public static ExecuteAsync(action: Action) : void
+        {
+            def application = Application.Current;
+            when (application != null)
+            {
+                def dispatcher = application.Dispatcher;
+                when (dispatcher != null)
+                    _ = dispatcher.BeginInvoke(action);
+            }
+        }
+    }
+}

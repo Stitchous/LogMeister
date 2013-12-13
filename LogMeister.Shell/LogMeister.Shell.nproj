@@ -54,8 +54,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <StartProgram />
-    <WorkingDirectory>$(OutputDirectory)</WorkingDirectory>
-    <CmdArgs />
+    <WorkingDirectory>
+    </WorkingDirectory>
+    <CmdArgs>d:\KAV.14.0.1.302_10.08_16.15_1748.BL.log</CmdArgs>
     <OutputPath>..\bin\Debug\</OutputPath>
     <RunDebugger>false</RunDebugger>
     <PlatformTarget>x86</PlatformTarget>
@@ -266,6 +267,11 @@
     <ProjectReference Include="..\LogMeister.Infrastructure\LogMeister.Infrastructure.nproj">
       <Name>LogMeister.Infrastructure</Name>
       <Project>{24e9ff55-6333-43cf-a309-b19e2ce31282}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\LogMeister.LogView\LogMeister.LogView.nproj">
+      <Name>LogMeister.LogView</Name>
+      <Project>{236ada26-ef7b-4aa8-a1cf-1eb5f69d9a0d}</Project>
       <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\LogMeister.Module.Core\LogMeister.Module.Core.nproj">

@@ -10,6 +10,10 @@ using System.Linq;
 using System.Windows;
 using Forms = System.Windows.Forms;
 
+using Microsoft.Practices.Unity;
+
+using LogMeister.LogView.Document;
+
 namespace LogMeister.Shell
 {
     public class ShellApplication : Application
@@ -27,8 +31,17 @@ namespace LogMeister.Shell
 
         protected override OnStartup(_ : StartupEventArgs) : void 
         {
+            def args = Environment.GetCommandLineArgs();
+            def filename = match(args.Length)
+            {
+                | 1 => None()
+				| 2 => Some(args[1])
+				| _ =>  _ = MessageBox.Show("Unsupported args cout use " + args[0] + " <filename>"); None()
+			}
+
             _bootstrapper.Run();
             Current.MainWindow.Show();
+            filename.Iter( x =>  _ = _bootstrapper.Container.Resolve.[DocumentManager]().LoadNew(x) );
         }
 
         _bootstrapper : Bootstrapper
