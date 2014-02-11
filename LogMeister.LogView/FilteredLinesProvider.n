@@ -21,7 +21,6 @@ namespace LogMeister.LogView
 		{ 
 			_filter.Count()
 		}
-
     	
         public Fetch(start: int, end : int) : IList[LineViewModel]
         {

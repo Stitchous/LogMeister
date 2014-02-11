@@ -114,8 +114,13 @@ namespace LogMeister.LogView.DataVirtualization
 		{
 			get 
 			{ 
-				def (pageIndex, page) = QueryPage(index);
-				page[pageIndex]
+				if (Count == 0) 
+					default(T)
+				else
+				{
+					def (pageIndex, page) = QueryPage(index);
+					page[pageIndex]
+				}
 			}
 			
 			set 
