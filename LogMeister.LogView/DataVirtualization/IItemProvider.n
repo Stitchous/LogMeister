@@ -1,0 +1,20 @@
+﻿using Nemerle;
+using Nemerle.Collections;
+using Nemerle.Text;
+using Nemerle.Utility;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace LogMeister.LogView.DataVirtualization
+{
+  public interface IItemProvider[T]
+  {
+      FetchCount() : int;
+      
+      Fetch(start : int, end : int) : IList[T];
+      
+      event CountChanged : Action[int];
+  }
+}

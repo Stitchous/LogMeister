@@ -29,6 +29,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <RunDebugger>false</RunDebugger>
+    <StartProgram />
+    <WorkingDirectory />
+    <CmdArgs>
+    </CmdArgs>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>false</DebugSymbols>
@@ -107,8 +111,14 @@
       <HintPath>$(Nemerle)\Nemerle.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Nemerle.ComputationExpressions">
+      <HintPath>$(Nemerle)\Nemerle.ComputationExpressions.dll</HintPath>
+    </Reference>
     <MacroReference Include="Nemerle.Linq">
       <HintPath>$(Nemerle)\Nemerle.Linq.dll</HintPath>
+    </MacroReference>
+    <MacroReference Include="Nemerle.ComputationExpressions">
+      <HintPath>$(Nemerle)\Nemerle.ComputationExpressions.Macros.dll</HintPath>
     </MacroReference>
     <Reference Include="WindowsBase, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <Name>WindowsBase</Name>
@@ -117,6 +127,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataVirtualization\IItemProvider.n">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataVirtualization\VirtualList.n">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Document\Document.n">
       <SubType>Code</SubType>
     </Compile>
@@ -130,6 +146,9 @@
     <Compile Include="FileMenu\FileMenuViewModel.n">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="FilteredLinesProvider.n">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ILogFilter.n">
       <SubType>Code</SubType>
     </Compile>
@@ -139,7 +158,7 @@
     <Compile Include="ILogSelection.n">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="LineInfoObservableList.n">
+    <Compile Include="LineProvider.n">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="LineViewModel.n">
@@ -160,6 +179,7 @@
   <ItemGroup>
     <Folder Include="FileMenu" />
     <Folder Include="Document" />
+    <Folder Include="DataVirtualization" />
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>

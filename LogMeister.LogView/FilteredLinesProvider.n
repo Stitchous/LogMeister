@@ -1,0 +1,27 @@
+﻿using Nemerle.Collections;
+using Nemerle.Text;
+using Nemerle.Utility;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+using LogMeister.Module.Core;
+using LogMeister.LogView.Document;
+using LogMeister.Infrastructure;
+
+namespace LogMeister.LogView
+{
+    [Record]
+    public class FilteredLinesProvider : IIndexedLineProvider 
+    {
+        public GetLine(index : int) : ILine
+        {
+            _originalProvider.GetLine(_filter.ElementAt(index))
+        }
+
+        private _filter : IEnumerable[int];
+
+        private _originalProvider : IIndexedLineProvider;
+    }
+}
