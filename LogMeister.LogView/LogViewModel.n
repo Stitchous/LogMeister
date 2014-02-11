@@ -18,23 +18,10 @@ using Nemerle.Extensions;
 using LogMeister.Module.Core;
 using LogMeister.LogView.Document;
 using LogMeister.Infrastructure;
+using LogMeister.LogView.DataVirtualization;
 
 namespace LogMeister.LogView
 {
-    [Record]
-    public class FilteredLinesProvider : IIndexedLineProvider 
-    {
-        public GetLine(index : int) : ILine
-        {
-            _originalProvider.GetLine(_filter.ElementAt(index))
-        }
-
-        private _filter : IEnumerable[int];
-
-        private _originalProvider : IIndexedLineProvider;
-    }
-
-
     [NotifyPropertyChanged]
     public class LogViewModel : ILogNavigation, ILogSelection, ILogFilter
     {
@@ -44,31 +31,32 @@ namespace LogMeister.LogView
                 {
                     _lineProvider = newDocument.Value.LineProvider;
                     _logInfo      = newDocument.Value.LogInfo;
-                     Lines         = LineInfoObservableList(_lineProvider);
-
-                    _timer = WeakDispatcherTimer((_, _) => 
-                        Lines.UpdateCount(_logInfo.ProcessedLineCount), TimeSpan.FromSeconds(1));
+                     
+                    Lines         = VirtualList(LineProvider(_lineProvider, _logInfo));
+                    
+					_timer = WeakDispatcherTimer((_,_) => 
+						Lines         = VirtualList(LineProvider(_lineProvider, _logInfo)), 
+						TimeSpan.FromSeconds(1));
+                    
                     _logInfo.Loaded += (_,_) => 
                     {
-                        UiDispatcher.ExecuteAsync(() => Lines.UpdateCount(_logInfo.ProcessedLineCount));
                         _timer.Stop();
                     }
                 }
         }
 
-        public Lines : LineInfoObservableList { get; private set;}
-
+        public Lines : VirtualList[LineViewModel] { get; private set;}
 
         public SetLineFilter(filter : IEnumerable[int]) : void
         {
-            Lines = LineInfoObservableList(FilteredLinesProvider(filter, _lineProvider));
-            Lines.UpdateCount(filter.Count());
+            //Lines = VirtualList(FilteredLinesProvider(filter, _lineProvider));
+            //Lines.UpdateCount(filter.Count());
         }
 
         public ResetFilter() : void
         {
-            Lines = LineInfoObservableList(_lineProvider);
-            Lines.UpdateCount(_logInfo.ProcessedLineCount);
+            //Lines = LineInfoObservableList(_lineProvider);
+            //Lines.UpdateCount(_logInfo.ProcessedLineCount);
         }
 
         public Select(line : IEnumerable[long]) : void

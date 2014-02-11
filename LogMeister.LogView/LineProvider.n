@@ -1,0 +1,44 @@
+﻿using Nemerle.Collections;
+using Nemerle.Text;
+using Nemerle.Utility;
+using Nemerle.ComputationExpressions;
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+using LogMeister.Module.Core;
+using LogMeister.LogView.DataVirtualization;
+
+namespace LogMeister.LogView
+{
+	[Record]
+	internal class LineProvider : IItemProvider[LineViewModel]
+	{
+		public FetchCount() : int
+		{ 
+			_logInfo.ProcessedLineCount;
+		}
+
+		public Fetch(beginIndex : int, endIndex : int) : IList[LineViewModel]
+		{
+			def range = 
+				comp enumerable
+				{
+					foreach(idx in $[beginIndex..endIndex])
+					{
+						yield LineViewModel(idx, () => _indexedLineProvider.GetLine(idx))
+					}
+				};
+			
+			range.ToList()
+		}
+		
+		public event CountChanged : Action[int] ;
+		
+		private _indexedLineProvider : IIndexedLineProvider;
+		
+		private _logInfo : ILogInfo;
+	}
+}

@@ -9,7 +9,12 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <dec:DecoratorContentControl infra:AvalonRegion.Name="MainDocumentView">
-            <ListView VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Lines}">
+            <ListView 
+                VirtualizingStackPanel.IsVirtualizing="True" 
+                VirtualizingStackPanel.VirtualizationMode="Recycling" 
+                ScrollViewer.IsDeferredScrollingEnabled="True" 
+                IsSynchronizedWithCurrentItem="True"
+                ItemsSource="{Binding Lines}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Width="60"

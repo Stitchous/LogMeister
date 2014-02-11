@@ -56,7 +56,7 @@
     <StartProgram />
     <WorkingDirectory>
     </WorkingDirectory>
-    <CmdArgs>d:\KAV.14.0.1.302_10.08_16.15_1748.BL.log</CmdArgs>
+    <CmdArgs>D:\Traces\KAV.14.0.0.3074_05.05_16.34_1256.SRV.log </CmdArgs>
     <OutputPath>..\bin\Debug\</OutputPath>
     <RunDebugger>false</RunDebugger>
     <PlatformTarget>x86</PlatformTarget>
