@@ -116,6 +116,9 @@
     </MacroReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FullTextSearchService.n">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Indexer.n" />
     <Compile Include="ISearchService.n">
       <SubType>Code</SubType>

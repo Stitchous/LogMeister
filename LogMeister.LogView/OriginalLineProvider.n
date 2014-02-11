@@ -1,8 +1,7 @@
 ﻿using Nemerle.Collections;
+using Nemerle.ComputationExpressions;
 using Nemerle.Text;
 using Nemerle.Utility;
-using Nemerle.ComputationExpressions;
-
 
 using System;
 using System.Collections.Generic;
@@ -11,10 +10,11 @@ using System.Linq;
 using LogMeister.Module.Core;
 using LogMeister.LogView.DataVirtualization;
 
+
 namespace LogMeister.LogView
 {
 	[Record]
-	internal class LineProvider : IItemProvider[LineViewModel]
+	internal class OriginalLineProvider : IItemProvider[LineViewModel]
 	{
 		public FetchCount() : int
 		{ 

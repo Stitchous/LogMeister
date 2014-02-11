@@ -1,0 +1,41 @@
+﻿using Nemerle.Collections;
+using Nemerle.Text;
+using Nemerle.Utility;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+using Lucene.Net.Analysis;
+using Lucene.Net.Analysis.Standard;
+using Lucene.Net.Documents;
+using Lucene.Net.Index;
+using Lucene.Net.QueryParsers;
+using Lucene.Net.Search;
+using Lucene.Net.Store;
+using Lucene.Net.Util;
+
+namespace LogMeister.Index
+{
+
+	
+	
+	[Record]
+	public class FullTextSearchService
+	{
+		
+		
+      
+		Fetch(searchTerm : string, start : int, end : int) : IList[string]
+		{
+			def parser = QueryParser(Version.LUCENE_30, "text", StandardAnalyzer(Version.LUCENE_30));
+		
+			null
+			
+		}
+      
+		event CountChanged : Action[int];
+		
+		private _directory : Directory;
+	}
+}

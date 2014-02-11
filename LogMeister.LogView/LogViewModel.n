@@ -32,11 +32,11 @@ namespace LogMeister.LogView
                     _lineProvider = newDocument.Value.LineProvider;
                     _logInfo      = newDocument.Value.LogInfo;
                      
-                    Lines         = VirtualList(LineProvider(_lineProvider, _logInfo));
+                     ResetLines();
                     
 					_timer = WeakDispatcherTimer((_,_) => 
-						Lines         = VirtualList(LineProvider(_lineProvider, _logInfo)), 
-						TimeSpan.FromSeconds(1));
+						ResetLines(), 
+						TimeSpan.FromSeconds(2));
                     
                     _logInfo.Loaded += (_,_) => 
                     {
@@ -46,17 +46,15 @@ namespace LogMeister.LogView
         }
 
         public Lines : VirtualList[LineViewModel] { get; private set;}
-
+        
         public SetLineFilter(filter : IEnumerable[int]) : void
         {
-            //Lines = VirtualList(FilteredLinesProvider(filter, _lineProvider));
-            //Lines.UpdateCount(filter.Count());
+            Lines = VirtualList(FilteredLinesProvider(filter, _lineProvider));
         }
 
         public ResetFilter() : void
         {
-            //Lines = LineInfoObservableList(_lineProvider);
-            //Lines.UpdateCount(_logInfo.ProcessedLineCount);
+        	ResetLines()
         }
 
         public Select(line : IEnumerable[long]) : void
@@ -67,6 +65,10 @@ namespace LogMeister.LogView
         {}
 
 
+        private ResetLines() : void
+        {
+			Lines = VirtualList(OriginalLineProvider(_lineProvider, _logInfo));
+        }
         private mutable _lineProvider : IIndexedLineProvider;
         private mutable _logInfo      : ILogInfo;
         private mutable _timer : WeakDispatcherTimer;

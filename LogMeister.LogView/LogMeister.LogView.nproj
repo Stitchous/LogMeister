@@ -158,9 +158,6 @@
     <Compile Include="ILogSelection.n">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="LineProvider.n">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="LineViewModel.n">
       <SubType>Code</SubType>
     </Compile>
@@ -172,6 +169,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Module.n">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="OriginalLineProvider.n">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.n" />

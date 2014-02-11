@@ -10,18 +10,28 @@ using LogMeister.Module.Core;
 using LogMeister.LogView.Document;
 using LogMeister.Infrastructure;
 
+using LogMeister.LogView.DataVirtualization;
+
 namespace LogMeister.LogView
 {
     [Record]
-    public class FilteredLinesProvider : IIndexedLineProvider 
+    public class FilteredLinesProvider : IItemProvider[LineViewModel]
     {
-        public GetLine(index : int) : ILine
+		public FetchCount() : int
+		{ 
+			_filter.Count()
+		}
+
+    	
+        public Fetch(start: int, end : int) : IList[LineViewModel]
         {
-            _originalProvider.GetLine(_filter.ElementAt(index))
+            _filter.Skip(start).Take(end - start).Select(i => LineViewModel(i, () => _originalProvider.GetLine(i))).ToList()
         }
 
-        private _filter : IEnumerable[int];
+        public event CountChanged : Action[int];
 
+		private _filter : IEnumerable[int];
+        
         private _originalProvider : IIndexedLineProvider;
     }
 }

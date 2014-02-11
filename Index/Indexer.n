@@ -14,8 +14,6 @@ using Lucene.Net.Search;
 using Lucene.Net.Store;
 using Lucene.Net.Util;
 
-
-
 using LogMeister.Module.Core;
 using System.Threading.Tasks;
 using Lucene.Net.Analysis.Standard;
