@@ -19,7 +19,8 @@ namespace LogMeister.LogView
         public this(index : int, lineFactory : Func[ILine])
         {
             _index = index;
-            _line = Lazy.[ILine](lineFactory);
+            def line = lineFactory();
+            _line = Lazy.[ILine](() => line);
         }
         
         public Index : int 
