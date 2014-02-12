@@ -18,51 +18,39 @@ namespace LogMeister.LogView
     {
         public this(index : int, lineFactory : Func[ILine])
         {
-            _index = index;
-            _line = Lazy.[ILine](lineFactory);
+            Index  = index;
+            def line = lineFactory();
+            Time = line.Time;
+            Thread = line.Thread;
+            Severity = line.Severity;
+            Message = line.Message;
         }
         
         public Index : int 
         { 
-            get 
-            { 
-                _index
-            } 
+            get; private set;
         }
         
         public Time : TimeSpan 
         { 
-            get
-            {
-                _line.Value.Time
-            }
+            get; private set;
         }
         
         public Thread : int 
         { 
-            get
-            {
-                _line.Value.Thread;
-            }
+            get; private set;
         }
         
         public Severity : string 
         { 
-            get
-            {
-                _line.Value.Severity
-            }
+            get; private set;
         }
 
         public Message  : string 
         { 
-            get 
-            { 
-                _line.Value.Message;
-            } 
+            get; private set;
         } 
 
-        private _index : int;
-        private _line : Lazy[ILine];
+        
     }
 }
