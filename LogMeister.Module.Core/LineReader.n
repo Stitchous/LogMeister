@@ -132,7 +132,7 @@ namespace LogMeister.Module.Core
             Line(timespan,
                     ParseHex(startPosition + 13 + 2, threadIdEnd),
                     Encoding.GetString(Buffer, threadIdEnd + 1, 3),
-                    components.ToArray(),
+                    components,
                     fileOffset + startPosition:long,
                     Encoding.GetString, Buffer, componentsEnd, endPosition - componentsEnd
                     )
