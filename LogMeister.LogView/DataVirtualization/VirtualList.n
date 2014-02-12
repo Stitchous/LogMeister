@@ -212,7 +212,8 @@ namespace LogMeister.LogView.DataVirtualization
 			else
 			{
 				def tempPage = _itemProvider.Fetch(pageStart, Math.Min(pageStart + PageSize - 1, Count-1));
-				assert(tempPage.Count <= 101);
+				assert(tempPage.Count <= PageSize);
+				
 				_pageCache[pageIndex] = (tempPage, pageCounter);
 				pageCounter ++;
 
