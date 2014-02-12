@@ -26,6 +26,9 @@
                         <GridViewColumn Width="60"
                                     DisplayMemberBinding="{Binding Thread}"
                                     Header="Thread" />
+                        <GridViewColumn Width="Auto"
+                                    DisplayMemberBinding="{Binding Components}"
+                                    Header="Components"/>
                         <GridViewColumn Width="50"
                                     DisplayMemberBinding="{Binding Severity}"
                                     Header="Severity" />

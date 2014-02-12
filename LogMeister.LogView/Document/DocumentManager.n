@@ -25,6 +25,7 @@ namespace LogMeister.LogView.Document
         public LoadNew(fileName : string) : Document 
         {
             def newDocument = Document(fileName, _logProcessorFactory);
+            CurrentDocument?.Dispose();
             CurrentDocument = newDocument;
             newDocument
         }

@@ -1,8 +1,6 @@
 ﻿using Nemerle;
-using Nemerle.Collections;
 using Nemerle.Text;
 using Nemerle.Utility;
-using Nemerle.Extensions;
 
 using System;
 using System.Collections.Generic;
@@ -24,6 +22,8 @@ namespace LogMeister.LogView
             Thread = line.Thread;
             Severity = line.Severity;
             Message = line.Message;
+            
+            Components = string.Join(",", line.Components.Reverse());
         }
         
         public Index : int 
@@ -34,6 +34,11 @@ namespace LogMeister.LogView
         public Time : TimeSpan 
         { 
             get; private set;
+        }
+        
+        public Components : string
+        {
+			get; private set;
         }
         
         public Thread : int 
@@ -50,7 +55,5 @@ namespace LogMeister.LogView
         { 
             get; private set;
         } 
-
-        
     }
 }

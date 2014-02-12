@@ -48,7 +48,7 @@ namespace LogMeister.Index
                     
                 }).ToList()
         }
-
+        
         public Process(line : ILine, index : int) : void
         {
             def message = line.Message;
@@ -61,7 +61,13 @@ namespace LogMeister.Index
         
         public Finish() : void
         {
-            _indexWriter.Value.Dispose()
+            _indexWriter.Value.Dispose();
+            _indexWriter =  Lazy(
+                () => 
+                {
+                	_directory =  Lazy(() => RAMDirectory());
+                	IndexWriter(_directory.Value, Analyzer, IndexWriter.MaxFieldLength.LIMITED)
+                });            
         }
         
         private Directory : Lucene.Net.Store.Directory
@@ -74,7 +80,7 @@ namespace LogMeister.Index
             get { StandardAnalyzer(Version.LUCENE_30) }
         }
         
-        private _indexWriter: Lazy[IndexWriter];
-        private _directory  : Lazy[Lucene.Net.Store.Directory];
+        private mutable _indexWriter: Lazy[IndexWriter];
+        private mutable _directory  : Lazy[Lucene.Net.Store.Directory];
     }
 }

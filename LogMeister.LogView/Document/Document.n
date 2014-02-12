@@ -11,17 +11,22 @@ using LogMeister.Module.Core;
 
 namespace LogMeister.LogView.Document
 {
-    public class Document
+    public class  Document : IDisposable
     {
         public this ([NotNullOrEmpty] fileName : string, [NotNull] logProcessorFactory : LogProcessorFactory)
         {
-            def processor = logProcessorFactory.Create(fileName);
-            LineProvider  = processor;
-            LogInfo       = processor;
+            _processor = logProcessorFactory.Create(fileName);
         }
         
-        public LineProvider : IIndexedLineProvider { get; private set; }
+        public LineProvider : IIndexedLineProvider { get { _processor } }
         
-        public LogInfo : ILogInfo { get; private set; }
+        public LogInfo : ILogInfo { get { _processor } }
+		
+        public Dispose() : void
+		{
+			_processor.Dispose();
+		}
+		
+		_processor : LogProcessor;
     }
 }
