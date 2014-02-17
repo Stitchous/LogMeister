@@ -24,7 +24,7 @@ namespace LogMeister.LogView
     	
         public Fetch(start: int, end : int) : IList[LineViewModel]
         {
-            _filter.Skip(start).Take(end - start).Select(i => LineViewModel(i, () => _originalProvider.GetLine(i))).ToList()
+            _filter.Skip(start).Take(end - start + 1).Select(i => LineViewModel(i, () => _originalProvider.GetLine(i))).ToList()
         }
 
         public event CountChanged : Action[int];

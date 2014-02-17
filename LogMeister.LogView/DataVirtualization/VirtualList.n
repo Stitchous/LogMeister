@@ -208,7 +208,7 @@ namespace LogMeister.LogView.DataVirtualization
 			mutable pageWithGeneration;
 
 			if (_pageCache.TryGetValue(pageIndex, out pageWithGeneration))
-			(index - pageStart, pageWithGeneration[0])
+				(index - pageStart, pageWithGeneration[0])
 			else
 			{
 				def tempPage = _itemProvider.Fetch(pageStart, Math.Min(pageStart + PageSize - 1, Count-1));
@@ -219,6 +219,8 @@ namespace LogMeister.LogView.DataVirtualization
 
 				CleanupCache();
 
+				assert(index - pageStart < tempPage.Count);
+				
 				(index - pageStart, tempPage);
 			}
 		}
